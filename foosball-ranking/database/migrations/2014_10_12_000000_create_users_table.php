@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('lastname');
             $table->boolean('isAdmin')->default(FALSE);
-            $table->foreignId('role_id')->constrained('roles')->onUpdate('cascade')->nullable(); // For if we want to add more roles
+            $table->foreignId('role_id')->nullable()->constrained('roles')->onUpdate('cascade'); // For if we want to add more roles
         });
     }
 
