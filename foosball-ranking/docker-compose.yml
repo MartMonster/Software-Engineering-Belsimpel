@@ -23,6 +23,7 @@ services:
             - sail
         depends_on:
             - mariadb
+        command: php artisan migrate --seed
     mariadb:
         image: 'mariadb:10'
         ports:
