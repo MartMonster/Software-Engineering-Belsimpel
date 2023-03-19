@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Games1v1Controller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
+
+Route::post('/games1v1',[Games1v1Controller::class],'store')
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';
