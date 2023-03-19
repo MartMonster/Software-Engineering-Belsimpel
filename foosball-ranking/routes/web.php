@@ -22,6 +22,6 @@ Route::get('/', function () {
 Route::post('/games1v1',[Games1v1Controller::class,'calculate'])
     ->middleware('auth');
 
-Route::get('/user/position',[UserController::class,'getPosition'])->middleware('auth');
+Route::get('/user/position',[UserController::class,'getPosElo'])->middleware('auth');
 
 require __DIR__.'/auth.php';
