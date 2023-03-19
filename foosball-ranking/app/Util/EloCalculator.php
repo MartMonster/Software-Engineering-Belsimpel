@@ -5,14 +5,11 @@ namespace App\Util;
 class EloCalculator
 {
 
-    public static function calculateElo(){
-        error_log("Made it");
 
-    }
 
-    function Probability($rating1,$rating2) {
+    private static function Probability($rating1,$rating2) {
         return (
-            (1.0 * 1.0) / (1 + 1.0 * Math.pow(10, (1.0 * ($rating1 - $rating2)) / 400))
+            (1.0 * 1.0) / (1 + 1.0 * pow(10,(1.0 * ($rating1 - $rating2)) / 400))
         );
     }
          
@@ -20,18 +17,18 @@ class EloCalculator
         // $K is a constant.
         // $d determines whether Player A wins
         // or Player B.
-    function EloRating($Ra, $Rb, $K, $d) {
+    public static function calculateElo($Ra, $Rb, $K, $d) {
         // To calculate the Winning
         // Probability of Player B
-        $Pb = Probability($Ra, $Rb);
+        $Pb =self::Probability($Ra, $Rb);
          
         // To calculate the Winning
         // Probability of Player A
-        $Pa = Probability($Rb, $Ra);
+        $Pa =self::Probability($Rb, $Ra);
          
         // Case 1 When Player A wins
         // Updating the Elo Ratings
-        if ($d === true) {
+        if ($d == 1) {
             $Ra = $Ra + $K * (1 - $Pa);
             $Rb = $Rb + $K * (0 - $Pb);
         }
@@ -43,9 +40,11 @@ class EloCalculator
             $Rb = $Rb + $K * (1 - $Pb);
         }
 
+        error_log($Ra);
+        error_log($Rb);
         return array(
-            1=>$Ra,
-            2=>$Rb
+            0=>$Ra,
+            1=>$Rb
         );
          
     }

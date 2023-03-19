@@ -19,7 +19,7 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::post('/games1v1',[Games1v1Controller::class,'calculate'])
+Route::post('/games1v1',[Games1v1Controller::class,'store'])
     ->middleware('auth');
 
 Route::get('/user/position',[UserController::class,'getPosElo'])->middleware('auth');

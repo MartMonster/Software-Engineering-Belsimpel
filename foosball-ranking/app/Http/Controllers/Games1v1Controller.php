@@ -39,9 +39,38 @@ class Games1v1Controller extends Controller
                 'created_at'=>now()
             ]);
         }
+        
+        $updatedElo=array(
+            0=>$player1->elo,
+            1=>$player2->elo
+        );
+
+        if($request->player1Score>$request->player2Score)
+            $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,30,1);
+        else if($request->player1Score<$request->player2Score)
+        $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,30,0);
+
+        else if($request->player1Score == $request->player2Score)
+            if($player1->elo > $player2->elo)
+                $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,0);
+            else if ($player1->elo < $player2->elo)
+                $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,0);
+
+        echo($updatedElo[0]);
+        echo("\n");
+        echo($updatedElo[1]);
+
+        DB::table('users')
+            ->updateOrInsert(
+                ['username' => $player1->username],
+                ['elo' => $updatedElo[0]]
+        );
+
+        DB::table('users')
+            ->updateOrInsert(
+                ['username' => $player2->username],
+                ['elo' => $updatedElo[1]]
+        );
         return response('Game succesfully created',201);
-    }
-    public function calculate(){
-        EloCalculator::calculateElo();
     }
 }
