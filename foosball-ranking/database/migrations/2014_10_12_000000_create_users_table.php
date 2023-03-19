@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,7 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        $roles = DB::table('roles')->get();
+        $playerRole = $roles->firstWhere('role_name', 'Player');
+        Schema::create('users', function (Blueprint $table) use ($playerRole) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -21,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('username')->unique();
             $table->string('lastname');
-            $table->foreignId('role_id')->nullable()->constrained('roles')->onUpdate('cascade'); // For if we want to add more roles
+            $table->foreignId('role_id')->default($playerRole->id)->constrained('roles')->onUpdate('cascade'); // For if we want to add more roles
             $table->float('elo')->default(1000);
         });
     }
