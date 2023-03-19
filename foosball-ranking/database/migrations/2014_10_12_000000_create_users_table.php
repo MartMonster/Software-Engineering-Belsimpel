@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->boolean('isAdmin')->default(FALSE);
             $table->foreignId('role_id')->nullable()->constrained('roles')->onUpdate('cascade'); // For if we want to add more roles
+            $table->float('elo')->default(1000);
         });
     }
 

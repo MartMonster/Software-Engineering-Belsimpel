@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('team_name');
             $table->foreignId('player1_id')->constrained('users')->onUpdate('cascade');
             $table->foreignId('player2_id')->constrained('users')->onUpdate('cascade');
-            $table->integer('elo')->default(1000);
+            $table->float('elo')->default(1000);
         });
     }
 
