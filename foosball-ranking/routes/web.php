@@ -17,7 +17,7 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::post('/games1v1',[Games1v1Controller::class],'store')
+Route::post('/games1v1',[Games1v1Controller::class,'store'])
     ->middleware('auth');
 
 require __DIR__.'/auth.php';
