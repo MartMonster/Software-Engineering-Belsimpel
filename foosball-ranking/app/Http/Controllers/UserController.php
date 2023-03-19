@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PositionElo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -20,5 +21,17 @@ class UserController extends Controller
             $i++;
         }
         return $i;
+    }
+
+    public function getElo(): float
+    {
+        $userId = Auth::id();
+        $user = DB::table('users')->where('id', $userId)->first();
+        return $user->elo;
+    }
+
+    public function getPosElo(): string
+    {
+        return new PositionElo($this->getPosition(), $this->getElo());
     }
 }
