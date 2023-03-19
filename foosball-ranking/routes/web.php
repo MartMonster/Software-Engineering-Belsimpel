@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games1v1Controller;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,9 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::post('/games1v1',[Games1v1Controller::class],'store')
+Route::post('/games1v1',[Games1v1Controller::class,'store'])
     ->middleware('auth');
+
+Route::get('/user/position',[UserController::class,'getPosition'])->middleware('auth');
 
 require __DIR__.'/auth.php';
