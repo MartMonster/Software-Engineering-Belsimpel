@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB,Auth;
 use Carbon\Carbon;
+use App\Util\EloCalculator;
+
 class Games1v1Controller extends Controller
 {
     public function store(Request $request){
@@ -38,5 +40,8 @@ class Games1v1Controller extends Controller
             ]);
         }
         return response('Game succesfully created',201);
+    }
+    public function calculate(){
+        EloCalculator::calculateElo();
     }
 }
