@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   version: 1.0.0
-  title: Songs API
+  title: Foosball Ranking API
 servers:
   - url: http://localhost:8000
 components:
