@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB,Auth;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB, Illuminate\Support\Facades\Auth;
 use App\Util\EloCalculator;
 
 class Games1v1Controller extends Controller
@@ -18,8 +17,6 @@ class Games1v1Controller extends Controller
         if($player1->username== $player2->username){
             return response('Bad request',400);
         }
-
-    
 
         if($request->player1Side==1){
             DB::table('games1v1')->insert([
@@ -39,22 +36,12 @@ class Games1v1Controller extends Controller
                 'created_at'=>now()
             ]);
         }
-        
-        $updatedElo=array(
-            0=>$player1->elo,
-            1=>$player2->elo
-        );
 
-        if($request->player1Score>$request->player2Score)
-            $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,30,1);
-        else if($request->player1Score<$request->player2Score)
-        $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,30,0);
-
-        else if($request->player1Score == $request->player2Score)
-            if($player1->elo > $player2->elo)
-                $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,0);
-            else if ($player1->elo < $player2->elo)
-                $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,0);
+        if ($request->player1Score != $request->player2Score)
+            $updatedElo = EloCalculator::calculateElo($player1->elo,$player2->elo,30,
+                $request->player1Score>$request->player2Score);
+        else
+            $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,$player1->elo < $player2->elo);
 
         echo($updatedElo[0]);
         echo("\n");
