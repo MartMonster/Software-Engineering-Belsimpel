@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game1v1;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB, Illuminate\Support\Facades\Auth;
 use App\Util\EloCalculator;
@@ -18,24 +20,20 @@ class Games1v1Controller extends Controller
             return response('Bad request',400);
         }
 
+        $game = new Game1v1;
         if($request->player1Side==1){
-            DB::table('games1v1')->insert([
-                'player1_id'=>$player1->id,
-                'player2_id'=>$player2->id,
-                'player2_score'=>$request->player2Score,
-                'player1_score'=>$request->player1Score,
-                'created_at'=>now()
-            ]);
+            $game->player1_id = $player1->id;
+            $game->player2_id = $player2->id;
+            $game->player1_score = $request->player1Score;
+            $game->player2_score = $request->player2Score;
         }
         else{
-            DB::table('games1v1')->insert([
-                'player1_id'=>$player2->id,
-                'player2_id'=>$player1->id,
-                'player2_score'=>$request->player1Score,
-                'player1_score'=>$request->player2Score,
-                'created_at'=>now()
-            ]);
+            $game->player1_id = $player2->id;
+            $game->player2_id = $player1->id;
+            $game->player1_score = $request->player2Score;
+            $game->player2_score = $request->player1Score;
         }
+        $game->save();
 
         if ($request->player1Score != $request->player2Score)
             $updatedElo = EloCalculator::calculateElo($player1->elo,$player2->elo,30,
@@ -47,11 +45,15 @@ class Games1v1Controller extends Controller
         echo("\n");
         echo($updatedElo[1]);
 
-        DB::table('users')
-            ->updateOrInsert(
-                ['username' => $player1->username],
-                ['elo' => $updatedElo[0]]
-        );
+        $newUser = User::all()->where('username', $player1->username)->get();
+        $newUser->elo = $updatedElo[0];
+        $newUser->save();
+
+//        DB::table('users')
+//            ->updateOrInsert(
+//                ['username' => $player1->username],
+//                ['elo' => $updatedElo[0]]
+//        );
 
         DB::table('users')
             ->updateOrInsert(

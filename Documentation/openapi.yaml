@@ -15,11 +15,11 @@ components:
           type: string
         lastname:
           type: string
-        # email:
-        #   type: string
-        # email_verified_at:
-        #   type: string
-        # password: # we probably don't want to use this
+          # email:
+          #   type: string
+          # email_verified_at:
+          #   type: string
+          # password: # we probably don't want to use this
           # type: string
         username:
           type: string
@@ -361,9 +361,9 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-  /User/position:
+  /User/summary:
     get:
-      summary: gets the position and elo of the player
+      summary: gets the username, position and elo of the player
       tags:
         - Users
       responses:
@@ -374,6 +374,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  username:
+                    type: string
                   position:
                     type: integer
                     default: 69

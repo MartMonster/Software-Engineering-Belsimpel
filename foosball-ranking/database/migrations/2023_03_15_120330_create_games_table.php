@@ -18,7 +18,7 @@ return new class extends Migration
             $table->tinyInteger('player1_score');
             $table->tinyInteger('player2_score');
             $table->timestamps();
-            
+
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('games1v1');
     }
 };
