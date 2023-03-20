@@ -32,6 +32,6 @@ class UserController extends Controller
 
     public function getPosElo(): string
     {
-        return new PositionElo($this->getPosition(), $this->getElo());
+        return new PositionElo(Auth::user()->username, $this->getPosition(), $this->getElo());
     }
 }
