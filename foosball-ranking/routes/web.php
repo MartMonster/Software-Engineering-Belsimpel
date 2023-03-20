@@ -4,7 +4,7 @@ use App\Models\Game1v1;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games1v1Controller;
 use App\Http\Controllers\UserController;
-use App\Util\EloCalculator;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,7 +23,11 @@ Route::get('/', function () {
 Route::post('/games1v1',[Games1v1Controller::class,'store'])
     ->middleware('auth');
 
-Route::delete('/games1v1/{game1v1}', [Games1v1Controller::class,'delete'])
+// TODO: implement
+Route::put('/games1v1/{game}', function (Game1v1 $game) {})
+    ->middleware('auth');
+
+Route::delete('/games1v1/{game}', [Games1v1Controller::class,'delete'])
     ->middleware('auth');
 
 Route::get('/user/summary',[UserController::class,'getPosElo'])->middleware('auth');

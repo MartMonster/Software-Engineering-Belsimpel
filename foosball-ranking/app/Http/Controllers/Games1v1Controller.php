@@ -11,7 +11,7 @@ use App\Util\EloCalculator;
 class Games1v1Controller extends Controller
 {
     public function store(Request $request){
-        $player2=DB::table('users')->where('username', $request->player2_username)->first();
+        $player2 = User::where('username', $request->player2_username)->first();
         $player1=Auth::user();
         if(is_null($player2)){
             return response('Second user not found',404);
@@ -53,8 +53,8 @@ class Games1v1Controller extends Controller
         return response('Game succesfully created',201);
     }
 
-    public function delete(Game1v1 $game1v1){
-        $game1v1->delete();
+    public function delete(Game1v1 $game){
+        $game->delete();
         return response('Game succesfully deleted',200);
     }
 }
