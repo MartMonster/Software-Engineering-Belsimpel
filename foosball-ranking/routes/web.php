@@ -20,6 +20,10 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
+Route::get('/games1v1', function() {
+    return Game1v1::orderBy('created_at', 'desc')->paginate(10);
+})->middleware('auth');
+
 Route::post('/games1v1',[Games1v1Controller::class,'store'])
     ->middleware('auth');
 
