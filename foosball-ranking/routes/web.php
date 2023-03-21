@@ -31,7 +31,7 @@ Route::post('/games1v1',[Games1v1Controller::class,'store'])
 Route::put('/games1v1/{game}', function (Game1v1 $game) {})
     ->middleware('auth');
 
-Route::delete('/games1v1/{game}', [Games1v1Controller::class,'delete'])
+Route::delete('/games1v1/{id}', [Games1v1Controller::class,'delete'])
     ->middleware('auth');
 
 Route::get('/user/summary',[UserController::class,'getPosElo'])->middleware('auth');

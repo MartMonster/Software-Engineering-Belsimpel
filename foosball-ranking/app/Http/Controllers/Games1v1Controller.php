@@ -53,8 +53,14 @@ class Games1v1Controller extends Controller
         return response('Game succesfully created',201);
     }
 
-    public function delete(Game1v1 $game){
-        $game->delete();
-        return response('Game succesfully deleted',200);
+    public function delete(String $id){
+        $game=$player2 = Game1v1::where('id', $id)->first();
+        if($game == null)
+            return response('Not found',404);
+        if($game->player1_id==Auth::id() || $game->player2_id==Auth::id()){
+                $game->delete();
+                return response('Game succesfully deleted',200);
+        }
+        return response('Unauthorized access',401);
     }
 }
