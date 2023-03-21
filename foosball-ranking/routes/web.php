@@ -20,19 +20,21 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::get('/games1v1', function() {
-    return Game1v1::orderBy('created_at', 'desc')->paginate(10);
-})->middleware('auth');
+Route::get('/games1v1/self', [Games1v1Controller::class,'getOwnGames'])
+    ->middleware('auth');
+
+Route::get('/games1v1', [Games1v1Controller::class, 'getLast10Games'])->middleware('auth');
 
 Route::post('/games1v1',[Games1v1Controller::class,'store'])
     ->middleware('auth');
 
-// TODO: implement
-Route::put('/games1v1/{game}', function (Game1v1 $game) {})
+Route::put('/games1v1/{game}', [Games1v1Controller::class,'update'])
     ->middleware('auth');
 
 Route::delete('/games1v1/{id}', [Games1v1Controller::class,'delete'])
     ->middleware('auth');
+
+Route::get('/user/top10', [UserController::class,'getTop10'])->middleware('auth');
 
 Route::get('/user/summary',[UserController::class,'getPosElo'])->middleware('auth');
 
@@ -44,6 +46,6 @@ Route::post('/user/reset/elo', function() {
         $user->save();
         echo($user->username . " " . $user->elo . "\n");
     }
-});
+})->middleware('auth');
 
 require __DIR__.'/auth.php';
