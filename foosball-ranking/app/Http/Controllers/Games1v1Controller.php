@@ -80,7 +80,7 @@ class Games1v1Controller extends Controller
     }
 
     public function delete(String $id){
-        $game=$player2 = Game1v1::where('id', $id)->first();
+        $game = Game1v1::where('id', $id)->first();
         if($game == null)
             return response('Not found',404);
         if($game->player1_id==Auth::id() || $game->player2_id==Auth::id()){

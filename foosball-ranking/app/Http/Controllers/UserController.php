@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //
-    public function getPosition(): int
+    private function getPosition(): int
     {
         $userId = Auth::id();
         $users = User::orderBy('elo', 'desc')->get();
@@ -24,7 +24,7 @@ class UserController extends Controller
         return $i;
     }
 
-    public function getElo(): float
+    private function getElo(): float
     {
         $userId = Auth::id();
         $user = User::findOrFail($userId);
