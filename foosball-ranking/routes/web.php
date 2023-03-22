@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Game1v1;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games1v1Controller;
 use App\Http\Controllers\UserController;
@@ -20,32 +20,40 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::get('/games1v1/self', [Games1v1Controller::class,'getOwnGames'])
-    ->middleware('auth');
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/games1v1', [Games1v1Controller::class, 'getLast10Games'])->middleware('auth');
+    Route::prefix('/games1v1')->group(function () {
+        Route::controller(Games1v1Controller::class)->group(function () {
+            Route::get('/self', 'getOwnGames');
 
-Route::post('/games1v1',[Games1v1Controller::class,'store'])
-    ->middleware('auth');
+            Route::get('/', 'getLast10Games');
 
-Route::put('/games1v1/{game}', [Games1v1Controller::class,'update'])
-    ->middleware('auth');
+            Route::post('/', 'store');
 
-Route::delete('/games1v1/{id}', [Games1v1Controller::class,'delete'])
-    ->middleware('auth');
+            Route::put('/{game}', 'update');
 
-Route::get('/user/top10', [UserController::class,'getTop10'])->middleware('auth');
+            Route::delete('/{id}', 'delete');
+        });
+    });
 
-Route::get('/user/summary',[UserController::class,'getPosElo'])->middleware('auth');
+    Route::prefix('/user')->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/top10', 'getTop10');
 
-// nice to have now, but should not be accessible for everyone
-Route::post('/user/reset/elo', function() {
-    $users = \App\Models\User::get();
-    foreach ($users as $user) {
-        $user->elo = 1000.0;
-        $user->save();
-        echo($user->username . " " . $user->elo . "\n");
-    }
-})->middleware('auth');
+            Route::get('/summary', 'getPosElo');
+        });
+
+        // nice to have now, but should not be accessible for everyone
+        Route::post('/reset/elo', function() {
+            $users = User::get();
+            foreach ($users as $user) {
+                $user->elo = 1000.0;
+                $user->save();
+                echo($user->username . " " . $user->elo . "\n");
+            }
+        });
+    });
+
+});
 
 require __DIR__.'/auth.php';
