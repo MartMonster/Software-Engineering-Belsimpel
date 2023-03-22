@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games1v1Controller;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Games2v2Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,19 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::prefix('/games2v2')->group(function () {
+        Route::controller(Games2v2Controller::class)->group(function () {
+            Route::get('/self', 'getOwnGames');
+
+            Route::get('/', 'getLast10Games');
+
+            Route::post('/', 'store');
+
+            Route::put('/{game}', 'update');
+
+            Route::delete('/{id}', 'delete');
+        });
+    });
 });
 
 require __DIR__.'/auth.php';
