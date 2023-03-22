@@ -512,6 +512,30 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
+  /Admin/FoosballGames1v1:
+    post:
+      summary: add a 1v1 game (admin only)
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoosballGameInputAdmin'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoosballGame'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
   /Admin/FoosballGames1v1/{id}:
     put:
       summary: edit any 1v1 game (admin only)
@@ -531,7 +555,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FoosballTeam'
+                $ref: '#/components/schemas/FoosballGame'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /Admin/FoosballGames2v2:
+    post:
+      summary: add a 2v2 game (admin only)
+      tags:
+        - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoosballGame2v2InputAdmin'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoosballGame2v2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -557,7 +605,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FoosballTeam'
+                $ref: '#/components/schemas/FoosballGame2v2'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':

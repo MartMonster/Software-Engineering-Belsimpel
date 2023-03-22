@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game1v1;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,7 +68,7 @@ class Games1v1Controller extends Controller
             return response('Unauthorized access',401);
     }
 
-    private function updateGameIdScores(Game1v1 $game, $player1_id, $player2_id, $player1_score, $player2_score, $side) {
+    private static function updateGameIdScores(Game1v1 $game, $player1_id, $player2_id, $player1_score, $player2_score, $side) {
         if ($side == 1) {
             $game->player1_id = $player1_id;
             $game->player2_id = $player2_id;
@@ -86,7 +87,8 @@ class Games1v1Controller extends Controller
         $game = Game1v1::where('id', $id)->first();
         if($game == null)
             return response('Not found',404);
-        if($game->player1_id==Auth::id() || $game->player2_id==Auth::id()){
+        if($game->player1_id==Auth::id() || $game->player2_id==Auth::id() ||
+            Auth::user()->role_id == Role::where('role_name', 'Admin')->first()->id){
                 $game->delete();
                 return response('Game succesfully deleted',200);
         }

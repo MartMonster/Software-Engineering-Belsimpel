@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PositionElo;
-use App\Models\Role;
+use App\Models\UserSummary;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,11 +32,14 @@ class UserController extends Controller
 
     public function getPosElo(): string
     {
-        return new PositionElo(Auth::user()->username, $this->getPosition(), $this->getElo());
+        $usPosElo = new UserSummary();
+        $usPosElo->username = Auth::user()->username;
+        $usPosElo->position = $this->getPosition();
+        $usPosElo->elo = $this->getElo();
+        return $usPosElo;
     }
 
     public function getTop10() {
-//        if (Auth::user()->role_id == Role::where('role_name', 'admin')->first()->id)
         return User::orderBy('elo', 'desc')->take(10)->get();
     }
 }
