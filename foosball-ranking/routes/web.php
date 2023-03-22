@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games1v1Controller;
@@ -66,6 +67,16 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{game}', 'update');
 
             Route::delete('/{id}', 'delete');
+        });
+    });
+
+    Route::prefix('/admin')->group(function () {
+        Route::controller(AdminController::class)->group(function () {
+            Route::post('/game1v1', 'createGame');
+
+            Route::put('/game1v1/{id}', 'editGame');
+
+            Route::delete('/user/{id}', 'deleteUser');
         });
     });
 });
