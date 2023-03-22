@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::post('/', 'store');
 
-            Route::put('/{game}', 'update');
+            Route::put('/{id}', 'update');
 
             Route::delete('/{id}', 'delete');
         });
