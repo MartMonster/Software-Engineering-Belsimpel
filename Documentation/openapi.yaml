@@ -83,6 +83,17 @@ components:
           minimum: 1
           maximum: 2
           default: 1
+    FoosballGameInputAdmin:
+      type: object
+      properties:
+        player1_id:
+          type: integer
+        player2_id:
+          type: integer
+        player1_score:
+          type: integer
+        player2_score:
+          type: integer
     FoosballGame2v2:
       type: object
       properties:
@@ -112,6 +123,17 @@ components:
           minimum: 1
           maximum: 2
           default: 1
+    FoosballGame2v2InputAdmin:
+      type: object
+      properties:
+        team1_id:
+          type: integer
+        team2_id:
+          type: integer
+        team1_score:
+          type: integer
+        team2_score:
+          type: integer
   parameters:
     id:
       name: id
@@ -204,7 +226,7 @@ paths:
           $ref: '#/components/responses/ServerError'
   /FoosballGames1v1/{id}:
     put:
-      summary: edits an existing 1v1 game (only your own except for admin)
+      summary: edits an existing 1v1 game (only your own)
       tags:
         - FoosballGames
       parameters:
@@ -304,7 +326,7 @@ paths:
           $ref: '#/components/responses/ServerError'
   /FoosballGames2v2/{id}:
     put:
-      summary: edits an existing 2v2 game (only your own except for admin)
+      summary: edits an existing 2v2 game (only your own)
       tags:
         - FoosballGames2v2
       parameters:
@@ -484,6 +506,74 @@ paths:
       responses:
         '204':
           description: team successfully deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /Admin/FoosballGames1v1/{id}:
+    put:
+      summary: edit any 1v1 game (admin only)
+      tags:
+        - Admin
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoosballGameInputAdmin'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoosballTeam'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /Admin/FoosballGames2v2/{id}:
+    put:
+      summary: edit any 2v2 game (admin only)
+      tags:
+        - Admin
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FoosballGame2v2InputAdmin'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FoosballTeam'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /Admin/User/{id}:
+    delete:
+      summary: deletes a player (not other admins)
+      tags:
+        - Admin
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '204':
+          description: player successfully deleted
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
