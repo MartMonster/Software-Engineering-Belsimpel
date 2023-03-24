@@ -80,18 +80,84 @@ class Games2v2Controller extends Controller
             ->where('id',$team2->id)
             ->update(['elo'=>$updatedElo[1]]);
 
-        self::updateGameTeamScores($team1->id,$team2->id,$request->team1_score,$request->team2_score,$request->side);
+        self::createGameTeamScores($team1->id,$team2->id,$request->team1_score,$request->team2_score,$request->side);
         return $updatedElo;
     }
 
-    private static function update($id,$request){
-        DB::table('games')->find($new_id);
+    public static function update($id,Request $request){
+        //get the game we want to modify and see if it is valid
+        $game=DB::table('games2v2')->find($id);
+        if($game==null)
+            return response('Not found',404);
+        
+        //see if the authenthificated user is part of this game
+        $game_ids=array();
+        $game_ids=array_merge($game_ids,self::getIdsFromTeams($game->team1_id));
+        $game_ids=array_merge($game_ids,self::getIdsFromTeams($game->team2_id));
+        if(!in_array(Auth::id(),$game_ids))
+            return response("Not authorized",401);
+
+
+        //get the id of the two teams provided     
+        $request_team1_id=self::getTeamIdFromTeamName($request->team1_name);
+        $request_team2_id=self::getTeamIdFromTeamName($request->team2_name);
+
+        
+        //get all the ids of the provided teams
+        $request_ids=array();
+        $request_ids=array_merge($request_ids,self::getIdsFromTeams($request_team1_id));
+        $request_ids=array_merge($request_ids,self::getIdsFromTeams($request_team2_id));
+        
+        //check if they are the same
+        sort($game_ids);
+        sort($request_ids);
+        if(!($game_ids===$request_ids))
+            return response('Player ids don\'t match up',400);
+
+        //update the game
+        self::updateGameTeamScores($id,$request_team1_id,$request_team2_id,$request->team1_score,$request->team2_score,$request->side);
+        return response('Game succesfully updated',200);
     }
 
 
+    private static function getIdsFromTeams($team_id){
+        $team=DB::table('foosball_teams')->find($team_id);
+        $ids=array();
+        if($team == null)
+            return array();
+        array_push($ids,$team->player1_id,$team->player2_id);
+        return $ids;
 
-    private static function updateGameTeamScores($team1_id, $team2_id, $team1_score, $team2_score, $side) {
-        echo($side);
+    }
+
+    
+    private static function updateGameTeamScores($game_id,$team1_id, $team2_id, $team1_score, $team2_score, $side) {
+        if ($side == 1) {
+            DB::table('games2v2')
+            ->where('id',$game_id)
+            ->update([
+                'team1_id'=>$team1_id,
+                'team2_id'=>$team2_id,
+                'team1_score'=>$team1_score,
+                'team2_score'=>$team2_score,
+                'updated_at'=>now()
+            ]);
+        } else {
+            DB::table('games2v2')
+            ->where('id',$game_id)
+            ->update([
+                'team1_id'=>$team2_id,
+                'team2_id'=>$team1_id,
+                'team1_score'=>$team2_score,
+                'team2_score'=>$team1_score,
+                'updated_at'=>now()
+            ]);
+        }
+
+        return;
+    }
+
+    private static function createGameTeamScores($team1_id, $team2_id, $team1_score, $team2_score, $side) {
         if ($side == 1) {
             DB::table('games2v2')->insert([
                 'team1_id'=>$team1_id,
@@ -134,6 +200,14 @@ class Games2v2Controller extends Controller
             return null;
         }
         return $user->id;
+    }
+
+    private static function getTeamIdFromTeamName($team_name){
+        $team=DB::table('foosball_teams')->where('team_name', $team_name)->first();
+        if(is_null($team)){
+            return null;
+        }
+        return $team->id;
     }
 
     private static function getTeamWithUsers($id1,$id2){
