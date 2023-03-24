@@ -57,20 +57,21 @@ class Games2v2Controller extends Controller
         if(count($ids) > count(array_unique($ids)))
             return response("Bad request",400);
 
-        
-        $team2=self::getTeamWithUsers($ids[2],$ids[3]);
+
         $team1=self::getTeamWithUsers($ids[0],$ids[1]);
-        if(is_null($team2))
-            $team2=self::createTeam($ids[2],$ids[3]);
+        $team2=self::getTeamWithUsers($ids[2],$ids[3]);
         if(is_null($team1))
             $team1= self::createTeam($ids[0],$ids[1]);
+        if(is_null($team2))
+            $team2=self::createTeam($ids[2],$ids[3]);
 
         if ($request->team1_score != $request->team2_score)
             $updatedElo = EloCalculator::calculateElo($team1->elo,$team2->elo,30,
                 $request->team1_score>$request->team2_score);
-        else
+        else if ($team1->elo != $team2->elo)
             $updatedElo=EloCalculator::calculateElo($team1->elo,$team2->elo,15,$team1->elo < $team2->elo);
-
+        else
+            $updatedElo=[$team1->elo,$team2->elo];
         DB::table('foosball_teams')
             ->where('id',$team1->id)
             ->update(['elo'=>$updatedElo[0]]);
@@ -126,7 +127,7 @@ class Games2v2Controller extends Controller
     private static function getIdFromUsername($username){
         $user=User::where('username', $username)->first();
         if(is_null($user)){
-            return null; 
+            return null;
         }
         return $user->id;
     }

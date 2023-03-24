@@ -36,9 +36,10 @@ class Games1v1Controller extends Controller
         if ($request->player1_score != $request->player2_score)
             $updatedElo = EloCalculator::calculateElo($player1->elo,$player2->elo,30,
                 $request->player1_score>$request->player2_score);
-        else
+        else if ($player1->elo != $player2->elo)
             $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,$player1->elo < $player2->elo);
-
+        else
+            $updatedElo=[$player1->elo, $player2->elo];
         echo($updatedElo[0]);
         echo("\n");
         echo($updatedElo[1]);
