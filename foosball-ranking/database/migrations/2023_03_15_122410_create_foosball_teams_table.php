@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('foosball_teams', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('team_name');
+            $table->string('team_name')->unique()->nullable();
             $table->foreignId('player1_id')->constrained('users')->onUpdate('cascade');
             $table->foreignId('player2_id')->constrained('users')->onUpdate('cascade');
             $table->float('elo')->default(1000);
