@@ -84,6 +84,10 @@ class Games2v2Controller extends Controller
         return $updatedElo;
     }
 
+    private static function update($id,$request){
+        DB::table('games')->find($new_id);
+    }
+
 
 
     private static function updateGameTeamScores($team1_id, $team2_id, $team1_score, $team2_score, $side) {
