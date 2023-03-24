@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('games2v2', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team1_id')->constrained('foosball_teams')->onUpdate('cascade');
-            $table->foreignId('team2_id')->constrained('foosball_teams')->onUpdate('cascade');
+            $table->foreignId('team1_id')->constrained('foosball_teams')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('team2_id')->constrained('foosball_teams')->onUpdate('cascade')->onDelete('cascade');
             $table->tinyInteger('team1_score');
             $table->tinyInteger('team2_score');
             $table->timestamps();
