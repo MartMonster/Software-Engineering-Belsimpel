@@ -73,9 +73,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/teams')->group(function () {
         Route::controller(TeamsController::class)->group(function () {
-            Route::get('/top10', 'getTop10Teams');
+            Route::get('/', 'getTop10Teams');
 
-            Route::get('/', 'getOwnTeams');
+            Route::get('/self', 'getOwnTeams');
 
             Route::post('/', 'createTeam');
 

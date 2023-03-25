@@ -19,7 +19,16 @@ class TeamsController extends Controller
     }
 
     public function createTeam(Request $request) {
-        return Games2v2Controller::createTeam($request->player1_id, $request->player2_id);
+        $team=new FoosballTeam;
+        $team->player1_id=Auth::id();
+        $team->player2_id=Games2v2Controller::getIdFromUsername($request->player2_username);
+        if(is_null($team->player2_id))
+            return response("Second user not found",404);
+        if($team->player1_id ==$team->player2_id )
+            return response("Bad request",400);
+        $team->team_name=$request->team_name;
+        $team->save();
+        
     }
 
     public function updateTeam(Request $request, String $id) {
