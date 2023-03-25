@@ -410,9 +410,9 @@ paths:
           $ref: '#/components/responses/NotFound'
         5XX:
           $ref: '#/components/responses/ServerError'
-  /FoosballTeam/top10:
+  /FoosballTeam/self:
     get:
-      summary: gets the top 10 teams
+      summary: gets the teams of the user
       tags:
         - FoosballTeams
       responses:
@@ -430,7 +430,7 @@ paths:
           $ref: '#/components/responses/ServerError'
   /FoosballTeam:
     get:
-      summary: gets the teams of the user
+      summary: gets the top 10 teams
       tags:
         - FoosballTeams
       responses:
