@@ -72,11 +72,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/admin')->group(function () {
         Route::controller(AdminController::class)->group(function () {
-            Route::post('/game1v1', 'createGame');
+            Route::post('/games1v1', 'createGame');
 
-            Route::put('/game1v1/{id}', 'editGame');
+            Route::put('/games1v1/{id}', 'editGame');
 
             Route::delete('/user/{id}', 'deletePlayer');
+
+            Route::post('/games2v2', 'create2v2Game');
         });
     });
 });

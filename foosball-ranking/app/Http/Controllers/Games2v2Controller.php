@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\FoosballTeam;
 use App\Models\Game2v2;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -93,7 +94,7 @@ class Games2v2Controller extends Controller
         $game_ids=array();
         $game_ids=array_merge($game_ids,self::getIdsFromTeams($game->team1_id));
         $game_ids=array_merge($game_ids,self::getIdsFromTeams($game->team2_id));
-        if(!in_array(Auth::id(),$game_ids))
+        if(!in_array(Auth::id(),$game_ids) && Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
             return response("Not authorized",401);
 
 
@@ -118,6 +119,18 @@ class Games2v2Controller extends Controller
         return response('Game succesfully updated',200);
     }
 
+    public function delete($id) {
+        $game = Game2v2::find($id);
+        if($game==null)
+            return response('Not found',404);
+        $game_ids=array();
+        $game_ids=array_merge($game_ids,self::getIdsFromTeams($game->team1_id));
+        $game_ids=array_merge($game_ids,self::getIdsFromTeams($game->team2_id));
+        if(!in_array(Auth::id(),$game_ids) && Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
+            return response("Not authorized",401);
+        Game2v2::where('id',$id)->delete();
+        return response('Game succesfully deleted',200);
+    }
 
     private static function getIdsFromTeams($team_id){
         $team = FoosballTeam::find($team_id);
