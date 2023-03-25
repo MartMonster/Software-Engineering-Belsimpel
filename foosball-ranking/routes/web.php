@@ -76,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
 
             Route::put('/game1v1/{id}', 'editGame');
 
-            Route::delete('/user/{id}', 'deleteUser');
+            Route::delete('/user/{id}', 'deletePlayer');
         });
     });
 });
