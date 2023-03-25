@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeamsController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games1v1Controller;
@@ -67,6 +68,20 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}', 'update');
 
             Route::delete('/{id}', 'delete');
+        });
+    });
+
+    Route::prefix('/teams')->group(function () {
+        Route::controller(TeamsController::class)->group(function () {
+            Route::get('/top10', 'getTop10Teams');
+
+            Route::get('/', 'getOwnTeams');
+
+            Route::post('/', 'createTeam');
+
+            Route::put('/{id}', 'updateTeam');
+
+            Route::delete('/{id}', 'deleteTeam');
         });
     });
 
