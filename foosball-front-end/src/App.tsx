@@ -2,13 +2,18 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Layout from "./pages/Layout";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="test" element={<Default/>}/>
-        <Route path="/" element={<NewPage/>}/>
+        <Route path='/' element={<Layout/>}>
+          <Route index element={<Dashboard/>}/>
+          <Route path="/default" element={<Default/>}/>
+          <Route path="/test" element={<NewPage/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
