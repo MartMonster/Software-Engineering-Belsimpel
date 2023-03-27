@@ -12,6 +12,7 @@ First make sure you are in the `foosball-ranking` directory
 #### Linux
 ```bash
 composer update
+sudo chmod o+w ./storage/ -R # This is to give permission to sail to read/write into log files
 ./vendor/laravel/sail/bin/sail up -d
 ./vendor/laravel/sail/bin/sail artisan migrate --seed
 ```
