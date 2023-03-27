@@ -1,8 +1,20 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="test" element={<Default/>}/>
+        <Route path="/" element={<NewPage/>}/>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function Default() {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +31,14 @@ function App() {
           Learn React
         </a>
       </header>
+    </div>
+  );
+}
+
+function NewPage() {
+  return (
+    <div className='App-header'>
+      <Link className='App-link' to="test">test</Link>
     </div>
   );
 }
