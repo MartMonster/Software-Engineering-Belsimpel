@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout/>}>
           <Route index element={<Dashboard/>}/>
+          <Route path='/login' element={<Login/>}/>
           <Route path="/default" element={<Default/>}/>
           <Route path="/test" element={<NewPage/>}/>
         </Route>
