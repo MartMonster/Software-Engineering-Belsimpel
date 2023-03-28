@@ -14,6 +14,10 @@ import { LastGames1v1, lastGames1v1Route } from './pages/LastGames1v1';
 import { LastGames2v2, lastGames2v2Route } from './pages/LastGames2v2';
 import { CreateTeam, createTeamRoute } from './pages/CreateTeam';
 import { ListOfTeams, listOfTeamsRoute } from './pages/ListOfTeams';
+import { Register, registerRoute } from './pages/Register';
+import { OwnGames1v1, ownGames1v1Route } from './pages/OwnGames1v1';
+import { OwnGames2v2, ownGames2v2Route } from './pages/OwnGames2v2';
+import { OwnTeams, ownTeamsRoute } from './pages/OwnTeams';
 
 function App() {
   return (
@@ -22,14 +26,24 @@ function App() {
         <Route path='/' element={<Layout/>}>
           <Route index element={<Dashboard/>}/>
           <Route path={loginRoute} element={<Login/>}/>
+          <Route path={registerRoute} element={<Register/>}/>
           <Route path={wallOfFame1v1Route} element={<WallOfFame1v1/>}/>
           <Route path={wallOfFame2v2Route} element={<WallOfFame2v2/>}/>
           <Route path={addGame1v1Route} element={<AddGame1v1/>}/>
           <Route path={addGame2v2Route} element={<AddGame2v2/>}/>
-          <Route path={lastGames1v1Route} element={<LastGames1v1/>}/>
-          <Route path={lastGames2v2Route} element={<LastGames2v2/>}/>
+          <Route path={lastGames1v1Route}>
+            <Route index element={<LastGames1v1/>}/>
+            <Route path={ownGames1v1Route} element={<OwnGames1v1/>}/>
+          </Route>
+          <Route path={lastGames2v2Route}>
+            <Route index element={<LastGames2v2/>}/>
+            <Route path={ownGames2v2Route} element={<OwnGames2v2/>}/>
+          </Route>
           <Route path={createTeamRoute} element={<CreateTeam/>}/>
-          <Route path={listOfTeamsRoute} element={<ListOfTeams/>}/>
+          <Route path={listOfTeamsRoute}>
+            <Route index element={<ListOfTeams/>}/>
+            <Route path={ownTeamsRoute} element={<OwnTeams/>}/>
+          </Route>
           <Route path="*" element={<Page404/>}/>
         </Route>
       </Routes>

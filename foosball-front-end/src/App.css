@@ -4,7 +4,7 @@
 
 .App {
   text-align: center;
-  margin: 0.3em;
+  margin: 1em;
 }
 
 .App-logo {
@@ -51,14 +51,40 @@
   justify-content: center;
 }
 
-button {
-  /* margin: 0.5vh; */
+.login {
+  /* flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  text-align: center;
+  /* width: 75%; */
+}
+
+.dashboardButtons button {
   width: 100%;
+  margin: 0;
+}
+
+button {
   height: 3em;
   font-size: 1em;
   border-radius: 0.5em;
   color: white;
   background-color: #282c34;
+  width: 75%;
+  margin: 0.5vh;
+}
+
+input {
+  /* margin: 0.5vh; */
+  width: 75%;
+  height: 3em;
+  font-size: 1em;
+  border-radius: 0.5em;
+  color: white;
+  background-color: #282c34;
+  margin: 0.5vh;
 }
 
 hr {
@@ -81,4 +107,22 @@ hr {
 
 p {
   padding: 0.3em;
+}
+
+label {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+select {
+  width: 75%;
+  height: 3em;
+  font-size: 1em;
+  border-radius: 0.5em;
+  color: white;
+  background-color: #282c34;
+  margin: 0.5vh;
 }
