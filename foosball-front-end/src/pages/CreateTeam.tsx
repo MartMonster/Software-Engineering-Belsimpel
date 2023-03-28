@@ -1,5 +1,12 @@
+import { useNavigate } from "react-router-dom";
+import { listOfTeamsRoute } from "./ListOfTeams";
+import { ownTeamsRoute } from "./OwnTeams";
 export const createTeamRoute: string = "CreateTeam"
 export const CreateTeam = () => {
+    const navigate = useNavigate();
+    const navigateToOwnTeams = () => {
+        navigate('/' + listOfTeamsRoute + '/' + ownTeamsRoute);
+    }
     return (
         <div className="App">
             <h1>Make a new foosball team</h1>
@@ -12,7 +19,7 @@ export const CreateTeam = () => {
                     What is the username of your teammate?
                     <input type="text" placeholder="Username" />
                 </label>
-                <button type="submit">Create team</button>
+                <button type="submit" onClick={navigateToOwnTeams}>Create team</button>
             </form>
         </div>
     );

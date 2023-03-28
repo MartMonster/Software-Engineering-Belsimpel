@@ -126,3 +126,20 @@ select {
   background-color: #282c34;
   margin: 0.5vh;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1em;
+}
+
+td,
+th {
+  border: 1px solid white;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: black;
+}

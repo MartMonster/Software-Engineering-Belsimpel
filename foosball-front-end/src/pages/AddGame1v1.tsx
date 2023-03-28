@@ -1,5 +1,12 @@
+import { useNavigate } from "react-router-dom";
+import { lastGames1v1Route } from "./LastGames1v1";
+import { ownGames1v1Route } from "./OwnGames1v1";
 export const addGame1v1Route:string = "AddGame1v1"
 export const AddGame1v1 = () => {
+    const navigate = useNavigate();
+    const navigateToOwnGames = () => {
+        navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
+    }
     return (
         <div className="App">
             <h1>Make a new 1v1 game</h1>
@@ -23,7 +30,7 @@ export const AddGame1v1 = () => {
                     How many points did your opponent score?
                     <input type="number" step="1" placeholder="Points"/>
                 </label>
-                <button type="submit">Enter game</button>
+                <button type="submit" onClick={navigateToOwnGames}>Enter game</button>
             </form>
         </div>
     );

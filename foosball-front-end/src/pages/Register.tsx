@@ -1,5 +1,10 @@
+import { useNavigate } from "react-router-dom";
 export const registerRoute: string = '/register';
 export const Register = () => {
+    const navigate = useNavigate();
+    const navigateToDashboard = () => {
+        navigate("/");
+    }
     return (
         <div className="App">
             <h1>Welcome to the foosball tracking website!</h1>
@@ -10,7 +15,7 @@ export const Register = () => {
                     <input type="text" placeholder="First name" />
                     <input type="text" placeholder="Last name" />
                     <input type="password" placeholder="Password" />
-                    <button type="submit">Register</button>
+                    <button type="submit" onClick={navigateToDashboard}>Register</button>
                 </div>
             </form>
         </div>

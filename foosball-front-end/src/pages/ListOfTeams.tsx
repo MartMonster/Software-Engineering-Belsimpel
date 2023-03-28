@@ -6,6 +6,23 @@ export const ListOfTeams = () => {
         <div className="App">
             <h1>Teams</h1>
             <Link to={ownTeamsRoute}>See own teams</Link>
+            <table>
+                <tr>
+                    <th>Team name</th>
+                    <th>Username</th>
+                    <th>Username</th>
+                </tr>
+                <tr>
+                    <td>Team name</td>
+                    <td>Player 1</td>
+                    <td>Player 2</td>
+                </tr>
+                <tr>
+                    <td>Team name</td>
+                    <td>Player 2</td>
+                    <td>Player 3</td>
+                </tr>
+            </table>
         </div>
     );
 }
