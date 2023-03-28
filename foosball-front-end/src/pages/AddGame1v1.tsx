@@ -3,7 +3,7 @@ export const AddGame1v1 = () => {
     return (
         <div className="App">
             <h1>Make a new 1v1 game</h1>
-            <form>
+            <form autoComplete="off">
                 <label>
                     What side did you play on?
                     <select>
