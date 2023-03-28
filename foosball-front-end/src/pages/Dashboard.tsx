@@ -1,4 +1,12 @@
 import { Link } from "react-router-dom";
+import { wallOfFame1v1Route } from "./WallOfFame1v1";
+import { wallOfFame2v2Route } from "./WallOfFame2v2";
+import { addGame1v1Route } from "./AddGame1v1";
+import { addGame2v2Route } from "./AddGame2v2";
+import { lastGames1v1Route } from "./LastGames1v1";
+import { lastGames2v2Route } from "./LastGames2v2";
+import { createTeamRoute } from "./CreateTeam";
+import { listOfTeamsRoute } from "./ListOfTeams";
 var username:string = "UserName";
 var position:number = 1;
 var elo:number = 1000;
@@ -8,28 +16,28 @@ const Dashboard = () => {
             <h1>Dashboard</h1>
             <p>Hello {username}, you are in the top {position} players, and you have {elo} elo.</p>
             <div className="dashboardButtons">
-                <Link className="dashboardLink" to="/walloffame1v1">
+                <Link className="dashboardLink" to={wallOfFame1v1Route}>
                     <button>Wall of fame 1v1</button>
                 </Link>
-                <Link className="dashboardLink" to="/walloffame2v2">
+                <Link className="dashboardLink" to={wallOfFame2v2Route}>
                     <button>Wall of fame 2v2</button>
                 </Link>
-                <Link className="dashboardLink" to="/add1v1game">
+                <Link className="dashboardLink" to={addGame1v1Route}>
                     <button>Add 1v1 game</button>
                 </Link>
-                <Link className="dashboardLink" to="/add2v2game">
+                <Link className="dashboardLink" to={addGame2v2Route}>
                     <button>Add 2v2 game</button>
                 </Link>
-                <Link className="dashboardLink" to="/1v1games">
+                <Link className="dashboardLink" to={lastGames1v1Route}>
                     <button>1v1 games</button>
                 </Link>
-                <Link className="dashboardLink" to="/2v2games">
+                <Link className="dashboardLink" to={lastGames2v2Route}>
                     <button>2v2 games</button>
                 </Link>
-                <Link className="dashboardLink" to="/createteam">
+                <Link className="dashboardLink" to={createTeamRoute}>
                     <button>Create team</button>
                 </Link>
-                <Link className="dashboardLink" to="/listofteams">
+                <Link className="dashboardLink" to={listOfTeamsRoute}>
                     <button>List of teams</button>
                 </Link>
             </div>

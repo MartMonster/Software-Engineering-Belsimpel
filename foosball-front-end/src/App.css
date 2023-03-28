@@ -1,5 +1,10 @@
+* {
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
+  margin: 0.3em;
 }
 
 .App-logo {
@@ -49,19 +54,31 @@
 button {
   /* margin: 0.5vh; */
   width: 100%;
-  height: 5vh;
-  font-size: 2vh;
-  border-radius: 1vh;
+  height: 3em;
+  font-size: 1em;
+  border-radius: 0.5em;
   color: white;
   background-color: #282c34;
 }
 
 hr {
-  width: 100%;
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  border-radius: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
+  width: 90%;
   border: 2px solid gray;
 }
 
 .dashboardLink {
   width: 75%;
-  margin: 0.5vh;
+  margin: 0.3em;
+}
+
+p {
+  padding: 0.3em;
 }

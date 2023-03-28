@@ -1,5 +1,8 @@
-const Login = () => {
-    return <h1>Welcome to the foosball tracking website</h1>
+export const loginRoute:string = 'login';
+export const Login = () => {
+    return (
+        <div className="App">
+            <h1>Welcome to the foosball tracking website!</h1>
+        </div>
+    );
 }
-
-export default Login;

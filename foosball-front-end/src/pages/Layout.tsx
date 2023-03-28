@@ -1,6 +1,8 @@
 import { Outlet, Link } from "react-router-dom";
+import { loginRoute } from "./Login";
 
-const Layout = () => {
+export const layoutRoute:string = "/"
+export const Layout = () => {
     return (
         <div className="App-header">
             <nav>
@@ -9,12 +11,12 @@ const Layout = () => {
                         <Link className='App-link' to="/">Dashboard</Link>
                     </li>
                     <li>
-                        <Link className='App-link' to="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link className='App-link' to="/default">Default</Link>
+                        <Link className='App-link' to={loginRoute}>Login</Link>
                     </li>
                     {/* <li>
+                        <Link className='App-link' to="/default">Default</Link>
+                    </li>
+                    <li>
                         <Link className='App-link' to="/blogs">Blogs</Link>
                     </li>
                     <li>
@@ -27,5 +29,3 @@ const Layout = () => {
         </div>
     );
 };
-
-export default Layout;
