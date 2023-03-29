@@ -5,7 +5,7 @@ export const LastGames1v1 = () => {
     return (
         <div className="App">
             <h1>Last 10 1v1 games</h1>
-            <Link to={ownGames1v1Route}>See own games</Link>
+            <Link className="App-link" to={ownGames1v1Route}>See own games</Link>
             <table>
                 <tr>
                     <th>Player Red</th>

@@ -5,7 +5,7 @@ export const ListOfTeams = () => {
     return (
         <div className="App">
             <h1>Teams</h1>
-            <Link to={ownTeamsRoute}>See own teams</Link>
+            <Link className="App-link" to={ownTeamsRoute}>See own teams</Link>
             <table>
                 <tr>
                     <th>Team name</th>

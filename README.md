@@ -31,3 +31,10 @@ First make sure you are in the `foosball-front-end` directory
 npm update
 npm start
 ```
+<!-- 
+useEffect(() => {
+axios.get().then((res) => setState(res))
+},  [])
+
+import React, {useEffect} from 'react';
+ -->

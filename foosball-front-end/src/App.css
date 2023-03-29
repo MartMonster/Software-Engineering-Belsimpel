@@ -140,6 +140,21 @@ th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: black;
+} */
+
+.outerTable td,
+.outerTable th {
+  padding: 0px;
+  border: 1px solid white;
+}
+
+.innerTable td, 
+.innerTable th {
+  border: 0;
+  text-align: center;
+  padding: 0px;
+  justify-content: center;
+  align-items: stretch;
 }
