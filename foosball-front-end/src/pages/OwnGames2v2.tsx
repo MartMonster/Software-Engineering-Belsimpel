@@ -1,3 +1,4 @@
+import React from 'react';
 export const ownGames2v2Route: string = "self";
 export const OwnGames2v2 = () => {
     return (

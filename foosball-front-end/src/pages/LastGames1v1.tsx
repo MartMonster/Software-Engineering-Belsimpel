@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import { ownGames1v1Route } from "./OwnGames1v1";
 export const lastGames1v1Route: string = "LastGames1v1"

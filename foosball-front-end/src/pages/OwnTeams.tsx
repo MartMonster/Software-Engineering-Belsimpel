@@ -1,3 +1,4 @@
+import React from 'react';
 export const ownTeamsRoute: string = "self";
 export const OwnTeams = () => {
     return (

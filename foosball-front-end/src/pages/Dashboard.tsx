@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import { wallOfFame1v1Route } from "./WallOfFame1v1";
 import { wallOfFame2v2Route } from "./WallOfFame2v2";

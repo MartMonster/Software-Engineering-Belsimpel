@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 export const registerRoute: string = '/register';
 export const Register = () => {

@@ -1,3 +1,4 @@
+import React from 'react';
 export const wallOfFame1v1Route:string = "WallOfFame1v1"
 export const WallOfFame1v1 = () => {
     return (

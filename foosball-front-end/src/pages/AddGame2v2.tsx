@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames2v2Route } from "./LastGames2v2";
 import { ownGames2v2Route } from "./OwnGames2v2";

@@ -1,5 +1,7 @@
+import React from 'react';
 import { Outlet, Link } from "react-router-dom";
 import { loginRoute } from "./Login";
+import { logout } from '../components/axios';
 
 export const layoutRoute:string = "/"
 export const Layout = () => {
@@ -11,7 +13,7 @@ export const Layout = () => {
                         <Link className='App-link' to="/">Dashboard</Link>
                     </li>
                     <li>
-                        <Link className='App-link' to={loginRoute}>Login</Link>
+                        <Link className='App-link' to={loginRoute} onClick={logout}>Login</Link>
                     </li>
                     {/* <li>
                         <Link className='App-link' to="/default">Default</Link>
