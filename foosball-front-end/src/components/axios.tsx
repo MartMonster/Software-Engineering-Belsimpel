@@ -222,3 +222,51 @@ export async function getOwnTeams() {
     });
     return teams;
 }
+
+export async function makeGame1v1(player2_username:string, player1_score:number, player2_score:number, player1_side:number) {
+    let b:boolean = false;
+    await axios.post('games1v1', {
+        headers: {
+            Accept: 'application/json'
+        },
+        player2_username,
+        player1_score,
+        player2_score,
+        player1_side
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    return b;
+}
+
+export async function makeGame2v2(player2_username:string, player3_username:string, player4_username:string, team1_score:number, team2_score:number, side:number) {
+    let b:boolean = false;
+    await axios.post('games2v2', {
+        headers: {
+            Accept: 'application/json'
+        },
+        player2_username,
+        player3_username,
+        player4_username,
+        team1_score,
+        team2_score,
+        side
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    return b;
+}

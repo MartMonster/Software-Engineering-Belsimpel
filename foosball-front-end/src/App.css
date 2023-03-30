@@ -176,3 +176,39 @@ th {
   text-align: right;
   margin: 1em 1em .5em 0em;
 }
+
+.editButton {
+  background-color: #3E4451;
+  /* background-color: orange; */
+  color: black;
+  color: #61dafb;
+  color: orange;
+  height: 4em;
+  width: 4em;
+}
+
+.deleteButton {
+  background-color: #3E4451;
+  /* background-color: red; */
+  color: black;
+  color: #61dafb;
+  color: red;
+  height: 4em;
+  width: 4em;
+}
+
+.tableCol {
+  display:"flex";
+  flex-direction:"column";
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.tableCol p {
+  margin: 0;
+}
+
+.outerTable th {
+  padding: .3em;
+}
