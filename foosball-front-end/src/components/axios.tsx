@@ -1,10 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 
+export let loggedIn: boolean = false;
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000';
+
 async function cookie() {
-    axios.defaults.withCredentials = true;
     let token;
-    await axios.get('http://localhost:8000/sanctum/csrf-cookie')
+    await axios.get('/sanctum/csrf-cookie')
         .then(response => {
             console.log(response.config.headers.get('X-XSRF-TOKEN'));
             token = response.config.headers.get('X-XSRF-TOKEN');
@@ -16,10 +19,9 @@ async function cookie() {
 }
 
 export async function login(email: string, password: string) {
-    axios.defaults.withCredentials = true;
     await cookie();
     let b: boolean = false;
-    await axios.post('http://localhost:8000/login', {
+    await axios.post('/login', {
         headers: {
             Accept: 'application/json'
         },
@@ -36,12 +38,12 @@ export async function login(email: string, password: string) {
             console.log(error);
             b = false;
         });
+    loggedIn = b;
     return b;
 }
 
 export async function logout() {
-    axios.defaults.withCredentials = true;
-    await axios.post('http://localhost:8000/logout', {
+    await axios.post('/logout', {
         headers: {
             Accept: 'application/json'
         }
@@ -52,6 +54,7 @@ export async function logout() {
         .catch(error => {
             console.log(error);
         });
+    loggedIn = false;
 }
 
 interface UserSummary {
@@ -61,9 +64,8 @@ interface UserSummary {
 }
 
 export async function getUserSummary() {
-    axios.defaults.withCredentials = true;
     let data: UserSummary | undefined;
-    await axios.get('http://localhost:8000/user/summary', {
+    await axios.get('/user/summary', {
         headers: {
             Accept: 'application/json'
         }
@@ -79,8 +81,7 @@ export async function getUserSummary() {
 }
 
 export async function getTop10() {
-    axios.defaults.withCredentials = true;
-    await axios.get('http://localhost:8000/user/top10', {
+    await axios.get('/user/top10', {
         headers: {
             Accept: 'application/json'
         }

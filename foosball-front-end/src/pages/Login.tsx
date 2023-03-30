@@ -30,6 +30,7 @@ export const Login = () => {
                         <button type='submit'>Login</button>
                     </div>
                 </form>
+                <button onClick={logout}>Logout</button>
                 <Link className="App-link" to={registerRoute}>Register</Link>
             </div>
         </div>
