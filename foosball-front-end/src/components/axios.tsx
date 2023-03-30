@@ -111,16 +111,8 @@ export async function getUserSummary() {
 export interface User{
     id:number,
     username:string,
-    elo:number,
-    // email:string,
-    // name:string,
-    // lastname:string,
-    // email_verified_at:any,
-    // created_at:any,
-    // updated_at:any,
-    // role_id:number,
+    elo:number
 }
-
 
 export async function getTop10Users() {
     let users:User[] | undefined;
@@ -137,4 +129,29 @@ export async function getTop10Users() {
         console.log(error);
     });
     return users;
+}
+
+export interface Team{
+    id:number,
+    team_name:string,
+    player1_username:string,
+    player2_username:string,
+    elo:number
+}
+
+export async function getTop10Teams() {
+    let teams:Team[] | undefined;
+    await axios.get('/teams', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        teams = response.data.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return teams;
 }

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { getTop10Users, User } from '../components/axios';
 
 export const wallOfFame1v1Route:string = "WallOfFame1v1"
 export const WallOfFame1v1 = () => {
-    const [users, setUsers] = React.useState(new Array<User>());
-    React.useEffect(() => {
+    const [users, setUsers] = useState(new Array<User>());
+    useEffect(() => {
         getTop10Users().then((data) => {
             if (data !== undefined) {
                 setUsers(data);
