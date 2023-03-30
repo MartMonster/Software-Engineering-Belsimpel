@@ -5,10 +5,10 @@ import { logout, loggedIn } from '../components/axios';
 
 export const layoutRoute:string = "/"
 export const Layout = () => {
-    // if (!loggedIn) {
-    //     console.log("user not logged in!")
-    //     return <Navigate to="login"/>;
-    // }
+    if (!loggedIn) {
+        console.log("user not logged in!")
+        return <Navigate to="login"/>;
+    }
     return (
         <div className="App-header">
             <nav>
