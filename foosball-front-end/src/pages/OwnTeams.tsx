@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getOwnTeams, Team } from '../components/axios';
 
-export const ownTeamsRoute: string = "self";
+export const ownTeamsRoute: string = "/teams";
 export const OwnTeams = () => {
     const [teams, setTeams] = useState<Team[]>([]);
     useEffect(() => {

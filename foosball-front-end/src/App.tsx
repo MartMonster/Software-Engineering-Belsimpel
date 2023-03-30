@@ -13,7 +13,6 @@ import { AddGame2v2, addGame2v2Route } from './pages/AddGame2v2';
 import { LastGames1v1, lastGames1v1Route } from './pages/LastGames1v1';
 import { LastGames2v2, lastGames2v2Route } from './pages/LastGames2v2';
 import { CreateTeam, createTeamRoute } from './pages/CreateTeam';
-import { ListOfTeams, listOfTeamsRoute } from './pages/ListOfTeams';
 import { Register, registerRoute } from './pages/Register';
 import { OwnGames1v1, ownGames1v1Route } from './pages/OwnGames1v1';
 import { OwnGames2v2, ownGames2v2Route } from './pages/OwnGames2v2';
@@ -41,10 +40,7 @@ function App() {
             <Route path={ownGames2v2Route} element={<OwnGames2v2/>}/>
           </Route>
           <Route path={createTeamRoute} element={<CreateTeam/>}/>
-          <Route path={listOfTeamsRoute}>
-            <Route index element={<ListOfTeams/>}/>
-            <Route path={ownTeamsRoute} element={<OwnTeams/>}/>
-          </Route>
+          <Route path={ownTeamsRoute} element={<OwnTeams/>}/>
           <Route path="*" element={<Page404/>}/>
         </Route>
       </Routes>

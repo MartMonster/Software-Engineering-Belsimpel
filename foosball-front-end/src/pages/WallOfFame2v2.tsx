@@ -20,8 +20,7 @@ export const WallOfFame2v2 = () => {
                     <tr>
                         <th>#</th>
                         <th>Team name</th>
-                        <th>Username</th>
-                        <th>Username</th>
+                        <th>Players</th>
                         <th>Elo</th>
                     </tr>
                 </thead>
@@ -31,8 +30,12 @@ export const WallOfFame2v2 = () => {
                             <tr key={team.id}>
                                 <td>{index+1}</td>
                                 <td>{team.team_name}</td>
-                                <td>{team.player1_username}</td>
-                                <td>{team.player2_username}</td>
+                                <td>
+                                    <div className="tableCol">
+                                        <p>{team.player1_username}</p>
+                                        <p>{team.player2_username}</p>
+                                    </div>
+                                </td>
                                 <td>{team.elo}</td>
                             </tr>
                         )

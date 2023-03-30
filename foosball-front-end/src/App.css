@@ -183,8 +183,8 @@ th {
   color: black;
   color: #61dafb;
   color: orange;
-  height: 4em;
-  width: 4em;
+  /* height: auto; */
+  width: auto;
 }
 
 .deleteButton {
@@ -193,8 +193,8 @@ th {
   color: black;
   color: #61dafb;
   color: red;
-  height: 4em;
-  width: 4em;
+  /* height: 4em; */
+  width: auto;
 }
 
 .tableCol {

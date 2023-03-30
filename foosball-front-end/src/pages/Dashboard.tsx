@@ -7,8 +7,8 @@ import { addGame2v2Route } from "./AddGame2v2";
 import { lastGames1v1Route } from "./LastGames1v1";
 import { lastGames2v2Route } from "./LastGames2v2";
 import { createTeamRoute } from "./CreateTeam";
-import { listOfTeamsRoute } from "./ListOfTeams";
 import { getUserSummary } from '../components/axios';
+import { ownTeamsRoute } from './OwnTeams';
 
 const Dashboard = () => {
     const [username, setUsername] = useState("");
@@ -49,8 +49,8 @@ const Dashboard = () => {
                 <Link className="dashboardLink" to={createTeamRoute}>
                     <button>Create team</button>
                 </Link>
-                <Link className="dashboardLink" to={listOfTeamsRoute}>
-                    <button>List of teams</button>
+                <Link className="dashboardLink" to={ownTeamsRoute}>
+                    <button>Own teams</button>
                 </Link>
             </div>
         </div>

@@ -1,93 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getOwnGames1v1, Game1v1 } from '../components/axios';
+
 export const ownGames1v1Route: string = "self";
 export const OwnGames1v1 = () => {
+    const [games, setGames] = useState<Game1v1[]>([]);
+    useEffect(() => {
+        getOwnGames1v1().then((data) => {
+            if (data !== undefined) {
+                setGames(data);
+                console.log(data);
+            }
+        });
+    }, []);
     return (
         <div className="App">
             <h1>Your last 10 1v1 games</h1>
             <table className="outerTable">
-                <tr>
-                    <th>Side</th>
-                    <th>Players</th>
-                    <th>Scores</th>
-                    {/* <th>Edit</th>
-                    <th>Delete</th> */}
-                </tr>
-                <tr>
-                    <td>
-                        <table className="innerTable">
-                            <tr>
-                                <td>Red</td>
+                <thead>
+                    <tr>
+                        <th>Side</th>
+                        <th>Players</th>
+                        <th>Scores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {games.map((game:Game1v1) => {
+                        return (
+                            <tr key={game.id}>
+                                <td>
+                                    <div className="tableCol">
+                                        <p>
+                                            Red
+                                        </p>
+                                        <p>
+                                            Blue
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="tableCol">
+                                        <p>
+                                            {game.player1_username}
+                                        </p>
+                                        <p>
+                                            {game.player2_username}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="tableCol">
+                                        <p>
+                                            {game.player1_score}
+                                        </p>
+                                        <p>
+                                            {game.player2_score}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button className='editButton'>Edit</button>
+                                </td>
+                                <td>
+                                    <button className='deleteButton'>Delete</button>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Blue</td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table className="innerTable">
-                            <tr>
-                                <td>Player Red</td>
-                            </tr>
-                            <tr>
-                                <td>Player Blue</td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table className="innerTable">
-                            <tr>
-                                <td>10</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <button>Edit</button>
-                    </td>
-                    <td>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div className="tableCol">
-                            <p>
-                                Red
-                            </p>
-                            <p>
-                                Blue
-                            </p>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="tableCol">
-                            <p>
-                                Player Red
-                            </p>
-                            <p>
-                                Player Blue
-                            </p>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="tableCol">
-                            <p>
-                                8
-                            </p>
-                            <p>
-                                10
-                            </p>
-                        </div>
-                    </td>
-                    <td>
-                        <button className='editButton'>Edit</button>
-                    </td>
-                    <td>
-                        <button className='deleteButton'>Delete</button>
-                    </td>
-                </tr>
+                        );
+                    })}
+                </tbody>
             </table>
         </div>
     );

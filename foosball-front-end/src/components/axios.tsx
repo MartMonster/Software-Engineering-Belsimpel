@@ -181,6 +181,23 @@ export async function getLast10Games1v1() {
     return games;
 }
 
+export async function getOwnGames1v1() {
+    let games:Game1v1[] | undefined;
+    await axios.get('/games1v1/self', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        games = response.data.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return games;
+}
+
 export interface Game2v2 {
     id: number,
     team1_name: string,
@@ -192,6 +209,23 @@ export interface Game2v2 {
 export async function getLast10Games2v2() {
     let games:Game2v2[] | undefined;
     await axios.get('/games2v2', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        games = response.data.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return games;
+}
+
+export async function getOwnGames2v2() {
+    let games:Game2v2[] | undefined;
+    await axios.get('/games2v2/self', {
         headers: {
             Accept: 'application/json'
         }
@@ -258,6 +292,27 @@ export async function makeGame2v2(player2_username:string, player3_username:stri
         team1_score,
         team2_score,
         side
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    return b;
+}
+
+export async function makeTeam(team_name:string, player2_username:string) {
+    let b:boolean = false;
+    await axios.post('teams', {
+        headers: {
+            Accept: 'application/json'
+        },
+        team_name,
+        player2_username
     })
     .then(response => {
         console.log(response);

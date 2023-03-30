@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { listOfTeamsRoute } from "./ListOfTeams";
 import { ownTeamsRoute } from "./OwnTeams";
+import { makeTeam } from '../components/axios';
+
 export const createTeamRoute: string = "CreateTeam"
 export const CreateTeam = () => {
     const navigate = useNavigate();
     const navigateToOwnTeams = () => {
-        navigate('/' + listOfTeamsRoute + '/' + ownTeamsRoute);
+        navigate(ownTeamsRoute);
+    }
+    const [teamName, setTeamName] = useState("");
+    const [teammate, setTeammate] = useState("");
+    const makeTeamLocal = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault()
+        if(await makeTeam(teamName, teammate)) {
+            navigateToOwnTeams()
+        }
     }
     return (
         <div className="App">
             <h1>Make a new foosball team</h1>
-            <form autoComplete="off">
+            <form autoComplete="off" onSubmit={makeTeamLocal}>
                 <label>
                     What will the name of your team be?
-                    <input type="text" placeholder="Team name" />
+                    <input type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
                 </label>
                 <label>
                     What is the username of your teammate?
-                    <input type="text" placeholder="Username" />
+                    <input type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
                 </label>
-                <button type="submit" onClick={navigateToOwnTeams}>Create team</button>
+                <button type="submit">Create team</button>
             </form>
         </div>
     );
