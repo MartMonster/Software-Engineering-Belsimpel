@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import axios from 'axios';
 
 export let loggedIn: boolean = false;
@@ -28,16 +28,44 @@ export async function login(email: string, password: string) {
         email,
         password
     })
-        .then(response => {
-            if (response.status >= 200 && response.status < 300) {
-                console.log(response);
-                b = true;
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            b = false;
-        });
+    .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+            console.log(response);
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        b = false;
+    });
+    loggedIn = b;
+    return b;
+}
+
+export async function register(email: string, username: string, name: string, lastname: string, password: string, password_confirmation:string) {
+    await cookie();
+    let b: boolean = false;
+    await axios.post('/register', {
+        headers: {
+            Accept: 'application/json'
+        },
+        email,
+        username,
+        name,
+        lastname,
+        password,
+        password_confirmation
+    })
+    .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+            console.log(response);
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        b = false;
+    });
     loggedIn = b;
     return b;
 }
@@ -48,12 +76,12 @@ export async function logout() {
             Accept: 'application/json'
         }
     })
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.log(error);
+    });
     loggedIn = false;
 }
 
@@ -70,26 +98,43 @@ export async function getUserSummary() {
             Accept: 'application/json'
         }
     })
-        .then(response => {
-            console.log(response.data);
-            data = response.data;
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    .then(response => {
+        console.log(response.data);
+        data = response.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
     return data;
 }
 
-export async function getTop10() {
+export interface User{
+    id:number,
+    username:string,
+    elo:number,
+    // email:string,
+    // name:string,
+    // lastname:string,
+    // email_verified_at:any,
+    // created_at:any,
+    // updated_at:any,
+    // role_id:number,
+}
+
+
+export async function getTop10Users() {
+    let users:User[] | undefined;
     await axios.get('/user/top10', {
         headers: {
             Accept: 'application/json'
         }
     })
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    .then(response => {
+        console.log(response);
+        users = response.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return users;
 }

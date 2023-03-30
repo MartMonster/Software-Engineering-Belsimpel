@@ -1,25 +1,44 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate, Link } from "react-router-dom";
+import { loginRoute } from "./Login";
+import { register } from '../components/axios';
+
 export const registerRoute: string = '/register';
 export const Register = () => {
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
     const navigateToDashboard = () => {
         navigate("/");
     }
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        if (await register(email, username, firstName, lastName, password, confirmPassword)) {
+            navigateToDashboard();
+        }
+    }
+
     return (
         <div className="App-header">
             <div className="App">
                 <h1>Welcome to the foosball tracking website!</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="login">
-                        <input type="email" placeholder="Email" />
-                        <input type="text" placeholder="Username" />
-                        <input type="text" placeholder="First name" />
-                        <input type="text" placeholder="Last name" />
-                        <input type="password" placeholder="Password" />
-                        <button type="submit" onClick={navigateToDashboard}>Register</button>
+                        <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <input type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
+                        <input type="text" placeholder="First name" onChange={e => setFirstName(e.target.value)} />
+                        <input type="text" placeholder="Last name" onChange={e => setLastName(e.target.value)} />
+                        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        <input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                        <button type="submit">Register</button>
                     </div>
                 </form>
+                <p>Already have an account? <Link className="App-link" to={loginRoute}>Login</Link> here!</p>
             </div>
         </div>
     );
