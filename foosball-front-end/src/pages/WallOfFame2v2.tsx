@@ -26,10 +26,10 @@ export const WallOfFame2v2 = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {teams?.map((team: Team, index) => {
+                    {teams.map((team: Team, index) => {
                         return (
-                            <tr>
-                                <td key={team.id}>{index+1}</td>
+                            <tr key={team.id}>
+                                <td>{index+1}</td>
                                 <td>{team.team_name}</td>
                                 <td>{team.player1_username}</td>
                                 <td>{team.player2_username}</td>

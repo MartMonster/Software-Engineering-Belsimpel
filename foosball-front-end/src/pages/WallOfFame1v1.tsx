@@ -24,10 +24,10 @@ export const WallOfFame1v1 = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users?.map((user: User, index) => {
+                    {users.map((user: User, index) => {
                         return (
-                            <tr>
-                                <td key={user.id}>{index + 1}</td>
+                            <tr key={user.id}>
+                                <td>{index + 1}</td>
                                 <td>{user.username}</td>
                                 <td>{user.elo}</td>
                             </tr>

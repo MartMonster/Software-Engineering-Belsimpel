@@ -8,16 +8,38 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Util\EloCalculator;
+use Illuminate\Support\Facades\DB;
 
 class Games1v1Controller extends Controller
 {
     public function getOwnGames() {
-        return Game1v1::where('player1_id', Auth::id())->orWhere('player2_id', Auth::id())->
-        orderBy('created_at', 'desc')->paginate(10);
+        return DB::table('games1v1 as g')
+            ->where('g.player1_id', Auth::id())->orWhere('g.player2_id', Auth::id())
+            ->join('users as p1', 'g.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'g.player2_id', '=', 'p2.id')
+            ->orderBy('g.created_at', 'desc')
+            ->select('g.id as id',
+                'g.player1_score as player1_score',
+                'g.player2_score as player2_score',
+                'p1.username AS player1_username',
+                'p2.username AS player2_username')->paginate(10);
+        // TODO: update the above to use eloquent
+//        return Game1v1::where('player1_id', Auth::id())->orWhere('player2_id', Auth::id())->
+//        orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function getLast10Games() {
-        return Game1v1::orderBy('created_at', 'desc')->paginate(10);
+        return DB::table('games1v1 as g')
+            ->join('users as p1', 'g.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'g.player2_id', '=', 'p2.id')
+            ->orderBy('g.created_at', 'desc')
+            ->select('g.id as id',
+                'g.player1_score as player1_score',
+                'g.player2_score as player2_score',
+                'p1.username AS player1_username',
+                'p2.username AS player2_username')->paginate(10);
+        // TODO: update the above to use eloquent
+//        return Game1v1::orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function store(Request $request){

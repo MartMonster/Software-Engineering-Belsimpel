@@ -155,3 +155,70 @@ export async function getTop10Teams() {
     });
     return teams;
 }
+
+export interface Game1v1 {
+    id: number,
+    player1_username: string,
+    player2_username: string,
+    player1_score: number,
+    player2_score: number
+}
+
+export async function getLast10Games1v1() {
+    let games:Game1v1[] | undefined;
+    await axios.get('/games1v1', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        games = response.data.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return games;
+}
+
+export interface Game2v2 {
+    id: number,
+    team1_name: string,
+    team2_name: string,
+    team1_score: number,
+    team2_score: number
+}
+
+export async function getLast10Games2v2() {
+    let games:Game2v2[] | undefined;
+    await axios.get('/games2v2', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        games = response.data.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return games;
+}
+
+export async function getOwnTeams() {
+    let teams:Team[] | undefined;
+    await axios.get('/teams/self', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        teams = response.data.data;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return teams;
+}
