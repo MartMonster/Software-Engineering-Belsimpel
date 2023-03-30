@@ -23,10 +23,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path={loginRoute} element={<Login />} />
+        <Route path={registerRoute} element={<Register />} />
         <Route path='/' element={<Layout/>}>
           <Route index element={<Dashboard/>}/>
-          <Route path={loginRoute} element={<Login/>}/>
-          <Route path={registerRoute} element={<Register/>}/>
+          
           <Route path={wallOfFame1v1Route} element={<WallOfFame1v1/>}/>
           <Route path={wallOfFame2v2Route} element={<WallOfFame2v2/>}/>
           <Route path={addGame1v1Route} element={<AddGame1v1/>}/>

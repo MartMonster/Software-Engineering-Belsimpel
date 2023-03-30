@@ -54,6 +54,30 @@ export async function logout() {
         });
 }
 
+interface UserSummary {
+    username: string;
+    position: number;
+    elo: number;
+}
+
+export async function getUserSummary() {
+    axios.defaults.withCredentials = true;
+    let data: UserSummary | undefined;
+    await axios.get('http://localhost:8000/user/summary', {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+        .then(response => {
+            console.log(response.data);
+            data = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    return data;
+}
+
 export async function getTop10() {
     axios.defaults.withCredentials = true;
     await axios.get('http://localhost:8000/user/top10', {

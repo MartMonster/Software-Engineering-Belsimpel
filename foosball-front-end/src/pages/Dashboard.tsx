@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { wallOfFame1v1Route } from "./WallOfFame1v1";
 import { wallOfFame2v2Route } from "./WallOfFame2v2";
@@ -8,10 +8,21 @@ import { lastGames1v1Route } from "./LastGames1v1";
 import { lastGames2v2Route } from "./LastGames2v2";
 import { createTeamRoute } from "./CreateTeam";
 import { listOfTeamsRoute } from "./ListOfTeams";
-var username:string = "UserName";
-var position:number = 1;
-var elo:number = 1000;
+import { getUserSummary } from '../components/axios';
+
 const Dashboard = () => {
+    const [username, setUsername] = useState("");
+    const [position, setPosition] = useState(0);
+    const [elo, setElo] = useState(0);
+    useEffect(() => {
+        getUserSummary().then((data) => {
+            if (data !== undefined) {
+                setUsername(data.username);
+                setPosition(data.position);
+                setElo(data.elo);
+            }
+        });
+    }, []);
     return (
         <div className="App">
             <h1>Dashboard</h1>

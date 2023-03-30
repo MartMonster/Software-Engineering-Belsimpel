@@ -20,16 +20,18 @@ export const Login = () => {
         }
     }
     return (
-        <div className="App">
-            <h1>Welcome to the foosball tracking website!</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="login">
-                <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-                    <button type='submit'>Login</button>
-                </div>
-            </form>
-            <Link className="App-link" to={registerRoute}>Register</Link>
+        <div className="App-header">
+            <div className="App">
+                <h1>Welcome to the foosball tracking website!</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="login">
+                        <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        <button type='submit'>Login</button>
+                    </div>
+                </form>
+                <Link className="App-link" to={registerRoute}>Register</Link>
+            </div>
         </div>
     );
 }
