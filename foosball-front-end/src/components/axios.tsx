@@ -325,3 +325,44 @@ export async function makeTeam(team_name:string, player2_username:string) {
     })
     return b;
 }
+
+export async function editGame1v1(id:number, player1_score:number, player2_score:number, player1_side:number) {
+    let b:boolean = false;
+    await axios.put('games1v1/'+id, {
+        headers: {
+            Accept: 'application/json'
+        },
+        player1_score,
+        player2_score,
+        player1_side
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    return b;
+}
+
+export async function deleteGame1v1(id:number) {
+    let b:boolean = false;
+    await axios.delete('games1v1/'+id, {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+    return b;
+}

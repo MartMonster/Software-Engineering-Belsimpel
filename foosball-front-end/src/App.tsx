@@ -17,6 +17,7 @@ import { Register, registerRoute } from './pages/Register';
 import { OwnGames1v1, ownGames1v1Route } from './pages/OwnGames1v1';
 import { OwnGames2v2, ownGames2v2Route } from './pages/OwnGames2v2';
 import { OwnTeams, ownTeamsRoute } from './pages/OwnTeams';
+import { EditGame1v1, editGame1v1Route } from './pages/EditGame1v1';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path={lastGames1v1Route}>
             <Route index element={<LastGames1v1/>}/>
             <Route path={ownGames1v1Route} element={<OwnGames1v1/>}/>
+            <Route path={editGame1v1Route+'/:id'} element={<EditGame1v1/>}/>
           </Route>
           <Route path={lastGames2v2Route}>
             <Route index element={<LastGames2v2/>}/>

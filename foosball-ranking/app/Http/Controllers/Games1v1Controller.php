@@ -78,14 +78,12 @@ class Games1v1Controller extends Controller
         $game = Game1v1::where('id', $id)->first();
         if($game == null)
             return response('Not found',404);
+        $player1 = User::find($game->player1_id);
+        $player2 = User::find($game->player2_id);
         if($game->player1_id==Auth::id() || $game->player2_id==Auth::id()) {
-            if (($game->player1_id == Auth::id() && $game->player2_id == $request->player2_id) ||
-                ($game->player1_id == $request->player2_id && $game->player2_id == Auth::id())) {
-                $this->updateGameIdScores($game, Auth::id(), $request->player2_id, $request->player1_score, $request->player2_score, $request->player1_side);
-                return response('Game succesfully updated',200);
-            }
-            else
-                return response('Player ids don\'t match up',400);
+            $opponent = $game->player1_id == Auth::id() ? $player2 : $player1;
+            $this->updateGameIdScores($game, Auth::id(), $opponent->id, $request->player1_score, $request->player2_score, $request->player1_side);
+            return response('Game succesfully updated',200);
         }
         else
             return response('Unauthorized access',401);

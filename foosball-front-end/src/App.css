@@ -212,3 +212,47 @@ th {
 .outerTable th {
   padding: .3em;
 }
+
+.Modal {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  right: 10%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  border-radius: 0.5em;
+  background-color: #282c34;
+}
+
+.Modal button {
+  margin: .3em;
+  width: 100%;
+}
+
+.Modal .row {
+  width: 100%;
+  border-radius: 0.5em;
+}
+
+.Modal .left {
+  padding: .1em;
+}
+
+.Modal .right {
+  padding: .1em;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000085;
+}
