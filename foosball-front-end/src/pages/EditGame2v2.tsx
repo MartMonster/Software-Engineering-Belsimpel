@@ -37,11 +37,11 @@ export const EditGame2v2 = () => {
                 </label>
                 <label>
                     How many points did your team score?
-                    <input type="number" step="1" placeholder="Points" onChange={e => setMyPoints(parseInt(e.target.value))} />
+                    <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setMyPoints(parseInt(e.target.value))} />
                 </label>
                 <label>
                     How many points did your opponents score?
-                    <input type="number" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))} />
+                    <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))} />
                 </label>
                 <button type="submit">Save game</button>
             </form>
