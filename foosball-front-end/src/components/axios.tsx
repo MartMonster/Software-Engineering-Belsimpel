@@ -4,7 +4,6 @@ import axios from 'axios';
 export let loggedIn: boolean = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.baseURL = 'http://192.168.1.125:8000';
 
 async function cookie() {
     let token;

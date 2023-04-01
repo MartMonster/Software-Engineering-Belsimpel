@@ -3,7 +3,7 @@ import { Outlet, Link, Navigate } from "react-router-dom";
 import { loginRoute } from "./Login";
 import { logout, loggedIn } from '../components/axios';
 
-const DEBUG:boolean = true;
+const DEBUG:boolean = false;
 
 export const layoutRoute:string = "/"
 export const Layout = () => {
