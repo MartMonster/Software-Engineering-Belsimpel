@@ -4,6 +4,7 @@ import axios from 'axios';
 export let loggedIn: boolean = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'http://192.168.1.125:8000';
 
 async function cookie() {
     let token;
@@ -116,7 +117,7 @@ export interface User{
 
 export async function getTop10Users() {
     let users:User[] | undefined;
-    await axios.get('/user/top10', {
+    await axios.get('/user', {
         headers: {
             Accept: 'application/json'
         }
@@ -364,5 +365,85 @@ export async function deleteGame1v1(id:number) {
     .catch(error => {
         console.log(error);
     })
+    return b;
+}
+
+export async function editGame2v2(id:number, team1_score:number, team2_score:number, side:number) {
+    let b:boolean = false;
+    await axios.put('games2v2/'+id, {
+        headers: {
+            Accept: 'application/json'
+        },
+        team1_score,
+        team2_score,
+        side
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return b;
+}
+
+export async function deleteGame2v2(id:number) {
+    let b:boolean = false;
+    await axios.delete('games2v2/'+id, {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return b;
+}
+
+export async function editTeam(id:number, team_name:string) {
+    let b:boolean = false;
+    await axios.put('teams/'+id, {
+        headers: {
+            Accept: 'application/json'
+        },
+        team_name
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return b;
+}
+
+export async function deleteTeam(id:number) {
+    let b:boolean = false;
+    await axios.delete('teams/'+id, {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+    .then(response => {
+        console.log(response);
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
     return b;
 }

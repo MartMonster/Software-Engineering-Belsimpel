@@ -18,6 +18,8 @@ import { OwnGames1v1, ownGames1v1Route } from './pages/OwnGames1v1';
 import { OwnGames2v2, ownGames2v2Route } from './pages/OwnGames2v2';
 import { OwnTeams, ownTeamsRoute } from './pages/OwnTeams';
 import { EditGame1v1, editGame1v1Route } from './pages/EditGame1v1';
+import { EditTeam, editTeamRoute } from './pages/EditTeam';
+import { EditGame2v2, editGame2v2Route } from './pages/EditGame2v2';
 
 function App() {
   return (
@@ -40,9 +42,13 @@ function App() {
           <Route path={lastGames2v2Route}>
             <Route index element={<LastGames2v2/>}/>
             <Route path={ownGames2v2Route} element={<OwnGames2v2/>}/>
+            <Route path={editGame2v2Route+'/:id'} element={<EditGame2v2/>}/>
           </Route>
           <Route path={createTeamRoute} element={<CreateTeam/>}/>
-          <Route path={ownTeamsRoute} element={<OwnTeams/>}/>
+          <Route path={ownTeamsRoute}>
+            <Route index element={<OwnTeams />}/>
+            <Route path={editTeamRoute+'/:id'} element={<EditTeam/>}/>
+          </Route>
           <Route path="*" element={<Page404/>}/>
         </Route>
       </Routes>

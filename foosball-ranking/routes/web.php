@@ -41,19 +41,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/user')->group(function () {
         Route::controller(UserController::class)->group(function () {
-            Route::get('/top10', 'getTop10');
+            Route::get('/', 'getTop10');
 
             Route::get('/summary', 'getPosElo');
-        });
-
-        // nice to have now, but should not be accessible for everyone
-        Route::post('/reset/elo', function() {
-            $users = User::get();
-            foreach ($users as $user) {
-                $user->elo = 1000.0;
-                $user->save();
-                echo($user->username . " " . $user->elo . "\n");
-            }
         });
     });
 
@@ -89,11 +79,11 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(AdminController::class)->group(function () {
             Route::post('/games1v1', 'createGame');
 
-            Route::put('/games1v1/{id}', 'editGame');
-
-            Route::delete('/user/{id}', 'deletePlayer');
-
             Route::post('/games2v2', 'create2v2Game');
+            
+            Route::put('/games1v1/{id}', 'editGame');
+            
+            Route::delete('/user/{id}', 'deletePlayer');
         });
     });
 });

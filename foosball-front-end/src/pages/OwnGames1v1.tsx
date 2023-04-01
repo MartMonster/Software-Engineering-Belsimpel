@@ -15,11 +15,6 @@ export const OwnGames1v1 = () => {
         setGameId(id);
     }
 
-    // function afterOpenModal() {
-    //     // references are now sync'd and can be accessed.
-    //     subtitle.style.color = '#f00';
-    // }
-
     function closeModal() {
         setIsOpen(false);
     }
@@ -101,7 +96,7 @@ export const OwnGames1v1 = () => {
             <Modal className="Modal" isOpen={modalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeModal}
                 contentLabel="Example Modal">
-                <h2 >Are you sure you want to delete this game?</h2>
+                <h2>Are you sure you want to delete this game?</h2>
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeModal}>Cancel</button>

@@ -95,25 +95,17 @@ class Games2v2Controller extends Controller
         if(!in_array(Auth::id(),$game_ids) && Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
             return response("Not authorized",401);
 
-
-        //get the id of the two teams provided
-        $request_team1_id=self::getTeamIdFromTeamName($request->team1_name);
-        $request_team2_id=self::getTeamIdFromTeamName($request->team2_name);
-
-
-        //get all the ids of the provided teams
-        $request_ids=array();
-        $request_ids=array_merge($request_ids,self::getIdsFromTeams($request_team1_id));
-        $request_ids=array_merge($request_ids,self::getIdsFromTeams($request_team2_id));
-
-        //check if they are the same
-        sort($game_ids);
-        sort($request_ids);
-        if(!($game_ids===$request_ids))
-            return response('Player/team ids don\'t match up',400);
+        if (in_array(Auth::id(), self::getIdsFromTeams($game->team1_id))) {
+            $userTeam = $game->team1_id;
+            $opponentTeam = $game->team2_id;
+        }
+        else {
+            $userTeam = $game->team2_id;
+            $opponentTeam = $game->team1_id;
+        }
 
         //update the game
-        self::updateGameTeamScores($id,$request_team1_id,$request_team2_id,$request->team1_score,$request->team2_score,$request->side);
+        self::updateGameTeamScores($id,$userTeam,$opponentTeam,$request->team1_score,$request->team2_score,$request->side);
         return response('Game succesfully updated',200);
     }
 

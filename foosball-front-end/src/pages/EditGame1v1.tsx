@@ -18,7 +18,7 @@ export const EditGame1v1 = () => {
     const [myPoints, setMyPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const [side, setSide] = useState(0);
-    const makeGame = async (e: { preventDefault: () => void; }) => {
+    const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await editGame1v1(id, myPoints, opponentPoints, side)) {
             navigateToOwnGames()
@@ -27,7 +27,7 @@ export const EditGame1v1 = () => {
     return (
         <div className="App">
             <h1>Edit your 1v1 game</h1>
-            <form autoComplete="off" onSubmit={makeGame}>
+            <form autoComplete="off" onSubmit={saveGame}>
                 <label>
                     What side did you play on?
                     <select onChange={e => setSide(parseInt(e.target.value))}>
