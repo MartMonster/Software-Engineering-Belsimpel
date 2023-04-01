@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { lastGames1v1Route } from "./LastGames1v1";
-import { ownGames1v1Route } from "./OwnGames1v1";
-import { editGame1v1 } from '../components/axios';
+import { editGame2v2 } from '../components/axios';
+import { ownGames2v2Route } from './OwnGames2v2';
+import { lastGames2v2Route } from './LastGames2v2';
 
-export const editGame1v1Route:string = "edit"
-export const EditGame1v1 = () => {
+export const editGame2v2Route: string = "edit"
+export const EditGame2v2 = () => {
     const idPar = useParams();
     let id: number = 0;
     if (idPar) {
@@ -13,20 +13,20 @@ export const EditGame1v1 = () => {
     }
     const navigate = useNavigate();
     const navigateToOwnGames = () => {
-        navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
+        navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
     }
     const [myPoints, setMyPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const [side, setSide] = useState(0);
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await editGame1v1(id, myPoints, opponentPoints, side)) {
+        if (await editGame2v2(id, myPoints, opponentPoints, side)) {
             navigateToOwnGames()
         }
     }
     return (
         <div className="App">
-            <h1>Edit your 1v1 game</h1>
+            <h1>Edit your 2v2 game</h1>
             <form autoComplete="off" onSubmit={saveGame}>
                 <label>
                     What side did you play on?
@@ -36,16 +36,16 @@ export const EditGame1v1 = () => {
                     </select>
                 </label>
                 <label>
-                    How many points did you score?
-                    <input type="number" step="1" placeholder="Points" onChange={e => setMyPoints(parseInt(e.target.value))}/>
+                    How many points did your team score?
+                    <input type="number" step="1" placeholder="Points" onChange={e => setMyPoints(parseInt(e.target.value))} />
                 </label>
                 <label>
-                    How many points did your opponent score?
-                    <input type="number" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
+                    How many points did your opponents score?
+                    <input type="number" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))} />
                 </label>
                 <button type="submit">Save game</button>
             </form>
-            <Link to={'/' + lastGames1v1Route +'/'+ ownGames1v1Route}>
+            <Link to={'/' + lastGames2v2Route + '/' + ownGames2v2Route}>
                 <button>Cancel</button>
             </Link>
         </div>
