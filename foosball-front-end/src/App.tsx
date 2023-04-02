@@ -2,7 +2,7 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import { Layout }from "./pages/Layout";
+import { Navbar }from "./pages/Navbar";
 import Dashboard from "./pages/Dashboard";
 import { Login, loginRoute } from "./pages/Login";
 import Page404 from "./pages/404";
@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path={loginRoute} element={<Login />} />
         <Route path={registerRoute} element={<Register />} />
-        <Route path='/' element={<Layout/>}>
+        <Route path='/' element={<Navbar/>}>
           <Route index element={<Dashboard/>}/>
           
           <Route path={wallOfFame1v1Route} element={<WallOfFame1v1/>}/>

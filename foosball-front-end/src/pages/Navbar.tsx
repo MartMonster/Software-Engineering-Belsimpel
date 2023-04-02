@@ -5,8 +5,8 @@ import { logout, loggedIn } from '../components/axios';
 
 const DEBUG:boolean = false;
 
-export const layoutRoute:string = "/"
-export const Layout = () => {
+export const navbarRoute:string = "/"
+export const Navbar = () => {
     if (!loggedIn && !DEBUG) {
         console.log("user not logged in!")
         return <Navigate to="login"/>;
