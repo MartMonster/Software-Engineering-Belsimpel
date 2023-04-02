@@ -1,4 +1,7 @@
 # Software-Engineering-Belsimpel
+## Prerequisites:
+To run this project you need `node` with `npm`, and `composer`. To run this project you need to follow both of the "how to run" instructions below on the same physical device, otherwise it will not work.
+
 ## Back-End
 ### Documentation/API specification
 inside the `Documentation` directory there a file `openapi.yaml`. This is our API specification
@@ -8,7 +11,7 @@ to view this file correctly, or open [https://editor.swagger.io/](https://editor
 of our file into it.
 
 ### How to run
-First make sure you are in the `foosball-ranking` directory
+First make sure you are in the `foosball-ranking` directory, and rename the `.env.example` file to `.env`
 #### Linux
 ```bash
 composer update
@@ -31,10 +34,10 @@ First make sure you are in the `foosball-front-end` directory
 npm update
 npm start
 ```
-<!-- 
-useEffect(() => {
-axios.get().then((res) => setState(res))
-},  [])
+## Running on your local IP
+To get it working for every device (including your phone) on your local network, you need to make some changes:
+- First get the local ip address of the computer you will host the project on.
+- Change the `.env` file (in the `foosball-ranking` directory) variable `FRONTEND_URL` to have your local ip instead of localhost. That will most likely look something like the following: `FRONTEND_URL=http://192.168.X.XXX:3000`
+- Change the `axios.tsx` file (in directory `foosball-front-end/src/components`) to use the baseURL of your own ip, which will most likely look something like the following: `axios.defaults.baseURL = 'http://192.168.X.XXX:8000';`
 
-import React, {useEffect} from 'react';
- -->
+After this you can run the project like normal, and navigate to the URL you specified in the `.env` file. (localhost does not work with these changes)
