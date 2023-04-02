@@ -46,7 +46,6 @@ class TeamsController extends Controller
     public function createTeam(Request $request) {
         $team=new FoosballTeam;
         $team->player1_id=Auth::id();
-        error_log("hey");
         $team->player2_id=Games2v2Controller::getIdFromUsername($request->player2_username);
         if(Games2v2Controller::getTeamWithUsers($team->player1_id,$team->player2_id)!=null)
             return response("Bad request",400);
