@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Games2v2Controller;
 
 class TeamsController extends Controller
 {
@@ -45,12 +46,17 @@ class TeamsController extends Controller
     public function createTeam(Request $request) {
         $team=new FoosballTeam;
         $team->player1_id=Auth::id();
+        error_log("hey");
         $team->player2_id=Games2v2Controller::getIdFromUsername($request->player2_username);
+        if(Games2v2Controller::getTeamWithUsers($team->player1_id,$team->player2_id)!=null)
+            return response("Bad request",400);
+
         if(is_null($team->player2_id))
             return response("Second user not found",404);
         if($team->player1_id ==$team->player2_id )
             return response("Bad request",400);
         $team->team_name=$request->team_name;
+        
         $team->save();
 
     }
