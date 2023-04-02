@@ -4,7 +4,7 @@ import { getOwnTeams, Team, deleteTeam } from '../components/axios';
 import Modal from 'react-modal';
 import { editTeamRoute } from './EditTeam';
 
-export const ownTeamsRoute: string = "/teams";
+export const ownTeamsRoute: string = "/Teams";
 export const OwnTeams = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [teamId, setTeamId] = useState(0);
