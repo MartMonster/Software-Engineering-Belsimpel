@@ -5,7 +5,7 @@ import { editGame2v2Route } from './EditGame2v2';
 import { lastGames2v2Route } from './LastGames2v2';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#root');
+Modal.setAppElement('html');
 export const ownGames2v2Route: string = "self";
 export const OwnGames2v2 = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
