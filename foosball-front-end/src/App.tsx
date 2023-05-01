@@ -20,6 +20,13 @@ import { OwnTeams, ownTeamsRoute } from './pages/OwnTeams';
 import { EditGame1v1, editGame1v1Route } from './pages/EditGame1v1';
 import { EditTeam, editTeamRoute } from './pages/EditTeam';
 import { EditGame2v2, editGame2v2Route } from './pages/EditGame2v2';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import { AdminAddGame1v1 } from './pages/admin/AdminAddGame1v1';
+import { AdminAddGame2v2 } from './pages/admin/AdminAddGame2v2';
+import { AdminLastGames1v1 } from './pages/admin/AdminLastGames1v1';
+import { AdminLastGames2v2 } from './pages/admin/AdminLastGames2v2';
+import { AdminNavbar } from './pages/admin/AdminNavbar';
+import { AdminCreateTeam } from './pages/admin/AdminCreateTeam';
 
 function App() {
   return (
@@ -50,6 +57,16 @@ function App() {
             <Route path={editTeamRoute+'/:id'} element={<EditTeam/>}/>
           </Route>
           <Route path="*" element={<Page404/>}/>
+        </Route>
+        <Route path='admin' element={<AdminNavbar/>}>
+          <Route index element={<AdminDashboard/>}/>
+          <Route path={wallOfFame1v1Route} element={<WallOfFame1v1 />} />
+          <Route path={wallOfFame2v2Route} element={<WallOfFame2v2 />} />
+          <Route path={addGame1v1Route} element={<AdminAddGame1v1 />} />
+          <Route path={addGame2v2Route} element={<AdminAddGame2v2 />} />
+          <Route path={lastGames1v1Route} element={<AdminLastGames1v1 />} />
+          <Route path={lastGames2v2Route} element={<AdminLastGames2v2 />} />
+          <Route path={createTeamRoute} element={<AdminCreateTeam />} />
         </Route>
       </Routes>
     </BrowserRouter>

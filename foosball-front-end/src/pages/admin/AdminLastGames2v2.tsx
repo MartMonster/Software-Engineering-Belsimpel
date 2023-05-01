@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { getLast10Games2v2, Game2v2, deleteGame2v2 } from '../../components/axios';
 import { Link } from 'react-router-dom';
-import { getOwnGames2v2, Game2v2, deleteGame2v2 } from '../components/axios';
-import { editGame2v2Route } from './EditGame2v2';
-import { lastGames2v2Route } from './LastGames2v2';
+import { editGame2v2Route } from '../EditGame2v2';
 import Modal from 'react-modal';
 
-Modal.setAppElement('html');
-export const ownGames2v2Route: string = "self";
-export const OwnGames2v2 = () => {
+export const lastGames2v2Route: string = "LastGames2v2"
+export const AdminLastGames2v2 = () => {
+    useEffect(getGames, []);
+    const [games, setGames] = useState<Game2v2[]>([]);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [gameId, setGameId] = useState(0);
     function openModal(id: number) {
@@ -26,29 +26,27 @@ export const OwnGames2v2 = () => {
         }
     }
 
-    const [games, setGames] = useState<Game2v2[]>([]);
     function getGames() {
-        getOwnGames2v2().then((data) => {
+        getLast10Games2v2().then((data) => {
             if (data !== undefined) {
                 setGames(data);
                 console.log(data);
             }
         });
     }
-    useEffect(getGames, []);
     return (
         <div className="App">
-            <h1>Your last 10 2v2 games</h1>
+            <h1>Last 10 2v2 games</h1>
             <table>
                 <thead>
                     <tr>
                         <th>Side</th>
-                        <th>Teams</th>
+                        <th>Players</th>
                         <th>Scores</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {games.map((game:Game2v2) => {
+                    {games.map((game: Game2v2, index) => {
                         return (
                             <tr key={game.id}>
                                 <td>
