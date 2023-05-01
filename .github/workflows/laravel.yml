@@ -21,7 +21,7 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
       working-directory: ./foosball-ranking
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer update
     - name: Generate key
       working-directory: ./foosball-ranking
       run: php artisan key:generate
