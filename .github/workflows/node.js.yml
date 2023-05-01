@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "Refactoring" ]
   pull_request:
     branches: [ "main" ]
 
@@ -26,6 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: update/install project
+      working-directory: ./foosball-front-end
+      run: npm update
     - name: Execute ci
       working-directory: ./foosball-front-end
       run: npm ci
