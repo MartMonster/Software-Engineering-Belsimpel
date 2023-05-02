@@ -47,9 +47,9 @@ export const OwnGames1v1 = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {games.map((game:Game1v1) => {
+                    {games.map((game:Game1v1, index) => {
                         return (
-                            <>
+                            <React.Fragment key={index}>
                                 <tr>
                                     <td>Red</td>
                                     <td>{game.player1_username}</td>
@@ -108,7 +108,7 @@ export const OwnGames1v1 = () => {
                                         <button className='deleteButton' onClick={() => openModal(game.id)}>Delete</button>
                                     </td>
                                 </tr> */}
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </tbody>

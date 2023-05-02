@@ -49,7 +49,7 @@ export const AdminLastGames1v1 = () => {
                 <tbody>
                     {games.map((game: Game1v1, index) => {
                         return (
-                            <>
+                            <React.Fragment key={index}>
                                 <tr>
                                     <td>Red</td>
                                     <td>{game.player1_username}</td>
@@ -68,7 +68,7 @@ export const AdminLastGames1v1 = () => {
                                     <td>{game.player2_username}</td>
                                     <td>{game.player2_score}</td>
                                 </tr>
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </tbody>

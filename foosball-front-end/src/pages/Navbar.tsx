@@ -1,13 +1,14 @@
 import React from 'react';
 import { Outlet, Link, Navigate } from "react-router-dom";
 import { loginRoute } from "./Login";
-import { logout, loggedIn } from '../components/axios';
+import { logout } from '../components/axios';
 
 // TODO: change this back to false
-const DEBUG:boolean = true;
+const DEBUG:boolean = false;
 
 export const navbarRoute:string = "/"
 export const Navbar = () => {
+    let loggedIn = sessionStorage.getItem("loggedIn") === "true";
     if (!loggedIn && !DEBUG) {
         console.log("user not logged in!")
         return <Navigate to="login"/>;

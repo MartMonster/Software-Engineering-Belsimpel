@@ -1,7 +1,6 @@
 // import React from 'react';
 import axios from 'axios';
 
-export let loggedIn: boolean = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
 
@@ -38,7 +37,7 @@ export async function login(email: string, password: string) {
         console.log(error);
         b = false;
     });
-    loggedIn = b;
+    sessionStorage.setItem('loggedIn', b.toString());
     return b;
 }
 
@@ -66,11 +65,12 @@ export async function register(email: string, username: string, name: string, la
         console.log(error);
         b = false;
     });
-    loggedIn = b;
+    sessionStorage.setItem('loggedIn', b.toString());
     return b;
 }
 
 export async function logout() {
+    sessionStorage.removeItem('loggedIn');
     await axios.post('/logout', {
         headers: {
             Accept: 'application/json'
@@ -82,7 +82,6 @@ export async function logout() {
     .catch(error => {
         console.log(error);
     });
-    loggedIn = false;
 }
 
 interface UserSummary {
