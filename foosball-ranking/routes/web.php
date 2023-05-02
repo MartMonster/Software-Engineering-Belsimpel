@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\TeamsController;
+use App\Http\Controllers\User\AdminController;
+use App\Http\Controllers\User\TeamsController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Games1v1Controller;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Games2v2Controller;
+use App\Http\Controllers\User\Games1v1Controller;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\Games2v2Controller;
 
 /*
 |--------------------------------------------------------------------------

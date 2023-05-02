@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\FoosballTeam;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Games2v2Controller;
+use App\Http\Controllers\User\Games2v2Controller;
 
 class TeamsController extends Controller
 {
@@ -44,15 +45,30 @@ class TeamsController extends Controller
     }
 
     public function createTeam(Request $request) {
-        return FoosballTeam::createTeam($request->player2_username, $request->team_name);
+        return FoosballTeam::createTeam(Auth::id(),$request->player2_username, $request->team_name);
 
     }
 
     public function updateTeam(Request $request, String $id) {
+        $team = FoosballTeam::find($id);
+        if($team == null)
+            return response('Not found',404);
+
+        if($team->player1_id!=Auth::id() && $team->player2_id!=Auth::id() &&
+            Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
+            return response('Unauthorized',401);
         return FoosballTeam::updateTeamName($request->team_name,$id);
     }
 
     public function deleteTeam(String $id) {
+        $team = FoosballTeam::find($id);
+        if($team == null)
+            return response('Not found',404);
+            
+        if($team->player1_id!=Auth::id() && $team->player2_id!=Auth::id() &&
+            Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
+                return response('Unauthorized',401);
+
         return FoosballTeam::deleteTeam($id);
     }
 }
