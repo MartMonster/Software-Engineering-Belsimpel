@@ -16,7 +16,6 @@ class FoosballTeam extends Model
     use HasFactory;
 
     public static function createTeam($player1_id,$player2_username,$team_name) {
-        error_log("here");
         $team=new FoosballTeam;
         $team->player1_id=$player1_id;
         ///TO:DO Huge dependency that should not be here!!
