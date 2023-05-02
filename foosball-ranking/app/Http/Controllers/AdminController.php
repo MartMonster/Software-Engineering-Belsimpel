@@ -86,4 +86,8 @@ class AdminController extends Controller
     public function update2v2Game(Request $request) {
 
     }
+
+    public function isAdmin() {
+        return Auth::user()->role_id == Role::where('role_name', 'Admin')->first()->id;
+    }
 }
