@@ -38,6 +38,7 @@ export async function login(email: string, password: string) {
         b = false;
     });
     sessionStorage.setItem('loggedIn', b.toString());
+    await getIsAdmin();
     return b;
 }
 
@@ -66,11 +67,13 @@ export async function register(email: string, username: string, name: string, la
         b = false;
     });
     sessionStorage.setItem('loggedIn', b.toString());
+    await getIsAdmin();
     return b;
 }
 
 export async function logout() {
     sessionStorage.removeItem('loggedIn');
+    sessionStorage.removeItem('isAdmin');
     await axios.post('/logout', {
         headers: {
             Accept: 'application/json'
@@ -82,6 +85,24 @@ export async function logout() {
     .catch(error => {
         console.log(error);
     });
+}
+
+
+export async function getIsAdmin() {
+    let b: boolean = false;
+    await axios.get('/admin', {
+        headers: {
+            Accept: 'application/json'
+        }
+    }).then(response => {
+        console.log(response.data);
+        b = response.data === 1;
+    }).catch(error => {
+        console.log(error);
+        b = false;
+    });
+    sessionStorage.setItem('isAdmin', b.toString());
+    return b;
 }
 
 interface UserSummary {

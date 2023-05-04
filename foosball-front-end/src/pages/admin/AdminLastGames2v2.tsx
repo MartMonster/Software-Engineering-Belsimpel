@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 
 export const lastGames2v2Route: string = "LastGames2v2"
 export const AdminLastGames2v2 = () => {
-    useEffect(getGames, []);
+    useEffect(getGames, [getGames]);
     const [games, setGames] = useState<Game2v2[]>([]);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [gameId, setGameId] = useState(0);

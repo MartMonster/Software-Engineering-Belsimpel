@@ -9,9 +9,14 @@ const DEBUG:boolean = false;
 export const navbarRoute:string = "/"
 export const Navbar = () => {
     let loggedIn = sessionStorage.getItem("loggedIn") === "true";
+    let isAdmin = sessionStorage.getItem("isAdmin") === "true";
     if (!loggedIn && !DEBUG) {
         console.log("user not logged in!")
         return <Navigate to="login"/>;
+    }
+    if (isAdmin) {
+        console.log("user is admin!")
+        return <Navigate to="admin"/>;
     }
     return (
         <div className="App-header">

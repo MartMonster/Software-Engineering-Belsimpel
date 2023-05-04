@@ -4,11 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Role;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\User\Games2v2Controller;
 
 class FoosballTeam extends Model
@@ -28,7 +23,7 @@ class FoosballTeam extends Model
         if($team->player1_id ==$team->player2_id )
             return response("Bad request",400);
         $team->team_name=$team_name;
-        
+
         $team->save();
         return response("Ok",200);
 

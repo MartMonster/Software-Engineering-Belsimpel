@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\User\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\User\TeamsController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\Games1v1Controller;
 use App\Http\Controllers\User\UserController;

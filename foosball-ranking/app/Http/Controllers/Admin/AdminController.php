@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\User\Games2v2Controller;
+use App\Http\Controllers\Controller;
 use App\Models\FoosballTeam;
 use App\Models\Game1v1;
 use App\Models\Role;
@@ -87,7 +89,8 @@ class AdminController extends Controller
 
     }
 
-    public function isAdmin() {
+    public function isAdmin(): bool
+    {
         return Auth::user()->role_id == Role::where('role_name', 'Admin')->first()->id;
     }
 }
