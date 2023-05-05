@@ -15,7 +15,7 @@ export const AddGame2v2 = () => {
     const [player4, setPlayer4] = useState("");
     const [myScore, setMyScore] = useState(0);
     const [opponentScore, setOpponentScore] = useState(0);
-    const [side, setSide] = useState(0)
+    const [side, setSide] = useState(1)
 
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()

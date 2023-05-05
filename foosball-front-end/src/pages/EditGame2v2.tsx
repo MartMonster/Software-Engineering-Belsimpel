@@ -17,7 +17,7 @@ export const EditGame2v2 = () => {
     }
     const [myPoints, setMyPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
-    const [side, setSide] = useState(0);
+    const [side, setSide] = useState(1);
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if (await editGame2v2(id, myPoints, opponentPoints, side)) {

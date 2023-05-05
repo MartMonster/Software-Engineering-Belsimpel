@@ -13,7 +13,7 @@ export const AddGame1v1 = () => {
     const [opponent, setOpponent] = useState("");
     const [myPoints, setMyPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
-    const [side, setSide] = useState(0);
+    const [side, setSide] = useState(1);
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await makeGame1v1(opponent, myPoints, opponentPoints, side)) {
