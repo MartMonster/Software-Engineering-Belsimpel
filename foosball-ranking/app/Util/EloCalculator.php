@@ -19,7 +19,7 @@ class EloCalculator
      * @param $d integer 1 if player A wins, 0 if player B wins
      * @return float[] array with new elo of player A and player B
      */
-    public static function calculateElo(float $Ra, float $Rb, int $K, int $d): array
+    private static function calculate(float $Ra, float $Rb, int $K, int $d): array
     {
         // To calculate the Winning
         // Probability of Player B
@@ -38,5 +38,18 @@ class EloCalculator
             0=>$Ra,
             1=>$Rb
         );
+    }
+
+    public static function calculateElo($elo1,$elo2,$score1,$score2){
+        if ($score1 != $score2)
+        $updatedElo = self::calculate($elo1,$elo2,30,
+            $score1>$score2);
+        else if ($elo1 != $elo2)
+        $updatedElo=EloCalculator::calculate($elo1,$elo2,15,$elo1 < $elo2);
+        else
+        $updatedElo=[$elo1, $elo2];
+
+        return $updatedElo;
+
     }
 }

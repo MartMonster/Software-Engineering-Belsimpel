@@ -19,14 +19,7 @@ class Game1v1 extends Model
         $game = new Game1v1;
         self::updateGameIdScores($game, $player1->id, $player2->id, $player1_score, $player2_score, $player1_side);
 
-        if ($player1_score != $player2_score)
-            $updatedElo = EloCalculator::calculateElo($player1->elo,$player2->elo,30,
-                $player1_score>$player2_score);
-        else if ($player1->elo != $player2->elo)
-            $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,$player1->elo < $player2->elo);
-        else
-            $updatedElo=[$player1->elo, $player2->elo];
-
+        $updatedElo = EloCalculator::calculateElo($player1->elo,$player2->elo,$player1_score,$player2_score);
         User::where('username', $player1->username)->update(['elo' => $updatedElo[0]]);
 
         User::where('username', $player2->username)->update(['elo' => $updatedElo[1]]);
