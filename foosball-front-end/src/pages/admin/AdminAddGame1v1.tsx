@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames1v1Route } from "../LastGames1v1";
-import { ownGames1v1Route } from "../OwnGames1v1";
 import { makeGame1v1 } from '../../components/admin/Games';
 
 export const addGame1v1Route:string = "AddGame1v1"
 export const AdminAddGame1v1 = () => {
     const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
+    const navigateToLastGames = () => {
+        navigate('/admin/' + lastGames1v1Route);
     }
     const [redPoints, setRedPoints] = useState(0);
     const [bluePoints, setBluePoints] = useState(0);
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await makeGame1v1(playerRed, playerBlue, redPoints, bluePoints)) {
-            navigateToOwnGames()
+            navigateToLastGames()
         }
     }
     const [playerRed, setPlayerRed] = useState("");

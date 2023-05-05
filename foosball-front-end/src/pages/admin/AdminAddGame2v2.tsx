@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames2v2Route } from "../LastGames2v2";
-import { ownGames2v2Route } from "../OwnGames2v2";
 import { makeGame2v2 } from '../../components/admin/Games';
 
 export const addGame2v2Route: string = "AddGame2v2"
 export const AdminAddGame2v2 = () => {
     const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
+    const navigateToLastGames = () => {
+        navigate('/admin/' + lastGames2v2Route);
     }
     const [redPlayer1, setRedPlayer1] = useState("");
     const [redPlayer2, setRedPlayer2] = useState("");
@@ -20,7 +19,7 @@ export const AdminAddGame2v2 = () => {
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await makeGame2v2(redPlayer1, redPlayer2, bluePlayer1, bluePlayer2, redScore, blueScore)) {
-            navigateToOwnGames()
+            navigateToLastGames()
         }
     }
     return (
