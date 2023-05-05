@@ -25,7 +25,7 @@ class Game1v1 extends Model
         User::where('username', $player2->username)->update(['elo' => $updatedElo[1]]);
         return response('Game succesfully created',201);
     }
-    private static function updateGameIdScores(Game1v1 $game, $player1_id, $player2_id, $player1_score, $player2_score, $side) {
+    public static function updateGameIdScores(Game1v1 $game, $player1_id, $player2_id, $player1_score, $player2_score, $side) {
         if ($side == 1) {
             $game->player1_id = $player1_id;
             $game->player2_id = $player2_id;

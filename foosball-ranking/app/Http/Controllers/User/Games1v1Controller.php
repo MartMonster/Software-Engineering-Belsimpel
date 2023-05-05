@@ -72,7 +72,7 @@ class Games1v1Controller extends Controller
         $player2 = User::find($game->player2_id);
         if($game->player1_id==Auth::id() || $game->player2_id==Auth::id()) {
             $opponent = $game->player1_id == Auth::id() ? $player2 : $player1;
-            $this->updateGameIdScores($game, Auth::id(), $opponent->id, $request->player1_score, $request->player2_score, $request->player1_side);
+            Game1v1::updateGameIdScores($game, Auth::id(), $opponent->id, $request->player1_score, $request->player2_score, $request->player1_side);
             return response('Game succesfully updated',200);
         }
         else
@@ -98,8 +98,7 @@ class Games1v1Controller extends Controller
         $game = Game1v1::where('id', $id)->first();
         if($game == null)
             return response('Not found',404);
-        if($game->player1_id==Auth::id() || $game->player2_id==Auth::id() ||
-            Auth::user()->role_id == Role::where('role_name', 'Admin')->first()->id){
+        if($game->player1_id==Auth::id() || $game->player2_id==Auth::id() ){
                 $game->delete();
                 return response('Game succesfully deleted',200);
         }
