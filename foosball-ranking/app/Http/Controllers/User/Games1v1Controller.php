@@ -53,26 +53,15 @@ class Games1v1Controller extends Controller
             return response('Bad request',400);
         }
 
-        $game = new Game1v1;
-        $this->updateGameIdScores($game, $player1->id, $player2->id, $request->player1_score, $request->player2_score, $request->player1_side);
+        return Game1v1::store(
+        $player1,
+        $player2,
+        $request->player1_score,
+        $request->player2_score,
+        $request->player1_side);
 
-        if ($request->player1_score != $request->player2_score)
-            $updatedElo = EloCalculator::calculateElo($player1->elo,$player2->elo,30,
-                $request->player1_score>$request->player2_score);
-        else if ($player1->elo != $player2->elo)
-            $updatedElo=EloCalculator::calculateElo($player1->elo,$player2->elo,15,$player1->elo < $player2->elo);
-        else
-            $updatedElo=[$player1->elo, $player2->elo];
-        echo($updatedElo[0]);
-        echo("\n");
-        echo($updatedElo[1]);
-        echo("\n");
 
-        User::where('username', $player1->username)->update(['elo' => $updatedElo[0]]);
 
-        User::where('username', $player2->username)->update(['elo' => $updatedElo[1]]);
-
-        return response('Game succesfully created',201);
     }
 
     public function update(Request $request, String $id) {

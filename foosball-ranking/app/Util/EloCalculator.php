@@ -34,8 +34,6 @@ class EloCalculator
         $Ra = $Ra + $K * ($d - $Pa);
         $Rb = $Rb + $K * (1-$d - $Pb);
 
-        error_log($Ra);
-        error_log($Rb);
         return array(
             0=>$Ra,
             1=>$Rb
