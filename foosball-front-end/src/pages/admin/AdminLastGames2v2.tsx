@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getLast10Games2v2, Game2v2, deleteGame2v2 } from '../../components/axios';
+import { getLast10Games2v2, Game2v2 } from '../../components/axios';
+import { deleteGame2v2 } from '../../components/admin/Games';
 import { Link } from 'react-router-dom';
 import { editGame2v2Route } from '../EditGame2v2';
 import Modal from 'react-modal';
