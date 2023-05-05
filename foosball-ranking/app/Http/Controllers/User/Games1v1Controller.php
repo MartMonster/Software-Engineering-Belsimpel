@@ -79,21 +79,6 @@ class Games1v1Controller extends Controller
             return response('Unauthorized access',401);
     }
 
-    private static function updateGameIdScores(Game1v1 $game, $player1_id, $player2_id, $player1_score, $player2_score, $side) {
-        if ($side == 1) {
-            $game->player1_id = $player1_id;
-            $game->player2_id = $player2_id;
-            $game->player1_score = $player1_score;
-            $game->player2_score = $player2_score;
-        } else {
-            $game->player1_id = $player2_id;
-            $game->player2_id = $player1_id;
-            $game->player1_score = $player2_score;
-            $game->player2_score = $player1_score;
-        }
-        $game->save();
-    }
-
     public function delete(String $id){
         $game = Game1v1::where('id', $id)->first();
         if($game == null)
