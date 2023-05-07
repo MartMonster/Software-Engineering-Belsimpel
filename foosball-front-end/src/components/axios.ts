@@ -168,7 +168,7 @@ export async function getTop10Teams() {
     })
     .then(response => {
         console.log(response);
-        teams = response.data.data;
+        teams = response.data;
     })
     .catch(error => {
         console.log(error);

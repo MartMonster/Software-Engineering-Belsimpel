@@ -22,7 +22,7 @@ class TeamsController extends Controller
                 't.elo as elo',
                 'p1.username AS player1_username',
                 'p2.username AS player2_username'
-            )->orderBy('elo', 'desc')->paginate(10);
+            )->orderBy('elo', 'desc')->take(10)->get();
         // TODO: replace the above with eloquent
 //        return FoosballTeam::orderBy('elo','desc')->paginate(10);
     }
