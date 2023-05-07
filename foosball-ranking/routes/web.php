@@ -78,13 +78,23 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(AdminController::class)->group(function () {
             Route::get('/', 'isAdmin');
             Route::middleware(['admin'])->group(function () {
-                Route::post('/games1v1', 'createGame');
+                Route::post('/games1v1', 'create1v1Game');
 
-                Route::put('/games1v1/{id}', 'editGame');
+                Route::put('/games1v1/{id}', 'edit1v1Game');
 
-                Route::delete('/games1v1/{id}', 'deleteGame');
+                Route::delete('/games1v1/{id}', 'delete1v1Game');
 
                 Route::post('/games2v2', 'create2v2Game');
+
+                Route::put('/games2v2/{id}', 'edit2v2Game');
+
+                Route::delete('/games2v2/{id}', 'delete2v2Game');
+
+                Route::post('/teams', 'createTeam');
+
+                Route::put('/teams/{id}', 'editTeam');
+
+                Route::delete('/teams/{id}', 'deleteTeam');
 
                 Route::delete('/user/{id}', 'deletePlayer');
             });

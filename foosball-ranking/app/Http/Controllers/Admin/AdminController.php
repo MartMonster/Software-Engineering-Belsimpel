@@ -6,6 +6,7 @@ use App\Http\Controllers\User\Games2v2Controller;
 use App\Http\Controllers\Controller;
 use App\Models\FoosballTeam;
 use App\Models\Game1v1;
+use App\Models\Game2v2;
 use App\Models\Role;
 use App\Models\User;
 use App\Util\EloCalculator;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function createGame(Request $request)
+    public function create1v1Game(Request $request)
     {
         $request->validate([
             'player1_username' => 'required',
@@ -39,7 +40,7 @@ class AdminController extends Controller
             1);
     }
 
-    public function editGame(Request $request, string $id) {
+    public function edit1v1Game(Request $request, string $id) {
         $request->validate([
             'player1_username' => 'required',
             'player2_username' => 'required',
@@ -64,7 +65,7 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteGame(string $id) {
+    public function delete1v1Game(string $id) {
         $game = Game1v1::where('id', $id)->first();
         if($game == null)
             return response('Not found',404);
@@ -86,35 +87,69 @@ class AdminController extends Controller
 
     public function create2v2Game(Request $request) {
         $ids=array();
-        array_push($ids,Games2v2Controller::getIdFromUsername($request->player1_username));
-        array_push($ids,Games2v2Controller::getIdFromUsername($request->player2_username));
-        array_push($ids,Games2v2Controller::getIdFromUsername($request->player3_username));
-        array_push($ids,Games2v2Controller::getIdFromUsername($request->player4_username));
+        $ids[0] = Games2v2Controller::getIdFromUsername($request->player1_username);
+        $ids[1] = Games2v2Controller::getIdFromUsername($request->player2_username);
+        $ids[2] = Games2v2Controller::getIdFromUsername($request->player3_username);
+        $ids[3] = Games2v2Controller::getIdFromUsername($request->player4_username);
         if(in_array(null, $ids, true))
             return response("Player not found",404);
         if(count($ids) > count(array_unique($ids)))
             return response("Bad request",400);
-        $team1 = Games2v2Controller::getTeamWithUsers($ids[0], $ids[1]);
-        $team2 = Games2v2Controller::getTeamWithUsers($ids[2], $ids[3]);
-        if(is_null($team1))
-            $team1= Games2v2Controller::createTeam($ids[0],$ids[1]);
-        if(is_null($team2))
-            $team2=Games2v2Controller::createTeam($ids[2],$ids[3]);
-        if ($request->team1_score != $request->team2_score)
-            $updatedElo = EloCalculator::calculateElo($team1->elo,$team2->elo,30,
-                $request->team1_score>$request->team2_score);
-        else if ($team1->elo != $team2->elo)
-            $updatedElo=EloCalculator::calculateElo($team1->elo,$team2->elo,15,$team1->elo < $team2->elo);
-        else
-            $updatedElo=[$team1->elo,$team2->elo];
-        FoosballTeam::where('id',$team1->id)->update(['elo'=>$updatedElo[0]]);
-        FoosballTeam::where('id',$team2->id)->update(['elo'=>$updatedElo[1]]);
-        Games2v2Controller::createGameTeamScores($team1->id,$team2->id,$request->team1_score,$request->team2_score,$request->side);
-        return $updatedElo;
+        return Game2v2::store($ids[0],$ids[1],$ids[2],$ids[3],$request->team1_score,$request->team2_score,$request->side);
     }
 
-    public function update2v2Game(Request $request) {
+    public function update2v2Game($id, Request $request) {
+        $game = Game2v2::where('id', $id)->first();
+        if($game == null)
+            return response('Not found',404);
+        $ids=array();
+        $ids[0] = Games2v2Controller::getIdFromUsername($request->player1_username);
+        $ids[1] = Games2v2Controller::getIdFromUsername($request->player2_username);
+        $ids[2] = Games2v2Controller::getIdFromUsername($request->player3_username);
+        $ids[3] = Games2v2Controller::getIdFromUsername($request->player4_username);
+        $team1_id = FoosballTeam::getTeamWithUsers($ids[0],$ids[1])->id;
+        $team2_id = FoosballTeam::getTeamWithUsers($ids[2],$ids[3])->id;
+        Game2v2::updateGameIdScores($game,$team1_id,$team2_id,$request->team1_score,$request->team2_score, 1);
+        return response('Game succesfully updated',200);
+    }
 
+    public function delete2v2Game($id) {
+        $game = Game2v2::where('id', $id)->first();
+        if($game == null)
+            return response('Not found',404);
+        else {
+            $game->delete();
+            return response('Game deleted',200);
+        }
+    }
+
+    public function createTeam(Request $request) {
+        $request->validate([
+            'player1_username' => 'required',
+            'player2_username' => 'required',
+            'team_name' => 'required',
+        ]);
+        $player1 = User::where('username', $request->player1_username)->first();
+        $player2 = User::where('username', $request->player2_username)->first();
+        if(is_null($player1)){
+            return response('First user not found',404);
+        }
+        if(is_null($player2)){
+            return response('Second user not found',404);
+        }
+        return FoosballTeam::createTeam($player1,$player2, $request->team_name);
+    }
+
+    public function updateTeam($id, Request $request) {
+        $request->validate([
+            'team_name' => 'required',
+        ]);
+        FoosballTeam::updateTeamName($request->team_name, $id);
+        return response('Team succesfully updated',200);
+    }
+
+    public function deleteTeam($id) {
+        FoosballTeam::deleteTeam($id);
     }
 
     public function isAdmin(): bool

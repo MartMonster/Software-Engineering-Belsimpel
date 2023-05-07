@@ -10,11 +10,10 @@ class FoosballTeam extends Model
 {
     use HasFactory;
 
-    public static function createTeam($player1_id,$player2_username,$team_name) {
+    public static function createTeam($player1_id,$player2_id,$team_name) {
         $team=new FoosballTeam;
         $team->player1_id=$player1_id;
-        ///TO:DO Huge dependency that should not be here!!
-        $team->player2_id=Games2v2Controller::getIdFromUsername($player2_username);
+        $team->player2_id=$player2_id;
         if(Games2v2Controller::getTeamWithUsers($team->player1_id,$team->player2_id)!=null)
             return response("Bad request",400);
 
@@ -43,5 +42,33 @@ class FoosballTeam extends Model
             return response('Not found',404);
         $team->delete();
         return response('Team deleted',200);
+    }
+
+    public static function getTeamWithUsers($id1,$id2){
+        $team =  FoosballTeam::where(fn ($query) =>
+        $query->where('player1_id', $id1)
+            ->where('player2_id', $id2)
+        )->orWhere(fn ($query) =>
+        $query->where('player1_id', $id2)
+            ->where('player2_id', $id1)
+        )->first();
+        if ($team == null) {
+            $team = new FoosballTeam;
+            $team->player1_id = $id1;
+            $team->player2_id = $id2;
+            $team->save();
+            $team->team_name = $team->fresh()->id;
+            $team->save();
+        }
+        return $team->fresh();
+    }
+
+    public static function getIdsFromTeams($team_id){
+        $team = FoosballTeam::find($team_id);
+        $ids=array();
+        if($team == null)
+            return array();
+        array_push($ids,$team->player1_id,$team->player2_id);
+        return $ids;
     }
 }

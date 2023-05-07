@@ -45,7 +45,11 @@ class TeamsController extends Controller
     }
 
     public function createTeam(Request $request) {
-        return FoosballTeam::createTeam(Auth::id(),$request->player2_username, $request->team_name);
+        $player2_id = User::where('username', $request->player2_username)->first()->id;
+        if(is_null($player2_id)){
+            return response('Second user not found',404);
+        }
+        return FoosballTeam::createTeam(Auth::id(),$player2_id, $request->team_name);
 
     }
 
@@ -64,7 +68,7 @@ class TeamsController extends Controller
         $team = FoosballTeam::find($id);
         if($team == null)
             return response('Not found',404);
-            
+
         if($team->player1_id!=Auth::id() && $team->player2_id!=Auth::id() &&
             Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
                 return response('Unauthorized',401);
