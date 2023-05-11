@@ -56,7 +56,7 @@ export const AdminLastGames1v1 = () => {
                                     <td>{game.player1_username}</td>
                                     <td>{game.player1_score}</td>
                                     <td rowSpan={2}>
-                                        <Link to={'/' + lastGames1v1Route + '/' + editGame1v1Route + '/' + game.id}>
+                                        <Link to={editGame1v1Route + '/' + game.id}>
                                             <button className='editButton'>Edit</button>
                                         </Link>
                                     </td>

@@ -98,7 +98,7 @@ class AdminController extends Controller
         return Game2v2::store($ids[0],$ids[1],$ids[2],$ids[3],$request->team1_score,$request->team2_score,$request->side);
     }
 
-    public function update2v2Game($id, Request $request) {
+    public function edit2v2Game($id, Request $request) {
         $game = Game2v2::where('id', $id)->first();
         if($game == null)
             return response('Not found',404);
