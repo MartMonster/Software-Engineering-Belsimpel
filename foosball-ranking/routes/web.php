@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\User\TeamsController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\Games1v1Controller;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\Games2v2Controller;
+use App\Http\Controllers\User\TeamsController;
+use App\Http\Controllers\User\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,4 +102,4 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

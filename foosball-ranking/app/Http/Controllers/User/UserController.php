@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserSummary;
 use App\Models\User;
+use App\Models\UserSummary;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -14,9 +14,9 @@ class UserController extends Controller
     {
         $userId = Auth::id();
         $users = User::orderBy('elo', 'desc')->get();
-        $i=1;
-        foreach ($users as $user){
-            if($user->id == $userId){
+        $i = 1;
+        foreach ($users as $user) {
+            if ($user->id == $userId) {
                 break;
             }
             $i++;
@@ -40,7 +40,8 @@ class UserController extends Controller
         return $usPosElo;
     }
 
-    public function getTop10() {
+    public function getTop10()
+    {
         return User::orderBy('elo', 'desc')->take(10)->get();
     }
 }

@@ -9,11 +9,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\User\Games2v2Controller;
 
 class TeamsController extends Controller
 {
-    public static function getTop10Teams() {
+    public static function getTop10Teams()
+    {
         return DB::table('foosball_teams as t')
             ->join('users as p1', 't.player1_id', '=', 'p1.id')
             ->join('users as p2', 't.player2_id', '=', 'p2.id')
@@ -27,7 +27,8 @@ class TeamsController extends Controller
 //        return FoosballTeam::orderBy('elo','desc')->paginate(10);
     }
 
-    public static function getOwnTeams() {
+    public static function getOwnTeams()
+    {
         return DB::table('foosball_teams as t')
             ->where('t.player1_id', '=', Auth::id())
             ->orWhere('t.player2_id', '=', Auth::id())
@@ -44,34 +45,37 @@ class TeamsController extends Controller
 //        orderBy('elo', 'desc')->paginate(10);
     }
 
-    public function createTeam(Request $request) {
+    public function createTeam(Request $request)
+    {
         $player2_id = User::where('username', $request->player2_username)->first()->id;
-        if(is_null($player2_id)){
-            return response('Second user not found',404);
+        if (is_null($player2_id)) {
+            return response('Second user not found', 404);
         }
-        return FoosballTeam::createTeam(Auth::id(),$player2_id, $request->team_name);
+        return FoosballTeam::createTeam(Auth::id(), $player2_id, $request->team_name);
 
     }
 
-    public function updateTeam(Request $request, String $id) {
+    public function updateTeam(Request $request, string $id)
+    {
         $team = FoosballTeam::find($id);
-        if($team == null)
-            return response('Not found',404);
+        if ($team == null)
+            return response('Not found', 404);
 
-        if($team->player1_id!=Auth::id() && $team->player2_id!=Auth::id() &&
+        if ($team->player1_id != Auth::id() && $team->player2_id != Auth::id() &&
             Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
-            return response('Unauthorized',401);
-        return FoosballTeam::updateTeamName($request->team_name,$id);
+            return response('Unauthorized', 401);
+        return FoosballTeam::updateTeamName($request->team_name, $id);
     }
 
-    public function deleteTeam(String $id) {
+    public function deleteTeam(string $id)
+    {
         $team = FoosballTeam::find($id);
-        if($team == null)
-            return response('Not found',404);
+        if ($team == null)
+            return response('Not found', 404);
 
-        if($team->player1_id!=Auth::id() && $team->player2_id!=Auth::id() &&
+        if ($team->player1_id != Auth::id() && $team->player2_id != Auth::id() &&
             Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
-                return response('Unauthorized',401);
+            return response('Unauthorized', 401);
 
         return FoosballTeam::deleteTeam($id);
     }
