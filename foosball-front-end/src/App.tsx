@@ -29,6 +29,7 @@ import { AdminNavbar } from './pages/admin/AdminNavbar';
 import { AdminCreateTeam } from './pages/admin/AdminCreateTeam';
 import { AdminEditGame1v1 } from './pages/admin/AdminEditGame1v1';
 import { AdminEditGame2v2 } from './pages/admin/AdminEditGame2v2';
+import PasswordReset from './pages/PasswordReset';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
       <Routes>
         <Route path={loginRoute} element={<Login />} />
         <Route path={registerRoute} element={<Register />} />
+        <Route path='password-reset/:hash' element={<PasswordReset />} />
         <Route path='/' element={<Navbar />}>
           <Route index element={<Dashboard />} />
           <Route path={wallOfFame1v1Route} element={<WallOfFame1v1 />} />
