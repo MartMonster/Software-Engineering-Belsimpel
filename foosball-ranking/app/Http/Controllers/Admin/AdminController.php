@@ -76,17 +76,6 @@ class AdminController extends Controller
         }
     }
 
-    public function deletePlayer(string $id)
-    {
-        $player = User::where('id', $id)->first();
-        if ($player == null)
-            return response('Not found', 404);
-        if ($player->role_id == Role::where('role_name', 'Admin')->first()->id)
-            return response('Forbidden: user is an admin', 403);
-        $player->delete();
-        return response('Player deleted', 200);
-    }
-
     public function create2v2Game(Request $request)
     {
         $ids = array();
@@ -163,5 +152,37 @@ class AdminController extends Controller
     public function isAdmin(): bool
     {
         return Auth::user()->role_id == Role::where('role_name', 'Admin')->first()->id;
+    }
+
+    public function getTop10Users()
+    {
+        return User::orderBy('elo', 'desc')->paginate(10);
+    }
+
+    public function editPlayer()
+    {
+    }
+
+    public function deletePlayer(string $id)
+    {
+        $player = User::where('id', $id)->first();
+        if ($player == null)
+            return response('Not found', 404);
+        if ($player->role_id == Role::where('role_name', 'Admin')->first()->id)
+            return response('Forbidden: user is an admin', 403);
+        $player->delete();
+        return response('Player deleted', 200);
+    }
+
+    public function getTop10Teams()
+    {
+        return FoosballTeam::join('users as p1', 'foosball_teams.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'foosball_teams.player2_id', '=', 'p2.id')
+            ->select('foosball_teams.id as id',
+                'foosball_teams.team_name as team_name',
+                'foosball_teams.elo as elo',
+                'p1.username AS player1_username',
+                'p2.username AS player2_username'
+            )->orderBy('elo', 'desc')->paginate(10);
     }
 }

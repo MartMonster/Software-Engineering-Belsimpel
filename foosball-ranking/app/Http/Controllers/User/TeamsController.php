@@ -8,41 +8,33 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class TeamsController extends Controller
 {
     public static function getTop10Teams()
     {
-        return DB::table('foosball_teams as t')
-            ->join('users as p1', 't.player1_id', '=', 'p1.id')
-            ->join('users as p2', 't.player2_id', '=', 'p2.id')
-            ->select('t.id as id',
-                't.team_name as team_name',
-                't.elo as elo',
+        return FoosballTeam::join('users as p1', 'foosball_teams.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'foosball_teams.player2_id', '=', 'p2.id')
+            ->select('foosball_teams.id as id',
+                'foosball_teams.team_name as team_name',
+                'foosball_teams.elo as elo',
                 'p1.username AS player1_username',
                 'p2.username AS player2_username'
             )->orderBy('elo', 'desc')->take(10)->get();
-        // TODO: replace the above with eloquent
-//        return FoosballTeam::orderBy('elo','desc')->paginate(10);
     }
 
     public static function getOwnTeams()
     {
-        return DB::table('foosball_teams as t')
-            ->where('t.player1_id', '=', Auth::id())
-            ->orWhere('t.player2_id', '=', Auth::id())
-            ->join('users as p1', 't.player1_id', '=', 'p1.id')
-            ->join('users as p2', 't.player2_id', '=', 'p2.id')
-            ->select('t.id as id',
-                't.team_name as team_name',
-                't.elo as elo',
+        return FoosballTeam::where('foosball_teams.player1_id', '=', Auth::id())
+            ->orWhere('foosball_teams.player2_id', '=', Auth::id())
+            ->join('users as p1', 'foosball_teams.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'foosball_teams.player2_id', '=', 'p2.id')
+            ->select('foosball_teams.id as id',
+                'foosball_teams.team_name as team_name',
+                'foosball_teams.elo as elo',
                 'p1.username AS player1_username',
                 'p2.username AS player2_username'
             )->orderBy('elo', 'desc')->paginate(10);
-        // TODO: replace the above with eloquent
-//        return FoosballTeam::where('player1_id', Auth::id())->orWhere('player2_id', Auth::id())->
-//        orderBy('elo', 'desc')->paginate(10);
     }
 
     public function createTeam(Request $request)
