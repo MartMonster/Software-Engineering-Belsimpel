@@ -184,9 +184,17 @@ export interface Game1v1 {
     player2_score: number
 }
 
-export async function getLast10Games1v1() {
+export interface PaginateInfo {
+    current_page: number,
+    last_page: number,
+}
+
+export async function getLast10Games1v1(page:number = 1) {
     let games:Game1v1[] | undefined;
-    await axios.get('/games1v1', {
+    let pagination:PaginateInfo;
+    let currentPage = 1;
+    let lastPage = 1;
+    await axios.get(`/games1v1?page=${page}`, {
         headers: {
             Accept: 'application/json'
         }
@@ -194,11 +202,14 @@ export async function getLast10Games1v1() {
     .then(response => {
         console.log(response);
         games = response.data.data;
+        currentPage = response.data.current_page;
+        lastPage = response.data.last_page;
     })
     .catch(error => {
         console.log(error);
     });
-    return games;
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {games, pagination};
 }
 
 export async function getOwnGames1v1() {
