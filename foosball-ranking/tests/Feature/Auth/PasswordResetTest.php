@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
+
 class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
@@ -15,19 +16,19 @@ class PasswordResetTest extends TestCase
     public function test_reset_password_link_can_be_requested(): void
     {
         $this->assertTrue(true);
-        /*Notification::fake();
+        Notification::fake();
 
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class);*/
+        Notification::assertSentTo($user, ResetPassword::class);
     }
 
     public function test_password_can_be_reset_with_valid_token(): void
     {
         $this->assertTrue(true);
-        /*Notification::fake();
+        Notification::fake();
 
         $user = User::factory()->create();
 
@@ -44,6 +45,6 @@ class PasswordResetTest extends TestCase
             $response->assertSessionHasNoErrors();
 
             return true;
-        });*/
+        });
     }
 }
