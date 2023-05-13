@@ -2,18 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { getLast10Games1v1, Game1v1 } from '../../components/axios';
 import { deleteGame1v1 } from '../../components/admin/Games';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { editGame1v1Route } from '../EditGame1v1';
+import paginationButtons from '../../components/paginate';
 
 export const lastGames1v1Route: string = "LastGames1v1"
 export const AdminLastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
-    useEffect(getGames, []);
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    useEffect(getGames, [searchParams, setSearchParams]);
 
     function getGames() {
-        getLast10Games1v1().then((data) => {
-            if (data !== undefined) {
-                setGames(data);
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+            setSearchParams({ page: page });
+        }
+        getLast10Games1v1(parseInt(page)).then((data) => {
+            if (data.games !== undefined) {
+                setGames(data.games);
+                setPaginateButtons(paginationButtons(data.pagination));
                 console.log(data);
             }
         });
@@ -47,7 +56,7 @@ export const AdminLastGames1v1 = () => {
                         <th>Scores</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='editDeleteGame'>
                     {games.map((game: Game1v1, index) => {
                         return (
                             <React.Fragment key={index}>
@@ -87,6 +96,21 @@ export const AdminLastGames1v1 = () => {
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        if (button === "...") {
+                            return (<li key={index} className="page-button">{button}</li>)
+                        } else {
+                            return (
+                                <li key={index} className="page-button">
+                                    <Link to={"/admin/"+lastGames1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }

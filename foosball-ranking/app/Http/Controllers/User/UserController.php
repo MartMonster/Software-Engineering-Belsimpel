@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserSummary;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -38,6 +39,15 @@ class UserController extends Controller
         $usPosElo->position = $this->getPosition();
         $usPosElo->elo = $this->getElo();
         return $usPosElo;
+    }
+
+    public function editUsername(Request $request)
+    {
+        if (User::where('username', $request->username)->first() != null)
+            return response('Username already taken', 400);
+        Auth::user()->username = $request->username;
+        Auth::user()->save();
+        return response('Username changed', 200);
     }
 
     public function getTop10()
