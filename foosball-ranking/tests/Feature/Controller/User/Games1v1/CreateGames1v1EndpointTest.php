@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\Games1v1;
+namespace Tests\Feature\Controller\User\Games1v1;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
