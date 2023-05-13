@@ -133,6 +133,21 @@ class UpdateGames1v1EndpointTest extends TestCase
         ->where('player1_score' , 7)->first());
     }
 
+    public function test_returns_appropiate_response_when_updating_non_existing_game(){
+        //First create the player
+        $player1 = User::factory()->create();
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',]);
+        //Try and update the game
+        $this->put('/games1v1/3',[
+            "player1_score"=> 2,
+            "player2_score"=> 3,
+            "player1_side"=> 2
+        ])->assertStatus(404);
+        
+    }
+
     public function test_returns_proper_response_code_when_not_authenticated_updating_1v1game_(): void
     {
         //First create the two players
