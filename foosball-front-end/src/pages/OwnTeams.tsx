@@ -25,10 +25,8 @@ export const OwnTeams = () => {
     }
     function getTeams() {
         getOwnTeams().then(teams => {
-            if (teams) {
-                setTeams(teams);
-                console.log(teams);
-            }
+            setTeams(teams);
+            console.log(teams);
         });
     }
     const [teams, setTeams] = useState<Team[]>([]);

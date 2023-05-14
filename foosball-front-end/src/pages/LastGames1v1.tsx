@@ -8,10 +8,8 @@ export const LastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
     useEffect(() => {
         getLast10Games1v1().then((data) => {
-            if (data.games !== undefined) {
-                setGames(data.games);
-                console.log(data);
-            }
+            setGames(data.games);
+            console.log(data);
         });
     }, []);
     return (

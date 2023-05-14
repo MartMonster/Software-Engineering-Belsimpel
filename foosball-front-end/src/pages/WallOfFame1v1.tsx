@@ -6,10 +6,8 @@ export const WallOfFame1v1 = () => {
     const [users, setUsers] = useState(new Array<User>());
     useEffect(() => {
         getTop10Users().then((data) => {
-            if (data !== undefined) {
-                setUsers(data);
-                console.log(data);
-            }
+            setUsers(data);
+            console.log(data);
         });
     }, []);
     return (

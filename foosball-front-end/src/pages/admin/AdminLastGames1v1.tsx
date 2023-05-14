@@ -21,14 +21,12 @@ export const AdminLastGames1v1 = () => {
         }
         let pageNumber = parseInt(page);
         getLast10Games1v1(pageNumber).then((data) => {
-            if (data.games !== undefined) {
-                setGames(data.games);
-                if (pageNumber > data.pagination.last_page || pageNumber < 1) {
-                    setSearchParams({ page: '1' });
-                }
-                setPaginateButtons(paginationButtons(data.pagination));
-                console.log(data);
+            setGames(data.games);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams({ page: '1' });
             }
+            setPaginateButtons(paginationButtons(data.pagination));
+            console.log(data);
         });
     }
     

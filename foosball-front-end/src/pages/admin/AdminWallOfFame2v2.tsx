@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getTop10Teams, Team } from '../../components/axios';
-import { deleteTeam } from '../../components/admin/Teams';
+import { Team } from '../../components/axios';
+import { deleteTeam, getTop10Teams } from '../../components/admin/Teams';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 
@@ -9,10 +9,8 @@ export const AdminWallOfFame2v2 = () => {
     const [teams, setTeams] = useState(new Array<Team>());
     const getTeams = useCallback(() => {
         getTop10Teams().then((data) => {
-            if (data !== undefined) {
-                setTeams(data);
-                console.log(data);
-            }
+            setTeams(data);
+            console.log(data);
         });
     }, [setTeams]);
     useEffect(() => {

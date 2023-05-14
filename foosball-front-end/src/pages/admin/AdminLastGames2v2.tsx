@@ -10,10 +10,8 @@ export const AdminLastGames2v2 = () => {
     const [games, setGames] = useState<Game2v2[]>([]);
     const getGames = useCallback(() => {
         getLast10Games2v2().then((data) => {
-            if (data !== undefined) {
-                setGames(data);
-                console.log(data);
-            }
+            setGames(data);
+            console.log(data);
         });
     }, [setGames]);
     useEffect(() => getGames, [getGames]);

@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getTop10Users, User } from '../../components/axios';
+import { User } from '../../components/axios';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { deleteUser } from '../../components/admin/Users';
+import { deleteUser, getTop10Users } from '../../components/admin/Users';
 
 export const wallOfFame1v1Route: string = "WallOfFame1v1"
 export const AdminWallOfFame1v1 = () => {
     const [users, setUsers] = useState(new Array<User>());
     const getUsers = useCallback(() => {
         getTop10Users().then((data) => {
-            if (data !== undefined) {
-                setUsers(data);
-                console.log(data);
-            }
+            setUsers(data);
+            console.log(data);
         });
     }, [setUsers]);
     

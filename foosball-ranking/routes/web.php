@@ -107,8 +107,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::prefix('/user')->group(function () {
                     Route::get('/', 'getTop10Users');
 
-                    Route::post('/', 'createPlayer');
-
                     Route::put('/{id}', 'editPlayer');
 
                     Route::delete('/{id}', 'deletePlayer');
