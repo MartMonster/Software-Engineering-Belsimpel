@@ -17,13 +17,12 @@ export const AdminLastGames1v1 = () => {
         let page = searchParams.get("page");
         if (page === null) {
             page = "1";
-            setSearchParams({ page: page });
         }
         let pageNumber = parseInt(page);
         getLast10Games1v1(pageNumber).then((data) => {
             setGames(data.games);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
-                setSearchParams({ page: '1' });
+                setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
             console.log(data);
@@ -101,9 +100,10 @@ export const AdminLastGames1v1 = () => {
             <div className="pagination-container">
                 <ul className="pagination">
                     {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
                         if (button === "...") {
                             return (<li key={index} className="page-nothing">{button}</li>)
-                        } else if (button.toString() === searchParams.get("page")) {
+                        } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
                                     <Link className='App-link' to={"/admin/"+lastGames1v1Route + "?page=" + button}>{button}</Link>

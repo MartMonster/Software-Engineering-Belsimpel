@@ -1,9 +1,12 @@
 import axios from 'axios';
-import { Team } from '../axios';
+import { PaginateInfo, Team } from '../axios';
 
-export async function getTop10Teams() {
+export async function getTop10Teams(page: number = 1) {
     let teams: Team[] = [];
-    await axios.get('admin/teams', {
+    let pagination: PaginateInfo;
+    let currentPage = 1;
+    let lastPage = 1;
+    await axios.get(`admin/teams?page=${page}`, {
         headers: {
             Accept: 'application/json'
         }
@@ -11,11 +14,14 @@ export async function getTop10Teams() {
         .then(response => {
             console.log(response);
             teams = response.data.data;
+            currentPage = response.data.current_page;
+            lastPage = response.data.last_page;
         })
         .catch(error => {
             console.log(error);
         })
-    return teams;
+    pagination = { current_page: currentPage, last_page: lastPage };
+    return {teams, pagination};
 }
 
 export async function editTeam(id:number, team_name:string) {

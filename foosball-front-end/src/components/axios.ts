@@ -212,9 +212,12 @@ export async function getLast10Games1v1(page:number = 1) {
     return {games, pagination};
 }
 
-export async function getOwnGames1v1() {
+export async function getOwnGames1v1(page: number = 1) {
     let games:Game1v1[] = [];
-    await axios.get('/games1v1/self', {
+    let pagination: PaginateInfo;
+    let currentPage = 1;
+    let lastPage = 1;
+    await axios.get(`/games1v1/self?page=${page}`, {
         headers: {
             Accept: 'application/json'
         }
@@ -222,11 +225,14 @@ export async function getOwnGames1v1() {
     .then(response => {
         console.log(response);
         games = response.data.data;
+        currentPage = response.data.current_page;
+        lastPage = response.data.last_page;
     })
     .catch(error => {
         console.log(error);
     });
-    return games;
+    pagination = { current_page: currentPage, last_page: lastPage };
+    return { games, pagination };
 }
 
 export interface Game2v2 {
@@ -237,9 +243,12 @@ export interface Game2v2 {
     team2_score: number
 }
 
-export async function getLast10Games2v2() {
-    let games:Game2v2[] = [];
-    await axios.get('/games2v2', {
+export async function getLast10Games2v2(page: number = 1) {
+    let games: Game2v2[] = [];
+    let pagination: PaginateInfo;
+    let currentPage = 1;
+    let lastPage = 1;
+    await axios.get(`/games2v2?page=${page}`, {
         headers: {
             Accept: 'application/json'
         }
@@ -247,16 +256,22 @@ export async function getLast10Games2v2() {
     .then(response => {
         console.log(response);
         games = response.data.data;
+        currentPage = response.data.current_page;
+        lastPage = response.data.last_page;
     })
     .catch(error => {
         console.log(error);
     });
-    return games;
+    pagination = { current_page: currentPage, last_page: lastPage };
+    return { games, pagination };
 }
 
-export async function getOwnGames2v2() {
-    let games:Game2v2[] = [];
-    await axios.get('/games2v2/self', {
+export async function getOwnGames2v2(page: number = 1) {
+    let games: Game2v2[] = [];
+    let pagination: PaginateInfo;
+    let currentPage = 1;
+    let lastPage = 1;
+    await axios.get(`/games2v2/self?page=${page}`, {
         headers: {
             Accept: 'application/json'
         }
@@ -264,16 +279,22 @@ export async function getOwnGames2v2() {
     .then(response => {
         console.log(response);
         games = response.data.data;
+        currentPage = response.data.current_page;
+        lastPage = response.data.last_page;
     })
     .catch(error => {
         console.log(error);
     });
-    return games;
+    pagination = { current_page: currentPage, last_page: lastPage };
+    return { games, pagination };
 }
 
-export async function getOwnTeams() {
-    let teams:Team[] = [];
-    await axios.get('/teams/self', {
+export async function getOwnTeams(page: number = 1) {
+    let teams: Team[] = [];
+    let pagination: PaginateInfo;
+    let currentPage = 1;
+    let lastPage = 1;
+    await axios.get(`/teams/self?page=${page}`, {
         headers: {
             Accept: 'application/json'
         }
@@ -281,11 +302,14 @@ export async function getOwnTeams() {
     .then(response => {
         console.log(response);
         teams = response.data.data;
+        currentPage = response.data.current_page;
+        lastPage = response.data.last_page;
     })
     .catch(error => {
         console.log(error);
     });
-    return teams;
+    pagination = { current_page: currentPage, last_page: lastPage };
+    return { teams, pagination };
 }
 
 export async function makeGame1v1(player2_username:string, player1_score:number, player2_score:number, player1_side:number) {

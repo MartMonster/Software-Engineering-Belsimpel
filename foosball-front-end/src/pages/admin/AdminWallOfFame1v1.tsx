@@ -1,18 +1,33 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { User } from '../../components/axios';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import { deleteUser, getTop10Users } from '../../components/admin/Users';
+import paginationButtons from '../../components/paginate';
 
 export const wallOfFame1v1Route: string = "WallOfFame1v1"
 export const AdminWallOfFame1v1 = () => {
     const [users, setUsers] = useState(new Array<User>());
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [pageNumber, setPageNumber] = useState(1);
+    
     const getUsers = useCallback(() => {
-        getTop10Users().then((data) => {
-            setUsers(data);
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+        }
+        let pageNumber = parseInt(page);
+        setPageNumber(pageNumber);
+        getTop10Users(pageNumber).then((data) => {
+            setUsers(data.users);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams();
+            }
+            setPaginateButtons(paginationButtons(data.pagination));
             console.log(data);
         });
-    }, [setUsers]);
+    }, [searchParams, setSearchParams]);
     
     useEffect(() => {
         getUsers();
@@ -50,7 +65,7 @@ export const AdminWallOfFame1v1 = () => {
                     {users.map((user: User, index) => {
                         return (
                             <tr key={user.id}>
-                                <td>{index + 1}</td>
+                                <td>{(index + 1)*pageNumber}</td>
                                 <td>{user.username}</td>
                                 <td>{user.elo}</td>
                                 <td>
@@ -79,6 +94,28 @@ export const AdminWallOfFame1v1 = () => {
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
+                        if (button === "...") {
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === page || (page === null && button === 1)) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={"/admin/" + wallOfFame1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={index} className="page-button">
+                                    <Link className='App-link' to={"/admin/" + wallOfFame1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }

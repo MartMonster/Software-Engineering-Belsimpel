@@ -178,6 +178,24 @@ th {
   margin: 1em 1em .5em 0em;
 }
 
+.left-3 {
+  width: 33%;
+  text-align: center;
+  margin: 1em 1em .5em 0em;
+}
+
+.right-3 {
+  width: 33%;
+  text-align: center;
+  margin: 1em 1em .5em 0em;
+}
+
+.middle-3 {
+  width: 33%;
+  text-align: center;
+  margin: 1em 1em .5em 0em;
+}
+
 .editButton {
   background-color: #3E4451;
   /* background-color: orange; */
@@ -246,6 +264,18 @@ th {
 }
 
 .Modal .right {
+  padding: .1em;
+}
+
+.Modal .left-3 {
+  padding: .1em;
+}
+
+.Modal .right-3 {
+  padding: .1em;
+}
+
+.Modal .middle-3 {
   padding: .1em;
 }
 

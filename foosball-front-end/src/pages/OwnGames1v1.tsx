@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getOwnGames1v1, Game1v1, deleteGame1v1 } from '../components/axios';
 import { editGame1v1Route } from './EditGame1v1';
 import { lastGames1v1Route } from './LastGames1v1';
 import Modal from 'react-modal';
+import paginationButtons from '../components/paginate';
 
 Modal.setAppElement('html');
 export const ownGames1v1Route: string = "self";
 export const OwnGames1v1 = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [gameId, setGameId] = useState(0);
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+
     function openModal(id:number) {
         setIsOpen(true);
         setGameId(id);
@@ -20,13 +24,24 @@ export const OwnGames1v1 = () => {
     }
 
     const [games, setGames] = useState<Game1v1[]>([]);
-    function getGames() {
-        getOwnGames1v1().then((data) => {
-            setGames(data);
+    const getGames = useCallback (() => {
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+        }
+        let pageNumber = parseInt(page);
+        getOwnGames1v1(pageNumber).then((data) => {
+            setGames(data.games);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams();
+            }
+            setPaginateButtons(paginationButtons(data.pagination));
             console.log(data);
         });
-    }
-    useEffect(getGames, []);
+    }, [searchParams, setSearchParams])
+
+    useEffect(getGames, [getGames]);
+
     async function deleteGame() {
         if(await deleteGame1v1(gameId)) {
             getGames();
@@ -66,46 +81,6 @@ export const OwnGames1v1 = () => {
                                     <td>{game.player2_username}</td>
                                     <td>{game.player2_score}</td>
                                 </tr>
-                                {/* <tr >
-                                    <td>
-                                        <div className="tableCol">
-                                            <p>
-                                                Red
-                                            </p>
-                                            <p>
-                                                Blue
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="tableCol">
-                                            <p>
-                                                {game.player1_username}
-                                            </p>
-                                            <p>
-                                                {game.player2_username}
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="tableCol">
-                                            <p>
-                                                {game.player1_score}
-                                            </p>
-                                            <p>
-                                                {game.player2_score}
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <Link to={'/' + lastGames1v1Route + '/' + editGame1v1Route + '/' + game.id}>
-                                            <button className='editButton'>Edit</button>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <button className='deleteButton' onClick={() => openModal(game.id)}>Delete</button>
-                                    </td>
-                                </tr> */}
                             </React.Fragment>
                         );
                     })}
@@ -124,6 +99,28 @@ export const OwnGames1v1 = () => {
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
+                        if (button === "...") {
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === page || (page === null && button === 1)) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={'/' + lastGames1v1Route+ '/' + ownGames1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={index} className="page-button">
+                                    <Link className='App-link' to={'/' + lastGames1v1Route + '/' + ownGames1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }

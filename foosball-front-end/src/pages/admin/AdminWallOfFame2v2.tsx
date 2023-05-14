@@ -1,38 +1,68 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Team } from '../../components/axios';
 import { deleteTeam, getTop10Teams } from '../../components/admin/Teams';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';
+import paginationButtons from '../../components/paginate';
 
 export const wallOfFame2v2Route: string = "WallOfFame2v2"
 export const AdminWallOfFame2v2 = () => {
     const [teams, setTeams] = useState(new Array<Team>());
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [pageNumber, setPageNumber] = useState(1);
+    
     const getTeams = useCallback(() => {
-        getTop10Teams().then((data) => {
-            setTeams(data);
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+        }
+        let pageNumber = parseInt(page);
+        setPageNumber(pageNumber);
+        getTop10Teams(pageNumber).then((data) => {
+            setTeams(data.teams);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams();
+            }
+            setPaginateButtons(paginationButtons(data.pagination));
             console.log(data);
         });
-    }, [setTeams]);
+    }, [setTeams, searchParams, setSearchParams]);
+
     useEffect(() => {
         getTeams();
     }, [getTeams]);
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    
     const [teamId, setTeamId] = useState(0);
-    function openModal(id: number) {
-        setIsOpen(true);
-        setTeamId(id);
+    const [teamName, setTeamName] = useState('');
+
+    function openDeleteModal() {
+        setOptionsModalIsOpen(false);
+        setDeleteModalIsOpen(true);
     }
 
-    function closeModal() {
-        setIsOpen(false);
+    function closeDeleteModal() {
+        setDeleteModalIsOpen(false);
     }
 
     async function removeTeam() {
         if (await deleteTeam(teamId)) {
             getTeams();
-            closeModal();
+            closeDeleteModal();
         }
+    }
+
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    function openOptionsModal(id:number, name:string) {
+        setTeamId(id);
+        setTeamName(name);
+        setOptionsModalIsOpen(true);
+    }
+
+    function closeOptionsModal() {
+        setOptionsModalIsOpen(false);
     }
     return (
         <div className="App">
@@ -49,8 +79,8 @@ export const AdminWallOfFame2v2 = () => {
                 <tbody>
                     {teams.map((team: Team, index) => {
                         return (
-                            <tr key={team.id}>
-                                <td>{index + 1}</td>
+                            <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
+                                <td>{(index + 1)*pageNumber}</td>
                                 <td>{team.team_name}</td>
                                 <td>
                                     <div className="tableCol">
@@ -59,32 +89,63 @@ export const AdminWallOfFame2v2 = () => {
                                     </div>
                                 </td>
                                 <td>{team.elo}</td>
-                                <td>
-                                    <Link to={`/admin/teams/edit/${team.id}`}>
-                                        <button className='editButton'>Edit</button>
-                                    </Link>
-                                </td>
-                                <td>
-                                    <button className='deleteButton' onClick={() => openModal(team.id)}>Delete</button>
-                                </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
-            <Modal className="Modal" isOpen={modalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeModal}
+            <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeOptionsModal}>
+                <h2>Options for team: {teamName}</h2>
+                <div className="row">
+                    <div className='left-3'>
+                        <button onClick={closeOptionsModal}>Close</button>
+                    </div>
+                    <div className='middle-3'>
+                        <Link to={`/admin/teams/edit/${teamId}`}>
+                            <button className='editButton'>Edit</button>
+                        </Link>
+                    </div>
+                    <div className='right-3'>
+                        <button onClick={() => openDeleteModal()} className='deleteButton'>Delete</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this team?</h2>
                 <div className="row">
                     <div className='left'>
-                        <button onClick={closeModal}>Cancel</button>
+                        <button onClick={closeDeleteModal}>Cancel</button>
                     </div>
                     <div className='right'>
                         <button onClick={removeTeam} className='deleteButton'>Delete</button>
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
+                        if (button === "...") {
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === page || (page === null && button === 1)) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={"/admin/" + wallOfFame2v2Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={index} className="page-button">
+                                    <Link className='App-link' to={"/admin/" + wallOfFame2v2Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }
