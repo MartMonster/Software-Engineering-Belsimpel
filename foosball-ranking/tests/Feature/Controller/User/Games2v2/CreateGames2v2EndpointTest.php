@@ -11,7 +11,7 @@ class CreateGames2v2EndpointTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function dummy_test(): void
+    public function test_dummy(): void
     {
         $this->assertTrue(true);
     }
