@@ -8,10 +8,8 @@ export const LastGames2v2 = () => {
     const [games, setGames] = useState<Game2v2[]>([]);
     useEffect(() => {
         getLast10Games2v2().then((data) => {
-            if (data !== undefined) {
-                setGames(data);
-                console.log(data);
-            }
+            setGames(data);
+            console.log(data);
         });
     }, []);
     return (

@@ -112,7 +112,7 @@ interface UserSummary {
 }
 
 export async function getUserSummary() {
-    let data: UserSummary | undefined;
+    let data: UserSummary = {username: '', position: 0, elo: 0};
     await axios.get('/user/summary', {
         headers: {
             Accept: 'application/json'
@@ -135,7 +135,7 @@ export interface User{
 }
 
 export async function getTop10Users() {
-    let users:User[] | undefined;
+    let users:User[] = [];
     await axios.get('/user', {
         headers: {
             Accept: 'application/json'
@@ -160,7 +160,7 @@ export interface Team{
 }
 
 export async function getTop10Teams() {
-    let teams:Team[] | undefined;
+    let teams:Team[] = [];
     await axios.get('/teams', {
         headers: {
             Accept: 'application/json'
@@ -190,7 +190,7 @@ export interface PaginateInfo {
 }
 
 export async function getLast10Games1v1(page:number = 1) {
-    let games:Game1v1[] | undefined;
+    let games:Game1v1[] = [];
     let pagination:PaginateInfo;
     let currentPage = 1;
     let lastPage = 1;
@@ -213,7 +213,7 @@ export async function getLast10Games1v1(page:number = 1) {
 }
 
 export async function getOwnGames1v1() {
-    let games:Game1v1[] | undefined;
+    let games:Game1v1[] = [];
     await axios.get('/games1v1/self', {
         headers: {
             Accept: 'application/json'
@@ -238,7 +238,7 @@ export interface Game2v2 {
 }
 
 export async function getLast10Games2v2() {
-    let games:Game2v2[] | undefined;
+    let games:Game2v2[] = [];
     await axios.get('/games2v2', {
         headers: {
             Accept: 'application/json'
@@ -255,7 +255,7 @@ export async function getLast10Games2v2() {
 }
 
 export async function getOwnGames2v2() {
-    let games:Game2v2[] | undefined;
+    let games:Game2v2[] = [];
     await axios.get('/games2v2/self', {
         headers: {
             Accept: 'application/json'
@@ -272,7 +272,7 @@ export async function getOwnGames2v2() {
 }
 
 export async function getOwnTeams() {
-    let teams:Team[] | undefined;
+    let teams:Team[] = [];
     await axios.get('/teams/self', {
         headers: {
             Accept: 'application/json'

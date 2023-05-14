@@ -22,10 +22,8 @@ export const OwnGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
     function getGames() {
         getOwnGames1v1().then((data) => {
-            if (data !== undefined) {
-                setGames(data);
-                console.log(data);
-            }
+            setGames(data);
+            console.log(data);
         });
     }
     useEffect(getGames, []);

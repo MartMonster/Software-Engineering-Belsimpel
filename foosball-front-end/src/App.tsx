@@ -30,6 +30,8 @@ import { AdminCreateTeam } from './pages/admin/AdminCreateTeam';
 import { AdminEditGame1v1 } from './pages/admin/AdminEditGame1v1';
 import { AdminEditGame2v2 } from './pages/admin/AdminEditGame2v2';
 import PasswordReset from './pages/PasswordReset';
+import { AdminWallOfFame1v1 } from './pages/admin/AdminWallOfFame1v1';
+import { AdminWallOfFame2v2 } from './pages/admin/AdminWallOfFame2v2';
 
 function App() {
   return (
@@ -63,8 +65,8 @@ function App() {
         </Route>
         <Route path='admin' element={<AdminNavbar />}>
           <Route index element={<AdminDashboard />} />
-          <Route path={wallOfFame1v1Route} element={<WallOfFame1v1 />} />
-          <Route path={wallOfFame2v2Route} element={<WallOfFame2v2 />} />
+          <Route path={wallOfFame1v1Route} element={<AdminWallOfFame1v1 />} />
+          <Route path={wallOfFame2v2Route} element={<AdminWallOfFame2v2 />} />
           <Route path={addGame1v1Route} element={<AdminAddGame1v1 />} />
           <Route path={addGame2v2Route} element={<AdminAddGame2v2 />} />
           <Route path={lastGames1v1Route}>

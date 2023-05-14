@@ -277,3 +277,48 @@ th {
 .editDeleteGame td {
   border: 0px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+  gap: 0.3em;
+}
+
+.pagination .page-button .App-link {
+  font-size: 1em;
+  font-weight: 600;
+  color: #00a8ff;
+  background: #fff;
+  padding: .2em .5em;
+  border-radius: .3em;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.pagination-container ul {
+  list-style: none;
+}
+
+.pagination .page-button .App-link:hover {
+  color: #fff;
+  background: #00a8ff;
+}
+
+.pagination .page-button-active .App-link {
+  font-size: 1em;
+  font-weight: 600;
+  color: #fff;
+  background: #00a8ff;
+  padding: .2em .5em;
+  border-radius: .3em;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.pagination .App-link {
+  color: black;
+  background-color: inherit;
+  text-decoration: none;
+}

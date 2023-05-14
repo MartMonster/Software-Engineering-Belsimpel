@@ -16,11 +16,9 @@ const Dashboard = () => {
     const [elo, setElo] = useState(0);
     useEffect(() => {
         getUserSummary().then((data) => {
-            if (data !== undefined) {
-                setUsername(data.username);
-                setPosition(data.position);
-                setElo(data.elo);
-            }
+            setUsername(data.username);
+            setPosition(data.position);
+            setElo(data.elo);
         });
     }, []);
     return (
