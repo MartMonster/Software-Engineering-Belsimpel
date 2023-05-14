@@ -19,9 +19,13 @@ export const AdminLastGames1v1 = () => {
             page = "1";
             setSearchParams({ page: page });
         }
-        getLast10Games1v1(parseInt(page)).then((data) => {
+        let pageNumber = parseInt(page);
+        getLast10Games1v1(pageNumber).then((data) => {
             if (data.games !== undefined) {
                 setGames(data.games);
+                if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                    setSearchParams({ page: '1' });
+                }
                 setPaginateButtons(paginationButtons(data.pagination));
                 console.log(data);
             }
@@ -100,12 +104,18 @@ export const AdminLastGames1v1 = () => {
                 <ul className="pagination">
                     {paginateButtons.map((button, index) => {
                         if (button === "...") {
-                            return (<li key={index} className="page-button">{button}</li>)
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === searchParams.get("page")) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={"/admin/"+lastGames1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
                         } else {
                             return (
-                                <li key={index} className="page-button">
-                                    <Link to={"/admin/"+lastGames1v1Route + "?page=" + button}>{button}</Link>
-                                </li>
+                            <li key={index} className="page-button">
+                                <Link className='App-link' to={"/admin/" + lastGames1v1Route + "?page=" + button}>{button}</Link>
+                            </li>
                             );
                         }
                     })}
