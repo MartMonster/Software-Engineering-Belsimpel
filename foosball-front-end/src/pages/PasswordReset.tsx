@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 const PasswordReset = () => {
     const params = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     console.log(params.hash)
     console.log(searchParams.get("email"))
     return (
