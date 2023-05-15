@@ -39,11 +39,11 @@ class TeamsController extends Controller
 
     public function createTeam(Request $request)
     {
-        $player2_id = User::where('username', $request->player2_username)->first()->id;
-        if (is_null($player2_id)) {
+        $player2 = User::where('username', $request->player2_username)->first();
+        if (is_null($player2)) {
             return response('Second user not found', 404);
         }
-        return FoosballTeam::createTeam(Auth::id(), $player2_id, $request->team_name);
+        return FoosballTeam::createTeam(Auth::id(), $player2->id, $request->team_name);
 
     }
 

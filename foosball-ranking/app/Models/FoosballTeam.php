@@ -15,17 +15,25 @@ class FoosballTeam extends Model
         $team = new FoosballTeam;
         $team->player1_id = $player1_id;
         $team->player2_id = $player2_id;
-        if (Games2v2Controller::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
-            return response("Bad request", 400);
 
         if (is_null($team->player2_id))
             return response("Second user not found", 404);
+        if(is_null($team_name)||$team_name=="")
+            return response("Invalid Team Name", 400);
+        
+        /// TODO: remove this weird dependency 
+        if (Games2v2Controller::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
+            return response("Bad request", 400);
+
+        if (FoosballTeam::where('team_name',$team_name)->first()!=null)
+            return response("Team name already taken",400);
+
         if ($team->player1_id == $team->player2_id)
             return response("Bad request", 400);
         $team->team_name = $team_name;
 
         $team->save();
-        return response("Ok", 200);
+        return response("Ok", 201);
 
     }
 
