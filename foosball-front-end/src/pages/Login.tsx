@@ -29,6 +29,7 @@ export const Login = () => {
                         <button type='submit'>Login</button>
                     </div>
                 </form>
+                <p>Forgot password? <Link className='App-link' to='/forgot-password'>Click here!</Link></p>
                 <p>Don't have an account yet? <Link className="App-link" to={registerRoute}>Register</Link> here!</p>
             </div>
         </div>

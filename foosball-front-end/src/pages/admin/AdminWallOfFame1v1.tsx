@@ -29,9 +29,7 @@ export const AdminWallOfFame1v1 = () => {
         });
     }, [searchParams, setSearchParams]);
     
-    useEffect(() => {
-        getUsers();
-    }, [getUsers]);
+    useEffect(getUsers, [getUsers]);
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [userId, setUserId] = useState(0);

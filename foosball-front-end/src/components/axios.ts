@@ -87,6 +87,51 @@ export async function logout() {
     });
 }
 
+export async function forgotPassword(email:string) {
+    await cookie();
+    let b: boolean = false;
+    await axios.post('/forgot-password', {
+        headers: {
+            Accept: 'application/json'
+        },
+        email
+    })
+    .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+            console.log(response);
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return b;
+}
+
+export async function resetPassword(email:string, password:string, password_confirmation:string, token:string) {
+    await cookie();
+    let b: boolean = false;
+    await axios.post('/reset-password', {
+        headers: {
+            Accept: 'application/json'
+        },
+        email,
+        password,
+        password_confirmation,
+        token
+    })
+    .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+            console.log(response);
+            b = true;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return b;
+}
+
 
 export async function getIsAdmin() {
     let b: boolean = false;
