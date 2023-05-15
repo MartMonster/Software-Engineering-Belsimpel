@@ -1,13 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { getLast10Games2v2, Game2v2, deleteGame2v2 } from '../../components/axios';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { getLast10Games2v2, Game2v2 } from '../../components/axios';
+import { deleteGame2v2 } from '../../components/admin/Games';
+import { Link, useSearchParams } from 'react-router-dom';
 import { editGame2v2Route } from '../EditGame2v2';
 import Modal from 'react-modal';
+import paginationButtons from '../../components/paginate';
 
 export const lastGames2v2Route: string = "LastGames2v2"
 export const AdminLastGames2v2 = () => {
-    useEffect(getGames, []);
     const [games, setGames] = useState<Game2v2[]>([]);
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const getGames = useCallback(() => {
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+        }
+        let pageNumber = parseInt(page);
+        getLast10Games2v2(pageNumber).then((data) => {
+            setGames(data.games);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams();
+            }
+            setPaginateButtons(paginationButtons(data.pagination));
+            console.log(data);
+        });
+    }, [searchParams, setSearchParams]);
+
+    useEffect(getGames, [getGames]);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [gameId, setGameId] = useState(0);
     function openModal(id: number) {
@@ -25,15 +46,8 @@ export const AdminLastGames2v2 = () => {
             closeModal();
         }
     }
-
-    function getGames() {
-        getLast10Games2v2().then((data) => {
-            if (data !== undefined) {
-                setGames(data);
-                console.log(data);
-            }
-        });
-    }
+    
+    
     return (
         <div className="App">
             <h1>Last 10 2v2 games</h1>
@@ -68,7 +82,7 @@ export const AdminLastGames2v2 = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    <Link to={'/' + lastGames2v2Route + '/' + editGame2v2Route + '/' + game.id}>
+                                    <Link to={editGame2v2Route + '/' + game.id}>
                                         <button className='editButton'>Edit</button>
                                     </Link>
                                 </td>
@@ -93,6 +107,28 @@ export const AdminLastGames2v2 = () => {
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
+                        if (button === "...") {
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === page || (page === null && button === 1)) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={"/admin/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={index} className="page-button">
+                                    <Link className='App-link' to={"/admin/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }

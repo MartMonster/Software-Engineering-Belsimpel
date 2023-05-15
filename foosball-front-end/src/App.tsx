@@ -27,6 +27,15 @@ import { AdminLastGames1v1 } from './pages/admin/AdminLastGames1v1';
 import { AdminLastGames2v2 } from './pages/admin/AdminLastGames2v2';
 import { AdminNavbar } from './pages/admin/AdminNavbar';
 import { AdminCreateTeam } from './pages/admin/AdminCreateTeam';
+import { AdminEditGame1v1 } from './pages/admin/AdminEditGame1v1';
+import { AdminEditGame2v2 } from './pages/admin/AdminEditGame2v2';
+import PasswordReset from './pages/PasswordReset';
+import { AdminWallOfFame1v1 } from './pages/admin/AdminWallOfFame1v1';
+import { AdminWallOfFame2v2 } from './pages/admin/AdminWallOfFame2v2';
+import ForgotPassword from './pages/ForgotPassword';
+import { AdminEditUser } from './pages/admin/AdminEditUser';
+import { AdminEditTeam } from './pages/admin/AdminEditTeam';
+import { EditUsername, editUsernameRoute } from './pages/EditUsername';
 
 function App() {
   return (
@@ -34,39 +43,53 @@ function App() {
       <Routes>
         <Route path={loginRoute} element={<Login />} />
         <Route path={registerRoute} element={<Register />} />
-        <Route path='/' element={<Navbar/>}>
-          <Route index element={<Dashboard/>}/>
-          
-          <Route path={wallOfFame1v1Route} element={<WallOfFame1v1/>}/>
-          <Route path={wallOfFame2v2Route} element={<WallOfFame2v2/>}/>
-          <Route path={addGame1v1Route} element={<AddGame1v1/>}/>
-          <Route path={addGame2v2Route} element={<AddGame2v2/>}/>
-          <Route path={lastGames1v1Route}>
-            <Route index element={<LastGames1v1/>}/>
-            <Route path={ownGames1v1Route} element={<OwnGames1v1/>}/>
-            <Route path={editGame1v1Route+'/:id'} element={<EditGame1v1/>}/>
-          </Route>
-          <Route path={lastGames2v2Route}>
-            <Route index element={<LastGames2v2/>}/>
-            <Route path={ownGames2v2Route} element={<OwnGames2v2/>}/>
-            <Route path={editGame2v2Route+'/:id'} element={<EditGame2v2/>}/>
-          </Route>
-          <Route path={createTeamRoute} element={<CreateTeam/>}/>
-          <Route path={ownTeamsRoute}>
-            <Route index element={<OwnTeams />}/>
-            <Route path={editTeamRoute+'/:id'} element={<EditTeam/>}/>
-          </Route>
-          <Route path="*" element={<Page404/>}/>
-        </Route>
-        <Route path='admin' element={<AdminNavbar/>}>
-          <Route index element={<AdminDashboard/>}/>
+        <Route path='password-reset/:hash' element={<PasswordReset />} />
+        <Route path='forgot-password' element={<ForgotPassword />} />
+        <Route path='/' element={<Navbar />}>
+          <Route index element={<Dashboard />} />
           <Route path={wallOfFame1v1Route} element={<WallOfFame1v1 />} />
           <Route path={wallOfFame2v2Route} element={<WallOfFame2v2 />} />
+          <Route path={addGame1v1Route} element={<AddGame1v1 />} />
+          <Route path={addGame2v2Route} element={<AddGame2v2 />} />
+          <Route path={lastGames1v1Route}>
+            <Route index element={<LastGames1v1 />} />
+            <Route path={ownGames1v1Route} element={<OwnGames1v1 />} />
+            <Route path={editGame1v1Route + '/:id'} element={<EditGame1v1 />} />
+          </Route>
+          <Route path={lastGames2v2Route}>
+            <Route index element={<LastGames2v2 />} />
+            <Route path={ownGames2v2Route} element={<OwnGames2v2 />} />
+            <Route path={editGame2v2Route + '/:id'} element={<EditGame2v2 />} />
+          </Route>
+          <Route path={createTeamRoute} element={<CreateTeam />} />
+          <Route path={ownTeamsRoute}>
+            <Route index element={<OwnTeams />} />
+            <Route path={editTeamRoute + '/:id'} element={<EditTeam />} />
+          </Route>
+          <Route path={editUsernameRoute} element={<EditUsername />} />
+          <Route path="*" element={<Page404 />} />
+        </Route>
+        <Route path='admin' element={<AdminNavbar />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path={wallOfFame1v1Route} element={<AdminWallOfFame1v1 />} />
+          <Route path={wallOfFame2v2Route} element={<AdminWallOfFame2v2 />} />
           <Route path={addGame1v1Route} element={<AdminAddGame1v1 />} />
           <Route path={addGame2v2Route} element={<AdminAddGame2v2 />} />
-          <Route path={lastGames1v1Route} element={<AdminLastGames1v1 />} />
-          <Route path={lastGames2v2Route} element={<AdminLastGames2v2 />} />
+          <Route path={lastGames1v1Route}>
+            <Route index element={<AdminLastGames1v1 />} />
+            <Route path={editGame2v2Route + '/:id'} element={<AdminEditGame1v1 />} />
+          </Route>
+          <Route path={lastGames2v2Route}>
+            <Route index element={<AdminLastGames2v2 />} />
+            <Route path={editGame2v2Route + '/:id'} element={<AdminEditGame2v2 />} />
+          </Route>
           <Route path={createTeamRoute} element={<AdminCreateTeam />} />
+          <Route path={'/admin/user/edit/:id'} element={<AdminEditUser />} />
+          <Route path={'/admin/teams/edit/:id'} element={<AdminEditTeam />} />
+          <Route path="*" element={<Page404 />} />
+        </Route>
+        <Route path='/' element={<AdminNavbar />}>
+          <Route index element={<Page404 />} />
         </Route>
       </Routes>
     </BrowserRouter>

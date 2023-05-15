@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ownTeamsRoute } from "../OwnTeams";
-import { makeTeam } from '../../components/axios';
+import { makeTeam } from '../../components/admin/Teams';
 
 export const createTeamRoute: string = "CreateTeam"
 export const AdminCreateTeam = () => {
@@ -10,10 +10,11 @@ export const AdminCreateTeam = () => {
         navigate(ownTeamsRoute);
     }
     const [teamName, setTeamName] = useState("");
-    const [teammate, setTeammate] = useState("");
+    const [player1, setPlayer1] = useState("");
+    const [player2, setPlayer2] = useState("");
     const makeTeamLocal = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await makeTeam(teamName, teammate)) {
+        if(await makeTeam(teamName, player1, player2)) {
             navigateToOwnTeams()
         }
     }
@@ -27,11 +28,11 @@ export const AdminCreateTeam = () => {
                 </label>
                 <label>
                     Username
-                    <input type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
+                    <input type="text" placeholder="Username" onChange={e => setPlayer1(e.target.value)}/>
                 </label>
                 <label>
                     Username
-                    <input type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)} />
+                    <input type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)} />
                 </label>
                 <button type="submit">Create team</button>
             </form>

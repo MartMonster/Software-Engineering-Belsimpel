@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\TeamsController;
-use App\Models\User;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\Games1v1Controller;
+use App\Http\Controllers\User\Games2v2Controller;
+use App\Http\Controllers\User\TeamsController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Games1v1Controller;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Games2v2Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', 'getTop10');
 
             Route::get('/summary', 'getPosElo');
+
+            Route::put('/username', 'editUsername');
         });
     });
 
@@ -77,15 +78,44 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/admin')->group(function () {
         Route::controller(AdminController::class)->group(function () {
-            Route::post('/games1v1', 'createGame');
+            Route::get('/', 'isAdmin');
+            Route::middleware(['admin'])->group(function () {
+                Route::prefix('/games1v1')->group(function () {
+                    Route::post('/', 'create1v1Game');
 
-            Route::post('/games2v2', 'create2v2Game');
-            
-            Route::put('/games1v1/{id}', 'editGame');
-            
-            Route::delete('/user/{id}', 'deletePlayer');
+                    Route::put('/{id}', 'edit1v1Game');
+
+                    Route::delete('/{id}', 'delete1v1Game');
+                });
+
+                Route::prefix('/games2v2')->group(function () {
+                    Route::post('/', 'create2v2Game');
+
+                    Route::put('/{id}', 'edit2v2Game');
+
+                    Route::delete('/{id}', 'delete2v2Game');
+                });
+
+                Route::prefix('/teams')->group(function () {
+                    Route::get('/', 'getTop10Teams');
+
+                    Route::post('/', 'createTeam');
+
+                    Route::put('/{id}', 'updateTeam');
+
+                    Route::delete('/{id}', 'deleteTeam');
+                });
+
+                Route::prefix('/user')->group(function () {
+                    Route::get('/', 'getTop10Users');
+
+                    Route::put('/{id}', 'editPlayer');
+
+                    Route::delete('/{id}', 'deletePlayer');
+                });
+            });
         });
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

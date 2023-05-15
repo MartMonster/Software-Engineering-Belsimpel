@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-//// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-//use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract/*,
-                                    CanResetPasswordContract*/
+    AuthorizableContract,
+    CanResetPasswordContract, MustVerifyEmail
 {
     use Authenticatable, Authorizable, CanResetPassword, HasApiTokens, HasFactory, Notifiable;
 
@@ -51,4 +51,26 @@ class User extends Model implements AuthenticatableContract,
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function hasVerifiedEmail()
+    {
+        // TODO: Implement hasVerifiedEmail() method.
+        return $this->email_verified_at != null;
+    }
+
+    public function markEmailAsVerified()
+    {
+        // TODO: Implement markEmailAsVerified() method.
+        $this->email_verified_at = now();
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        // TODO: Implement sendEmailVerificationNotification() method.
+    }
+
+    public function getEmailForVerification()
+    {
+        // TODO: Implement getEmailForVerification() method.
+    }
 }

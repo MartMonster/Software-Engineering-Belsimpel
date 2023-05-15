@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getOwnTeams, Team, deleteTeam } from '../components/axios';
 import Modal from 'react-modal';
 import { editTeamRoute } from './EditTeam';
+import paginationButtons from '../components/paginate';
 
 export const ownTeamsRoute: string = "/Teams";
 export const OwnTeams = () => {
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [modalIsOpen, setIsOpen] = useState(false);
     const [teamId, setTeamId] = useState(0);
     function openModal(id: number) {
@@ -23,16 +27,23 @@ export const OwnTeams = () => {
             closeModal();
         }
     }
-    function getTeams() {
-        getOwnTeams().then(teams => {
-            if (teams) {
-                setTeams(teams);
-                console.log(teams);
+    const getTeams = useCallback(() => {
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+        }
+        let pageNumber = parseInt(page);
+        getOwnTeams(pageNumber).then(data => {
+            setTeams(data.teams);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams();
             }
+            setPaginateButtons(paginationButtons(data.pagination));
+            console.log(data);
         });
-    }
+    }, [searchParams, setSearchParams])
     const [teams, setTeams] = useState<Team[]>([]);
-    useEffect(getTeams, []);
+    useEffect(getTeams, [getTeams]);
     return (
         <div className="App">
             <h1>Your teams</h1>
@@ -82,6 +93,28 @@ export const OwnTeams = () => {
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
+                        if (button === "...") {
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === page || (page === null && button === 1)) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={ownTeamsRoute + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={index} className="page-button">
+                                    <Link className='App-link' to={ownTeamsRoute + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }

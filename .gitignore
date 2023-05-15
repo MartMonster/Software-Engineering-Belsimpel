@@ -24,5 +24,7 @@ Homestead.json
 /.idea
 composer.lock
 # package-lock.json
-.scannerwork/.sonar_lock
-.scannerwork/report-task.txt
+.scannerwork/
+coverage.xml
+
+reports/

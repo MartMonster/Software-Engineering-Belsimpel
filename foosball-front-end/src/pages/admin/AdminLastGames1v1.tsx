@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { getLast10Games1v1, Game1v1, deleteGame1v1 } from '../../components/axios';
+import { getLast10Games1v1, Game1v1 } from '../../components/axios';
+import { deleteGame1v1 } from '../../components/admin/Games';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { editGame1v1Route } from '../EditGame1v1';
+import paginationButtons from '../../components/paginate';
 
 export const lastGames1v1Route: string = "LastGames1v1"
 export const AdminLastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
-    useEffect(getGames, []);
+    const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    useEffect(getGames, [searchParams, setSearchParams]);
 
     function getGames() {
-        getLast10Games1v1().then((data) => {
-            if (data !== undefined) {
-                setGames(data);
-                console.log(data);
+        let page = searchParams.get("page");
+        if (page === null) {
+            page = "1";
+        }
+        let pageNumber = parseInt(page);
+        getLast10Games1v1(pageNumber).then((data) => {
+            setGames(data.games);
+            if (pageNumber > data.pagination.last_page || pageNumber < 1) {
+                setSearchParams();
             }
+            setPaginateButtons(paginationButtons(data.pagination));
+            console.log(data);
         });
     }
     
@@ -46,16 +57,16 @@ export const AdminLastGames1v1 = () => {
                         <th>Scores</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='editDeleteGame'>
                     {games.map((game: Game1v1, index) => {
                         return (
-                            <>
+                            <React.Fragment key={index}>
                                 <tr>
                                     <td>Red</td>
                                     <td>{game.player1_username}</td>
                                     <td>{game.player1_score}</td>
                                     <td rowSpan={2}>
-                                        <Link to={'/' + lastGames1v1Route + '/' + editGame1v1Route + '/' + game.id}>
+                                        <Link to={editGame1v1Route + '/' + game.id}>
                                             <button className='editButton'>Edit</button>
                                         </Link>
                                     </td>
@@ -68,7 +79,7 @@ export const AdminLastGames1v1 = () => {
                                     <td>{game.player2_username}</td>
                                     <td>{game.player2_score}</td>
                                 </tr>
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </tbody>
@@ -86,6 +97,28 @@ export const AdminLastGames1v1 = () => {
                     </div>
                 </div>
             </Modal>
+            <div className="pagination-container">
+                <ul className="pagination">
+                    {paginateButtons.map((button, index) => {
+                        let page = searchParams.get("page");
+                        if (button === "...") {
+                            return (<li key={index} className="page-nothing">{button}</li>)
+                        } else if (button.toString() === page || (page === null && button === 1)) {
+                            return (
+                                <li key={index} className="page-button-active">
+                                    <Link className='App-link' to={"/admin/"+lastGames1v1Route + "?page=" + button}>{button}</Link>
+                                </li>
+                            );
+                        } else {
+                            return (
+                            <li key={index} className="page-button">
+                                <Link className='App-link' to={"/admin/" + lastGames1v1Route + "?page=" + button}>{button}</Link>
+                            </li>
+                            );
+                        }
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }

@@ -10,12 +10,14 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
+
 class RegisteredUserController extends Controller
 {
     /**
      * Handle an incoming registration request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request): Response
     {
@@ -26,7 +28,7 @@ class RegisteredUserController extends Controller
             'username'=>['required','string','max:255', 'unique:'.User::class],
             'lastname'=>['required','string','max:255'],
         ]);
-    
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

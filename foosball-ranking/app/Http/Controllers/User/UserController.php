@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\UserSummary;
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserSummary;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -13,9 +15,9 @@ class UserController extends Controller
     {
         $userId = Auth::id();
         $users = User::orderBy('elo', 'desc')->get();
-        $i=1;
-        foreach ($users as $user){
-            if($user->id == $userId){
+        $i = 1;
+        foreach ($users as $user) {
+            if ($user->id == $userId) {
                 break;
             }
             $i++;
@@ -39,7 +41,17 @@ class UserController extends Controller
         return $usPosElo;
     }
 
-    public function getTop10() {
+    public function editUsername(Request $request)
+    {
+        if (User::where('username', $request->username)->first() != null)
+            return response('Username already taken', 400);
+        Auth::user()->username = $request->username;
+        Auth::user()->save();
+        return response('Username changed', 200);
+    }
+
+    public function getTop10()
+    {
         return User::orderBy('elo', 'desc')->take(10)->get();
     }
 }

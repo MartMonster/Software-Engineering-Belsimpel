@@ -59,7 +59,7 @@
   align-items: center;
   justify-content: center; */
   text-align: center;
-  /* width: 75%; */
+  width: 85vw;
 }
 
 .dashboardButtons button {
@@ -178,6 +178,24 @@ th {
   margin: 1em 1em .5em 0em;
 }
 
+.left-3 {
+  width: 33%;
+  text-align: center;
+  margin: 1em 1em .5em 0em;
+}
+
+.right-3 {
+  width: 33%;
+  text-align: center;
+  margin: 1em 1em .5em 0em;
+}
+
+.middle-3 {
+  width: 33%;
+  text-align: center;
+  margin: 1em 1em .5em 0em;
+}
+
 .editButton {
   background-color: #3E4451;
   /* background-color: orange; */
@@ -249,6 +267,18 @@ th {
   padding: .1em;
 }
 
+.Modal .left-3 {
+  padding: .1em;
+}
+
+.Modal .right-3 {
+  padding: .1em;
+}
+
+.Modal .middle-3 {
+  padding: .1em;
+}
+
 .Overlay {
   position: fixed;
   top: 0;
@@ -256,4 +286,69 @@ th {
   right: 0;
   bottom: 0;
   background-color: #00000085;
+}
+
+.editDeleteGame tr:nth-child(even) {
+  border-bottom: 1px solid white;
+}
+
+.editDeleteGame tr:nth-child(odd) {
+  border-top: 1px solid white;
+}
+
+.editDeleteGame td:first-child {
+  border-left: 1px solid white;
+}
+
+.editDeleteGame tr:nth-child(odd) td:last-child {
+  border-right: 1px solid white;
+}
+
+.editDeleteGame td {
+  border: 0px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+  gap: 0.3em;
+}
+
+.pagination .page-button .App-link {
+  font-size: 1em;
+  font-weight: 600;
+  color: #00a8ff;
+  background: #fff;
+  padding: .2em .5em;
+  border-radius: .3em;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.pagination-container ul {
+  list-style: none;
+}
+
+.pagination .page-button .App-link:hover {
+  color: #fff;
+  background: #00a8ff;
+}
+
+.pagination .page-button-active .App-link {
+  font-size: 1em;
+  font-weight: 600;
+  color: #fff;
+  background: #00a8ff;
+  padding: .2em .5em;
+  border-radius: .3em;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.pagination .App-link {
+  color: black;
+  background-color: inherit;
+  text-decoration: none;
 }
