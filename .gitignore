@@ -26,3 +26,5 @@ composer.lock
 # package-lock.json
 .scannerwork/
 coverage.xml
+
+reports/
