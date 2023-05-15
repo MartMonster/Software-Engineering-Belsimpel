@@ -16,8 +16,6 @@ class FoosballTeam extends Model
         $team->player1_id = $player1_id;
         $team->player2_id = $player2_id;
 
-        if (is_null($team->player2_id))
-            return response("Second user not found", 404);
         if(is_null($team_name)||$team_name=="")
             return response("Invalid Team Name", 400);
         

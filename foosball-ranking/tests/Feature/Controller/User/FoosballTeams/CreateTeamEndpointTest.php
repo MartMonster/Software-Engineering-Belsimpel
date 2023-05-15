@@ -147,6 +147,21 @@ class CreateTeamEndpointTest extends TestCase
             "team_name"=>"TestTeam"
         ])->assertStatus(404);
     }
+
+    public function test_returns_appropiate_response_when_players_are_the_same(): void
+    {
+        $player1 = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        $this->post('/teams', [
+            "player2_username"=>$player1->username,
+            "team_name"=>"TestTeam"
+        ])->assertStatus(400);
+    }
     
     
     
