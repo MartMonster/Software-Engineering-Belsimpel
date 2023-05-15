@@ -196,6 +196,26 @@ export async function getTop10Users() {
     return users;
 }
 
+export async function editUsername(username:string) {
+    let b: boolean = false;
+    await axios.put('/user/username', {
+        headers: {
+            Accept: 'application/json'
+        },
+        username
+    })
+    .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+            b = true;
+            console.log(response);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    return b;
+}
+
 export interface Team{
     id:number,
     team_name:string,

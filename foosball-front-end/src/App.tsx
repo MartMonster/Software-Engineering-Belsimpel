@@ -33,6 +33,9 @@ import PasswordReset from './pages/PasswordReset';
 import { AdminWallOfFame1v1 } from './pages/admin/AdminWallOfFame1v1';
 import { AdminWallOfFame2v2 } from './pages/admin/AdminWallOfFame2v2';
 import ForgotPassword from './pages/ForgotPassword';
+import { AdminEditUser } from './pages/admin/AdminEditUser';
+import { AdminEditTeam } from './pages/admin/AdminEditTeam';
+import { EditUsername, editUsernameRoute } from './pages/EditUsername';
 
 function App() {
   return (
@@ -63,6 +66,7 @@ function App() {
             <Route index element={<OwnTeams />} />
             <Route path={editTeamRoute + '/:id'} element={<EditTeam />} />
           </Route>
+          <Route path={editUsernameRoute} element={<EditUsername />} />
           <Route path="*" element={<Page404 />} />
         </Route>
         <Route path='admin' element={<AdminNavbar />}>
@@ -80,6 +84,8 @@ function App() {
             <Route path={editGame2v2Route + '/:id'} element={<AdminEditGame2v2 />} />
           </Route>
           <Route path={createTeamRoute} element={<AdminCreateTeam />} />
+          <Route path={'/admin/user/edit/:id'} element={<AdminEditUser />} />
+          <Route path={'/admin/teams/edit/:id'} element={<AdminEditTeam />} />
           <Route path="*" element={<Page404 />} />
         </Route>
         <Route path='/' element={<AdminNavbar />}>

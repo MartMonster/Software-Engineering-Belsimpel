@@ -67,6 +67,7 @@ export const AdminWallOfFame2v2 = () => {
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>
+            <p>Click on a team to edit or delete it.</p>
             <table>
                 <thead>
                     <tr>

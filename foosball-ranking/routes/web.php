@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', 'getTop10');
 
             Route::get('/summary', 'getPosElo');
+
+            Route::put('/username', 'editUsername');
         });
     });
 
@@ -99,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
 
                     Route::post('/', 'createTeam');
 
-                    Route::put('/{id}', 'editTeam');
+                    Route::put('/{id}', 'updateTeam');
 
                     Route::delete('/{id}', 'deleteTeam');
                 });
