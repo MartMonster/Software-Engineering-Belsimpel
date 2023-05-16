@@ -36,21 +36,26 @@ export const LastGames1v1 = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Player Red</th>
-                        <th>Player Blue</th>
-                        <th>Score Red</th>
-                        <th>Score Blue</th>
+                        <th>Side</th>
+                        <th>Players</th>
+                        <th>Scores</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='editDeleteGame'>
                     {games.map((game: Game1v1, index) => {
                         return (
-                            <tr key={game.id}>
-                                <td>{game.player1_username}</td>
-                                <td>{game.player2_username}</td>
-                                <td>{game.player1_score}</td>
-                                <td>{game.player2_score}</td>
-                            </tr>
+                            <React.Fragment key={index}>
+                                <tr>
+                                    <td>Red</td>
+                                    <td className='lastGames'>{game.player1_username}</td>
+                                    <td>{game.player1_score}</td>
+                                </tr>
+                                <tr>
+                                    <td>Blue</td>
+                                    <td className='lastGames'>{game.player2_username}</td>
+                                    <td>{game.player2_score}</td>
+                                </tr>
+                            </React.Fragment>
                         );
                     })
                     }

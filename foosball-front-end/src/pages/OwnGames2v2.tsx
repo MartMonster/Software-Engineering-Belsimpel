@@ -9,24 +9,24 @@ import paginationButtons from '../components/paginate';
 Modal.setAppElement('html');
 export const ownGames2v2Route: string = "self";
 export const OwnGames2v2 = () => {
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [gameId, setGameId] = useState(0);
-    function openModal(id: number) {
-        setIsOpen(true);
-        setGameId(id);
+    function openDeleteModal() {
+        setDeleteModalIsOpen(true);
+        setOptionsModalIsOpen(false);
     }
 
-    function closeModal() {
-        setIsOpen(false);
+    function closeDeleteModal() {
+        setDeleteModalIsOpen(false);
     }
 
     async function deleteGame() {
         if (await deleteGame2v2(gameId)) {
             getGames();
-            closeModal();
+            closeDeleteModal();
         }
     }
 
@@ -48,9 +48,22 @@ export const OwnGames2v2 = () => {
     }, [searchParams, setSearchParams])
 
     useEffect(getGames, [getGames]);
+
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    const [modalText, setModalText] = useState('');
+    function openOptionsModal(id: number, text: string) {
+        setGameId(id);
+        setModalText(text);
+        setOptionsModalIsOpen(true);
+    }
+
+    function closeOptionsModal() {
+        setOptionsModalIsOpen(false);
+    }
     return (
         <div className="App">
             <h1>Your last 10 2v2 games</h1>
+            <p>Click on a game to edit or delete it.</p>
             <table>
                 <thead>
                     <tr>
@@ -59,48 +72,49 @@ export const OwnGames2v2 = () => {
                         <th>Scores</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {games.map((game:Game2v2) => {
+                <tbody className='editDeleteGame'>
+                    {games.map((game:Game2v2, index) => {
                         return (
-                            <tr key={game.id}>
-                                <td>
-                                    <div className="tableCol">
-                                        <p>Red</p>
-                                        <p>Blue</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="tableCol">
-                                        <p>{game.team1_name}</p>
-                                        <p>{game.team2_name}</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="tableCol">
-                                        <p>{game.team1_score}</p>
-                                        <p>{game.team2_score}</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <Link to={'/' + lastGames2v2Route + '/' + editGame2v2Route + '/' + game.id}>
-                                        <button className='editButton'>Edit</button>
-                                    </Link>
-                                </td>
-                                <td>
-                                    <button className='deleteButton' onClick={() => openModal(game.id)}>Delete</button>
-                                </td>
-                            </tr>
+                            <React.Fragment key={index}>
+                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`)}>
+                                    <td>Red</td>
+                                    <td className='lastGames'>{game.team1_name}</td>
+                                    <td>{game.team1_score}</td>
+                                </tr>
+                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`)}>
+                                    <td>Blue</td>
+                                    <td className='lastGames'>{game.team2_name}</td>
+                                    <td>{game.team2_score}</td>
+                                </tr>
+                            </React.Fragment>
                         );
                     })}
                 </tbody>
             </table>
-            <Modal className="Modal" isOpen={modalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeModal}
+            <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeOptionsModal}>
+                <h2>Options for game: {modalText}</h2>
+                <div className="row">
+                    <div className='left-3'>
+                        <button onClick={closeOptionsModal}>Close</button>
+                    </div>
+                    <div className='middle-3'>
+                        <Link to={`/${lastGames2v2Route}/${editGame2v2Route}/${gameId}`}>
+                            <button className='editButton'>Edit</button>
+                        </Link>
+                    </div>
+                    <div className='right-3'>
+                        <button onClick={() => openDeleteModal()} className='deleteButton'>Delete</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this game?</h2>
                 <div className="row">
                     <div className='left'>
-                        <button onClick={closeModal}>Cancel</button>
+                        <button onClick={closeDeleteModal}>Cancel</button>
                     </div>
                     <div className='right'>
                         <button onClick={deleteGame} className='deleteButton'>Delete</button>
