@@ -50,10 +50,15 @@ class Games1v1Controller extends Controller
         if (is_null($player2)) {
             return response('Second user not found', 404);
         }
+
+        if(is_null($request->player1_score) || is_null($request->player2_score) || is_null($request->player1_side)) {
+            return response('Bad request', 400);
+        }
         if ($player1->username == $player2->username) {
             return response('Bad request', 400);
         }
 
+        
         return Game1v1::store(
             $player1,
             $player2,

@@ -172,6 +172,21 @@ class CreateTeamEndpointTest extends TestCase
         ->where('team_name',$teamName)->first();
     }
 
+    public function test_return_appropiate_response_when_not_authenticated_creating_team(): void
+    {
+        $player1 = User::factory()->create();
+
+        $player2 = User::factory()->create();
+
+
+        $this->json('POST','/teams', [
+            "player2_username"=>$player2->username,
+            "team_name"=>"TestTeam"
+        ])->assertStatus(401);
+
+        $this->assertNull(self::findTeam($player1,$player2,"TestTeam"));
+    }
+
 
 
 }

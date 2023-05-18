@@ -78,6 +78,73 @@ class CreateGames1v1EndpointTest extends TestCase
         ])->assertStatus(404);
         
     }
+
+    public function test_returns_appropiate_response_if_second_player_is_missing(): void
+    {
+        $player1 = User::factory()->create();
+
+
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        
+        $response= $this->post('/games1v1', [
+            'player2_score'=>10,
+            'player1_score'=>7,
+            'player1_side'=>2,
+        ])->assertStatus(404);
+        
+    }
+
+    public function test_returns_appropiate_response_if_any_of_the_scores_are_missing(): void
+    {
+        $player1 = User::factory()->create();
+
+        $player2=  User::factory()->create();
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        
+        $response= $this->post('/games1v1', [
+            'player2_username'=>$player2->username,
+            'player1_score'=>7,
+            'player1_side'=>1,
+        ])->assertStatus(400);
+        
+        $response= $this->post('/games1v1', [
+            'player2_username'=>$player2->username,
+            'player1_side'=>1,
+        ])->assertStatus(400);
+        
+        $response= $this->post('/games1v1', [
+            'player2_username'=>$player2->username,
+            'player2_score'=>10,
+            'player1_side'=>1,
+        ])->assertStatus(400);
+    }
+
+    public function test_returns_appropiate_response_if_side_is_not_specified(): void
+    {
+        $player1 = User::factory()->create();
+
+        $player2=  User::factory()->create();
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        
+        $response= $this->post('/games1v1', [
+            'player2_username'=>$player2->username,
+            'player2_score'=>10,
+            'player1_score'=>7,
+        ])->assertStatus(400);
+    }
+
     public function test_checks_if_the_players_are_different(): void
     {
         $player1 = User::factory()->create();

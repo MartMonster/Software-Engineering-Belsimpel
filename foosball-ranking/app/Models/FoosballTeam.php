@@ -37,6 +37,8 @@ class FoosballTeam extends Model
 
     public static function updateTeamName($team_name, string $id)
     {
+        if(is_null($team_name)||$team_name=="")
+            return response("Invalid Team Name", 400);
         $team = FoosballTeam::find($id);
         if ($team == null)
             return response('Not found', 404);

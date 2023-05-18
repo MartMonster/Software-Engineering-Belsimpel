@@ -53,8 +53,7 @@ class TeamsController extends Controller
         if ($team == null)
             return response('Not found', 404);
 
-        if ($team->player1_id != Auth::id() && $team->player2_id != Auth::id() &&
-            Auth::user()->role_id != Role::where('role_name', 'Admin')->first()->id)
+        if ($team->player1_id != Auth::id() && $team->player2_id != Auth::id())
             return response('Unauthorized', 401);
         return FoosballTeam::updateTeamName($request->team_name, $id);
     }
