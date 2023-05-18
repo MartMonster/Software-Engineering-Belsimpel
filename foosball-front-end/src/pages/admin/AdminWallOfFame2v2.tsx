@@ -82,14 +82,14 @@ export const AdminWallOfFame2v2 = () => {
                         return (
                             <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
                                 <td>{(index + 1)*pageNumber}</td>
-                                <td>{team.team_name}</td>
+                                <td className='teamName'>{team.team_name}</td>
                                 <td>
                                     <div className="tableCol">
-                                        <p>{team.player1_username}</p>
-                                        <p>{team.player2_username}</p>
+                                        <p className='WoF2v2'>{team.player1_username}</p>
+                                        <p className='WoF2v2'>{team.player2_username}</p>
                                     </div>
                                 </td>
-                                <td>{team.elo}</td>
+                                <td>{Math.round(team.elo)}</td>
                             </tr>
                         )
                     })}

@@ -26,8 +26,8 @@ export const WallOfFame1v1 = () => {
                         return (
                             <tr key={user.id}>
                                 <td>{index + 1}</td>
-                                <td>{user.username}</td>
-                                <td>{user.elo}</td>
+                                <td className='WoF1v1'>{user.username}</td>
+                                <td>{Math.round(user.elo)}</td>
                             </tr>
                         );
                     })}

@@ -9,16 +9,17 @@ export const ownTeamsRoute: string = "/Teams";
 export const OwnTeams = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [pageNumber, setPageNumber] = useState(1);
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [teamId, setTeamId] = useState(0);
-    function openModal(id: number) {
-        setIsOpen(true);
-        setTeamId(id);
+    function openDeleteModal() {
+        setDeleteModalIsOpen(true);
+        setOptionsModalIsOpen(false);
     }
 
     function closeModal() {
-        setIsOpen(false);
+        setDeleteModalIsOpen(false);
     }
 
     async function deleteTeamLocal() {
@@ -33,6 +34,7 @@ export const OwnTeams = () => {
             page = "1";
         }
         let pageNumber = parseInt(page);
+        setPageNumber(pageNumber);
         getOwnTeams(pageNumber).then(data => {
             setTeams(data.teams);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
@@ -44,12 +46,26 @@ export const OwnTeams = () => {
     }, [searchParams, setSearchParams])
     const [teams, setTeams] = useState<Team[]>([]);
     useEffect(getTeams, [getTeams]);
+
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    const [teamName, setTeamName] = useState('');
+    function openOptionsModal(id: number, name: string) {
+        setTeamId(id);
+        setTeamName(name);
+        setOptionsModalIsOpen(true);
+    }
+
+    function closeOptionsModal() {
+        setOptionsModalIsOpen(false);
+    }
     return (
         <div className="App">
             <h1>Your teams</h1>
+            <p>Click on a team to edit or delete it.</p>
             <table>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Team name</th>
                         <th>Players</th>
                         <th>Elo</th>
@@ -58,30 +74,40 @@ export const OwnTeams = () => {
                 <tbody>
                     {teams.map((team: Team, index) => {
                         return (
-                            <tr key={team.id}>
-                                <td>{team.team_name}</td>
+                            <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
+                                <td>{(index + 1) * pageNumber}</td>
+                                <td className='teamName'>{team.team_name}</td>
                                 <td>
-                                    <div className='tableCol'>
-                                        <p>{team.player1_username}</p>
-                                        <p>{team.player2_username}</p>
+                                    <div className="tableCol">
+                                        <p className='WoF2v2'>{team.player1_username}</p>
+                                        <p className='WoF2v2'>{team.player2_username}</p>
                                     </div>
                                 </td>
-                                <td>{team.elo}</td>
-                                <td>
-                                    <Link to={ownTeamsRoute+'/'+editTeamRoute+'/'+team.id}>
-                                        <button className='editButton'>Edit</button>
-                                    </Link>
-                                </td>
-                                <td>
-                                    <button className='deleteButton' onClick={() => openModal(team.id)}>Delete</button>
-                                </td>
+                                <td>{Math.round(team.elo)}</td>
                             </tr>
                         );
                     })
                     }
                 </tbody>
             </table>
-            <Modal className="Modal" isOpen={modalIsOpen} overlayClassName="Overlay"
+            <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeOptionsModal}>
+                <h2>Options for team: {teamName}</h2>
+                <div className="row">
+                    <div className='left-3'>
+                        <button onClick={closeOptionsModal}>Close</button>
+                    </div>
+                    <div className='middle-3'>
+                        <Link to={`${ownTeamsRoute}/${editTeamRoute}/${teamId}`}>
+                            <button className='editButton'>Edit</button>
+                        </Link>
+                    </div>
+                    <div className='right-3'>
+                        <button onClick={() => openDeleteModal()} className='deleteButton'>Delete</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeModal}>
                 <h2>Are you sure you want to delete this team?</h2>
                 <div className="row">

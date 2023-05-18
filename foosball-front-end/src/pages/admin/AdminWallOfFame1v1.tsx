@@ -31,26 +31,41 @@ export const AdminWallOfFame1v1 = () => {
     
     useEffect(getUsers, [getUsers]);
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [userId, setUserId] = useState(0);
-    function openModal(id: number) {
-        setIsOpen(true);
-        setUserId(id);
+    const [username, setUsername] = useState('');
+
+    function openDeleteModal() {
+        setDeleteModalIsOpen(true);
+        setOptionsModalIsOpen(false);
     }
 
-    function closeModal() {
-        setIsOpen(false);
+    function closeDeleteModal() {
+        setDeleteModalIsOpen(false);
     }
 
     async function removeUser() {
         if (await deleteUser(userId)) {
             getUsers();
-            closeModal();
+            closeDeleteModal();
         }
     }
+
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    function openOptionsModal(id: number, name: string) {
+        setUserId(id);
+        setUsername(name);
+        setOptionsModalIsOpen(true);
+    }
+
+    function closeOptionsModal() {
+        setOptionsModalIsOpen(false);
+    }
+
     return (
         <div className="App">
             <h1>Wall of fame 1v1</h1>
+            <p>Click on a user to edit or delete them.</p>
             <table>
                 <thead>
                     <tr>
@@ -62,30 +77,39 @@ export const AdminWallOfFame1v1 = () => {
                 <tbody>
                     {users.map((user: User, index) => {
                         return (
-                            <tr key={user.id}>
+                            <tr key={user.id} onClick={() => openOptionsModal(user.id, user.username)}>
                                 <td>{(index + 1)*pageNumber}</td>
-                                <td>{user.username}</td>
-                                <td>{user.elo}</td>
-                                <td>
-                                    <Link to={`/admin/user/edit/${user.id}`}>
-                                        <button className='editButton'>Edit</button>
-                                    </Link>
-                                </td>
-                                <td>
-                                    <button className='deleteButton' onClick={() => openModal(user.id)}>Delete</button>
-                                </td>
+                                <td className='WoF1v1'>{user.username}</td>
+                                <td>{Math.round(user.elo)}</td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
-            <Modal className="Modal" isOpen={modalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeModal}
+            <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeOptionsModal}>
+                <h2>Options for user: {username}</h2>
+                <div className="row">
+                    <div className='left-3'>
+                        <button onClick={closeOptionsModal}>Close</button>
+                    </div>
+                    <div className='middle-3'>
+                        <Link to={`/admin/user/edit/${userId}`}>
+                            <button className='editButton'>Edit</button>
+                        </Link>
+                    </div>
+                    <div className='right-3'>
+                        <button onClick={() => openDeleteModal()} className='deleteButton'>Delete</button>
+                    </div>
+                </div>
+            </Modal>
+            <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
+                onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this user?</h2>
                 <div className="row">
                     <div className='left'>
-                        <button onClick={closeModal}>Cancel</button>
+                        <button onClick={closeDeleteModal}>Cancel</button>
                     </div>
                     <div className='right'>
                         <button onClick={removeUser} className='deleteButton'>Delete</button>
