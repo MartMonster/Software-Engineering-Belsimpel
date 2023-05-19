@@ -39,16 +39,21 @@ class TeamsController extends Controller
 
     public function createTeam(Request $request)
     {
+        $request->validate([
+            'team_name' => ['required','unique:'.FoosballTeam::class],
+            'player2_username' => ['required','exists:'.User::class.',username']
+
+        ]);
         $player2 = User::where('username', $request->player2_username)->first();
-        if (is_null($player2)) {
-            return response('Second user not found', 404);
-        }
         return FoosballTeam::createTeam(Auth::id(), $player2->id, $request->team_name);
 
     }
 
     public function updateTeam(Request $request, string $id)
     {
+        $request->validate([
+            'team_name' => ['required','unique:'.FoosballTeam::class]
+        ]);
         $team = FoosballTeam::find($id);
         if ($team == null)
             return response('Not found', 404);

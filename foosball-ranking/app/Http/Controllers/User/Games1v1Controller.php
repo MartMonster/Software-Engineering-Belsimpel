@@ -45,15 +45,14 @@ class Games1v1Controller extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'player1_score' => 'required|integer',
+            'player2_score' => 'required|integer',
+            'player1_side' => 'required|integer',
+            'player2_username' => 'required|string|exists:users,username'
+        ]);
         $player2 = User::where('username', $request->player2_username)->first();
         $player1 = Auth::user();
-        if (is_null($player2)) {
-            return response('Second user not found', 404);
-        }
-
-        if(is_null($request->player1_score) || is_null($request->player2_score) || is_null($request->player1_side)) {
-            return response('Bad request', 400);
-        }
         if ($player1->username == $player2->username) {
             return response('Bad request', 400);
         }

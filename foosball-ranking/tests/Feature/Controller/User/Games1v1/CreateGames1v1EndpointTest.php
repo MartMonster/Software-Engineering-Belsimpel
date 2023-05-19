@@ -70,12 +70,12 @@ class CreateGames1v1EndpointTest extends TestCase
         ]);
 
         
-        $response= $this->post('/games1v1', [
+        $response= $this->json('post','/games1v1', [
             'player2_username'=>"Wrong username",
             'player2_score'=>10,
             'player1_score'=>7,
             'player1_side'=>2,
-        ])->assertStatus(404);
+        ])->assertStatus(422);
         
     }
 
@@ -90,11 +90,11 @@ class CreateGames1v1EndpointTest extends TestCase
         ]);
 
         
-        $response= $this->post('/games1v1', [
+        $response= $this->json('post','/games1v1', [
             'player2_score'=>10,
             'player1_score'=>7,
             'player1_side'=>2,
-        ])->assertStatus(404);
+        ])->assertStatus(422);
         
     }
 
@@ -109,22 +109,22 @@ class CreateGames1v1EndpointTest extends TestCase
         ]);
 
         
-        $response= $this->post('/games1v1', [
+        $response= $this->json('post','/games1v1', [
             'player2_username'=>$player2->username,
             'player1_score'=>7,
             'player1_side'=>1,
-        ])->assertStatus(400);
+        ])->assertStatus(422);
         
-        $response= $this->post('/games1v1', [
+        $response= $this->json('post','/games1v1', [
             'player2_username'=>$player2->username,
             'player1_side'=>1,
-        ])->assertStatus(400);
+        ])->assertStatus(422);
         
-        $response= $this->post('/games1v1', [
+        $response= $this->json('post','/games1v1', [
             'player2_username'=>$player2->username,
             'player2_score'=>10,
             'player1_side'=>1,
-        ])->assertStatus(400);
+        ])->assertStatus(422);
     }
 
     public function test_returns_appropiate_response_if_side_is_not_specified(): void
@@ -138,11 +138,11 @@ class CreateGames1v1EndpointTest extends TestCase
         ]);
 
         
-        $response= $this->post('/games1v1', [
+        $response= $this->json('post','/games1v1', [
             'player2_username'=>$player2->username,
             'player2_score'=>10,
             'player1_score'=>7,
-        ])->assertStatus(400);
+        ])->assertStatus(422);
     }
 
     public function test_checks_if_the_players_are_different(): void

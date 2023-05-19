@@ -62,10 +62,10 @@ class CreateTeamEndpointTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/teams', [
+        $this->json('post','/teams', [
             "player2_username"=>"SecondUsername",
             "team_name"=>"TestTeam"
-        ])->assertStatus(404);
+        ])->assertStatus(422);
     }
 
 
@@ -91,10 +91,10 @@ class CreateTeamEndpointTest extends TestCase
         $this->assertNotNull(self::findTeam($player1,$player2,"TestTeam"));
 
         
-        $this->post('/teams', [
+        $this->json('post','/teams', [
             "player2_username"=>$player3->username,
             "team_name"=>"TestTeam"
-        ])->assertStatus(400);
+        ])->assertStatus(422);
     }
 
     public function test_returns_appropiate_response_when_creating_team_with_missing_name(): void
@@ -108,9 +108,9 @@ class CreateTeamEndpointTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/teams', [
+        $this->json('post','/teams', [
             "player2_username"=>$player2->username
-        ])->assertStatus(400);
+        ])->assertStatus(422);
 
     }
 
@@ -127,10 +127,10 @@ class CreateTeamEndpointTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/teams', [
+        $this->json('post','/teams', [
             "player2_username"=>$player2->username,
             "team_name"=>""
-        ])->assertStatus(400);
+        ])->assertStatus(422);
     }
 
     public function test_returns_appropiate_response_when_creating_team_with_missing_second_player(): void
@@ -143,9 +143,9 @@ class CreateTeamEndpointTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/teams', [
+        $this->json('post','/teams', [
             "team_name"=>"TestTeam"
-        ])->assertStatus(404);
+        ])->assertStatus(422);
     }
 
     public function test_returns_appropiate_response_when_players_are_the_same(): void

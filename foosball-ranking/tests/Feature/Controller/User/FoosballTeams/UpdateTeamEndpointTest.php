@@ -106,7 +106,7 @@ class UpdateTeamEndpointTest extends TestCase
         $this->assertNotNull($team);
         
 
-        $this->put('/teams/'.$team->id,["team_name"=>""])->assertStatus(400);
+        $this->json('put','/teams/'.$team->id,["team_name"=>""])->assertStatus(422);
 
         $this->assertNotNull(self::findTeam($player1,$player2,"TestTeam"));
 
@@ -132,7 +132,7 @@ class UpdateTeamEndpointTest extends TestCase
         $this->assertNotNull($team);
         
 
-        $this->put('/teams/'.$team->id,[])->assertStatus(400);
+        $this->json('put','/teams/'.$team->id,[])->assertStatus(422);
 
         $this->assertNotNull(self::findTeam($player1,$player2,"TestTeam"));
 
@@ -160,6 +160,41 @@ class UpdateTeamEndpointTest extends TestCase
         $this->json('put','/teams/'.$team->id,["team_name"=>"UpdatedTeam"])->assertStatus(401);
 
         $this->assertNotNull(self::findTeam($player1,$player2,"TestTeam"));
+    }
+
+
+    public function test_users_cannot_update_team_name_to_already_taken_name(): void
+    {
+        $player1 = User::factory()->create();
+
+        $player2 = User::factory()->create();
+
+        $player3 = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        $this->post('/teams', [
+            "player2_username"=>$player2->username,
+            "team_name"=>"TestTeam"
+        ])->assertStatus(201);
+
+        $this->post('/teams', [
+            "player2_username"=>$player3->username,
+            "team_name"=>"TestTeam2"
+        ])->assertStatus(201);
+        
+
+        $team = self::findTeam($player1,$player2,"TestTeam");
+        $this->assertNotNull($team);
+
+        $this->json('put','/teams/'.$team->id,["team_name"=>"TestTeam2"])->assertStatus(422);
+
+        $this->assertNotNull(self::findTeam($player1,$player2,"TestTeam"));
+        $this->assertNotNull(self::findTeam($player1,$player3,"TestTeam2"));
+        
     }
 
     
