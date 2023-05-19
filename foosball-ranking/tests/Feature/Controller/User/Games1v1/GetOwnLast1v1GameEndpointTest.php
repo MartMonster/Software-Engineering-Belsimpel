@@ -102,56 +102,7 @@ class GetOwnLast1v1GameEndpointTest extends TestCase
             $this->assertEquals($game,$game1);
         }
     }
-    public function test_users_can_see_only_the_last_10_own_1v1game(): void
-    {
-        $player1 = User::factory()->create();
-        
-        $player2 = User::factory()->create();
-
-        $player3 = User::factory()->create();
-
-        $this->post('/login', [
-            'email' => $player1->email,
-            'password' => 'password',
-        ]);
-        for($i=0;$i<10;$i++){
-            $this->post('/games1v1', [
-                'player2_username'=>$player2->username,
-                'player2_score'=>10,
-                'player1_score'=>7,
-                'player1_side'=>1,
-            ]);
-        }
-
-        $this->post('/logout');
-        $this->post('/login', [
-            'email' => $player3->email,
-            'password' => 'password',
-        ]);
-
-        for($i=0;$i<12;$i++){
-            $this->post('/games1v1', [
-                'player2_username'=>$player2->username,
-                'player2_score'=>10,
-                'player1_score'=>7,
-                'player1_side'=>1,
-            ]);
-        }
-        $response=$this->get('/games1v1/self')->assertStatus(200);
-        $game= new stdClass();
-        $game->player1_username=$player3->username;
-        $game->player2_username=$player2->username;
-        $game->player1_score=7;
-        $game->player2_score=10;
-
-        for($i=0;$i<10;$i++){
-            $game1=$response->getData()->data[$i];
-            unset($game1->id);
-            $this->assertEquals($game,$game1);
-        }
-        $this->assertArrayNotHasKey(11,$response->getData()->data);
-        $this->assertArrayNotHasKey(12,$response->getData()->data);
-    }
+    
     public function test_own_1v1games_are_ordered_decreasingly_by_date(): void
     {
         $player1 = User::factory()->create();
@@ -296,12 +247,20 @@ class GetOwnLast1v1GameEndpointTest extends TestCase
                 'player1_side'=>1,
             ]);
         }
-        $response=$this->get('/games1v1/self?page=2')->assertStatus(200);
+        $response=$this->get('/games1v1/self')->assertStatus(200);
+
         $game= new stdClass();
         $game->player1_username=$player3->username;
         $game->player2_username=$player2->username;
         $game->player1_score=7;
         $game->player2_score=10;
+        for($i=0;$i<10;$i++){
+            $game1=$response->getData()->data[$i];
+            unset($game1->id);
+            $this->assertEquals($game,$game1);
+        }
+        $this->assertArrayNotHasKey(10,$response->getData()->data);
+        $response=$this->get('/games1v1/self?page=2')->assertStatus(200);
 
         for($i=0;$i<2;$i++){
             $game1=$response->getData()->data[$i];
