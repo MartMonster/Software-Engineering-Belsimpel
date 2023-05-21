@@ -53,18 +53,18 @@ class Games2v2Controller extends Controller
 
     public function store(Request $request)
     {
-        $ids = array();
-        $ids[0] = Auth::id();
-        $ids[1] = self::getIdFromUsername($request->player2_username);
-        $ids[2] = self::getIdFromUsername($request->player3_username);
-        $ids[3] = self::getIdFromUsername($request->player4_username);
-        if (in_array(null, $ids, true)) {
+        $players = array();
+        $players[0] = Auth::user();
+        $players[1] = User::where('username',$request->player2_username )->first();
+        $players[2] = User::where('username',$request->player3_username )->first();
+        $players[3] = User::where('username',$request->player4_username )->first();
+        if (in_array(null, $players, true)) {
             return response("Not found", 404);
         }
-        if (count($ids) > count(array_unique($ids)))
+        if (count($players) > count(array_unique($players)))
             return response("Bad request", 400);
 
-        return Game2v2::store($ids[0], $ids[1], $ids[2], $ids[3], $request->team1_score, $request->team2_score, $request->side);
+        return Game2v2::store($players[0], $players[1], $players[2], $players[3], $request->team1_score, $request->team2_score, $request->side);
     }
 
     public static function update($id, Request $request)
