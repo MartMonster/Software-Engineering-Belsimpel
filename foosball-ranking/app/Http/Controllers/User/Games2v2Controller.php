@@ -62,7 +62,7 @@ class Games2v2Controller extends Controller
             return response("Not found", 404);
         }
         if (count($players) > count(array_unique($players)))
-            return response("Bad request", 400);
+            return response("Not all players are unique", 400);
 
         return Game2v2::store($players[0], $players[1], $players[2], $players[3], $request->team1_score, $request->team2_score, $request->side);
     }

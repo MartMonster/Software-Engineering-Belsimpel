@@ -78,16 +78,16 @@ class AdminController extends Controller
 
     public function create2v2Game(Request $request)
     {
-        $ids = array();
-        $ids[0] = Games2v2Controller::getIdFromUsername($request->player1_username);
-        $ids[1] = Games2v2Controller::getIdFromUsername($request->player2_username);
-        $ids[2] = Games2v2Controller::getIdFromUsername($request->player3_username);
-        $ids[3] = Games2v2Controller::getIdFromUsername($request->player4_username);
-        if (in_array(null, $ids, true))
+        $players = array();
+        $players[0] = User::where('username', $request->player1_username)->first();
+        $players[1] = User::where('username', $request->player2_username)->first();
+        $players[2] = User::where('username', $request->player3_username)->first();
+        $players[3] = User::where('username', $request->player4_username)->first();
+        if (in_array(null, $players, true))
             return response("Player not found", 404);
-        if (count($ids) > count(array_unique($ids)))
-            return response("Bad request", 400);
-        return Game2v2::store($ids[0], $ids[1], $ids[2], $ids[3], $request->team1_score, $request->team2_score, $request->side);
+        if (count($players) > count(array_unique($players)))
+            return response("Not all players are unique", 400);
+        return Game2v2::store($players[0], $players[1], $players[2], $players[3], $request->team1_score, $request->team2_score, $request->side);
     }
 
     public function edit2v2Game($id, Request $request)

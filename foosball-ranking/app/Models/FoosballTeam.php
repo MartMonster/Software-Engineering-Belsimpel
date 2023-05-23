@@ -18,16 +18,16 @@ class FoosballTeam extends Model
 
         if(is_null($team_name)||$team_name=="")
             return response("Invalid Team Name", 400);
-        
-        /// TODO: remove this weird dependency 
+
+        /// TODO: remove this weird dependency
         if (Games2v2Controller::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
-            return response("Bad request", 400);
+            return response("Team with these users already exists", 400);
 
         if (FoosballTeam::where('team_name',$team_name)->first()!=null)
             return response("Team name already taken",400);
 
         if ($team->player1_id == $team->player2_id)
-            return response("Bad request", 400);
+            return response("Not all players are unique", 400);
         $team->team_name = $team_name;
 
         $team->save();
