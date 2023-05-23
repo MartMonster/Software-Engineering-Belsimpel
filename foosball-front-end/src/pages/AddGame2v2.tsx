@@ -13,8 +13,8 @@ export const AddGame2v2 = () => {
     const [player2, setPlayer2] = useState("");
     const [player3, setPlayer3] = useState("");
     const [player4, setPlayer4] = useState("");
-    const [myScore, setMyScore] = useState(0);
-    const [opponentScore, setOpponentScore] = useState(0);
+    const [myScore, setMyScore] = useState<number>();
+    const [opponentScore, setOpponentScore] = useState<number>();
     const [side, setSide] = useState(1)
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
@@ -42,20 +42,20 @@ export const AddGame2v2 = () => {
                 </label>
                 <label>
                     What is the username of your teammate?
-                    <input type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)}/>
+                    <input required type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)}/>
                 </label>
                 <label>
                     What are the usernames of your opponents?
-                    <input type="text" placeholder="Username" onChange={e => setPlayer3(e.target.value)}/>
-                    <input type="text" placeholder="Username" onChange={e => setPlayer4(e.target.value)}/>
+                    <input required type="text" placeholder="Username" onChange={e => setPlayer3(e.target.value)}/>
+                    <input required type="text" placeholder="Username" onChange={e => setPlayer4(e.target.value)}/>
                 </label>
                 <label>
                     How many points did your team score?
-                    <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setMyScore(parseInt(e.target.value))}/>
+                    <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setMyScore(parseInt(e.target.value))}/>
                 </label>
                 <label>
                     How many points did your opponents score?
-                    <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentScore(parseInt(e.target.value))}/>
+                    <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentScore(parseInt(e.target.value))}/>
                 </label>
                 {error()}
                 <button type="submit">Enter game</button>

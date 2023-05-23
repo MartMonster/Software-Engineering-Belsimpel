@@ -32,7 +32,7 @@ export const AdminEditTeam = () => {
             <form autoComplete="off" onSubmit={submitTeamName}>
                 <div className="login">
                     <label>Team name
-                        <input type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)} />
+                        <input required type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)} />
                     </label>
                     {error()}
                     <button type="submit">Edit team</button>

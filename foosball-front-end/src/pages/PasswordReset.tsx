@@ -32,16 +32,16 @@ const PasswordReset = () => {
                 <form autoComplete="off" onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
-                            <input type="text" value={email} disabled/>
+                            <input required type="text" value={email} disabled/>
                         </label>
                         <label>New password
-                            <input type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
+                            <input required type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
                         </label>
                         <label>Confirm password
-                            <input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                            <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         </label>
                         {error()}
-                        <input type="submit" value="Reset password" />
+                        <button type="submit">Reset password</button>
                     </div>
                 </form>
             </div>

@@ -11,8 +11,8 @@ export const AddGame1v1 = () => {
         navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
     }
     const [opponent, setOpponent] = useState("");
-    const [myPoints, setMyPoints] = useState(0);
-    const [opponentPoints, setOpponentPoints] = useState(0);
+    const [myPoints, setMyPoints] = useState<number>();
+    const [opponentPoints, setOpponentPoints] = useState<number>();
     const [side, setSide] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
@@ -39,15 +39,15 @@ export const AddGame1v1 = () => {
                 </label>
                 <label>
                     What is the username of your opponent?
-                    <input type="text" placeholder="Username" onChange={e => setOpponent(e.target.value)}/>
+                    <input required type="text" placeholder="Username" onChange={e => setOpponent(e.target.value)}/>
                 </label>
                 <label>
                     How many points did you score?
-                    <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setMyPoints(parseInt(e.target.value))}/>
+                    <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setMyPoints(parseInt(e.target.value))}/>
                 </label>
                 <label>
                     How many points did your opponent score?
-                    <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
+                    <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
                 </label>
                 {error()}
                 <button type="submit">Enter game</button>

@@ -32,8 +32,8 @@ export const Login = () => {
                 <h1>Welcome to the foosball tracking website!</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="login">
-                        <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
                         {error()}
                         <button type='submit'>Login</button>
                     </div>

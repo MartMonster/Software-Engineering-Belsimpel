@@ -29,11 +29,11 @@ export const CreateTeam = () => {
             <form autoComplete="off" onSubmit={makeTeamLocal}>
                 <label>
                     What will the name of your team be?
-                    <input type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
+                    <input required type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
                 </label>
                 <label>
                     What is the username of your teammate?
-                    <input type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
+                    <input required type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
                 </label>
                 {error()}
                 <button type="submit">Create team</button>

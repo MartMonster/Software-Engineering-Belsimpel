@@ -27,7 +27,7 @@ export const EditUsername = () => {
             <form autoComplete="off" onSubmit={submitUsername}>
                 <div className="login">
                     <label>Username
-                        <input type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
+                        <input required type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
                     </label>
                     {error()}
                     <button type="submit">Edit username</button>

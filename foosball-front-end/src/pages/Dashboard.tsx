@@ -13,8 +13,8 @@ import { editUsernameRoute } from './EditUsername';
 
 const Dashboard = () => {
     const [username, setUsername] = useState("");
-    const [position, setPosition] = useState(0);
-    const [elo, setElo] = useState(0);
+    const [position, setPosition] = useState<number>();
+    const [elo, setElo] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
         if (errorMessage !== "") {

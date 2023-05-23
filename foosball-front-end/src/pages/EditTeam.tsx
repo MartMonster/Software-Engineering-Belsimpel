@@ -33,7 +33,7 @@ export const EditTeam = () => {
             <form autoComplete="off" onSubmit={saveTeam}>
                 <label>
                     Your new team name:
-                    <input type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)} />
+                    <input required type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)} />
                 </label>
                 {error()}
                 <button type="submit">Save team</button>

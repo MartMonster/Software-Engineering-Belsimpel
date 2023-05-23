@@ -36,12 +36,12 @@ export const Register = () => {
                 <h1>Welcome to the foosball tracking website!</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="login">
-                        <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                        <input type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
-                        <input type="text" placeholder="First name" onChange={e => setFirstName(e.target.value)} />
-                        <input type="text" placeholder="Last name" onChange={e => setLastName(e.target.value)} />
-                        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-                        <input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <input required type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
+                        <input required type="text" placeholder="First name" onChange={e => setFirstName(e.target.value)} />
+                        <input required type="text" placeholder="Last name" onChange={e => setLastName(e.target.value)} />
+                        <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         {error()}
                         <button type="submit">Register</button>
                     </div>

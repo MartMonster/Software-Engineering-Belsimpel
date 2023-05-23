@@ -27,10 +27,10 @@ const ForgotPassword = () => {
                 <form autoComplete="off" onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email
-                            <input type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                            <input required type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         </label>
                         {error()}
-                        <input type="submit" value="Send reset email" />
+                        <button type="submit">Send reset email</button>
                     </div>
                 </form>
                 <p>Back to the <Link className='App-link' to={loginRoute}>Login page.</Link></p>

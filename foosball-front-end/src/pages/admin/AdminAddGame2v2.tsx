@@ -13,8 +13,8 @@ export const AdminAddGame2v2 = () => {
     const [redPlayer2, setRedPlayer2] = useState("");
     const [bluePlayer1, setBluePlayer1] = useState("");
     const [bluePlayer2, setBluePlayer2] = useState("");
-    const [redScore, setRedScore] = useState(0);
-    const [blueScore, setBlueScore] = useState(0);
+    const [redScore, setRedScore] = useState<number>();
+    const [blueScore, setBlueScore] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
         if (errorMessage !== "") {
@@ -37,30 +37,30 @@ export const AdminAddGame2v2 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input type="text" placeholder="Username" onChange={e => setRedPlayer1(e.target.value)} />
+                            <input required type="text" placeholder="Username" onChange={e => setRedPlayer1(e.target.value)} />
                         </label>
                         <label>
                             Username
-                            <input type="text" placeholder="Username" onChange={e => setRedPlayer2(e.target.value)} />
+                            <input required type="text" placeholder="Username" onChange={e => setRedPlayer2(e.target.value)} />
                         </label>
                         <label>
                             Points
-                            <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedScore(parseInt(e.target.value))} />
+                            <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedScore(parseInt(e.target.value))} />
                         </label>
                     </div>
                     <div className="right">
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input type="text" placeholder="Username" onChange={e => setBluePlayer1(e.target.value)} />
+                            <input required type="text" placeholder="Username" onChange={e => setBluePlayer1(e.target.value)} />
                         </label>
                         <label>
                             Username
-                            <input type="text" placeholder="Username" onChange={e => setBluePlayer2(e.target.value)} />
+                            <input required type="text" placeholder="Username" onChange={e => setBluePlayer2(e.target.value)} />
                         </label>
                         <label>
                             Points
-                            <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBlueScore(parseInt(e.target.value))} />
+                            <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBlueScore(parseInt(e.target.value))} />
                         </label>
                     </div>
                 </div>

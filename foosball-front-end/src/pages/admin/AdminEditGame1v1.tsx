@@ -27,8 +27,8 @@ export const AdminEditGame1v1 = () => {
     }
     const [playerRed, setPlayerRed] = useState("");
     const [playerBlue, setPlayerBlue] = useState("");
-    const [redPoints, setRedPoints] = useState(0);
-    const [bluePoints, setBluePoints] = useState(0);
+    const [redPoints, setRedPoints] = useState<number>();
+    const [bluePoints, setBluePoints] = useState<number>();
     return (
         <div className="App">
             <h1>Edit a 1v1 game</h1>
@@ -38,22 +38,22 @@ export const AdminEditGame1v1 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input type="text" placeholder="Username" onChange={e => setPlayerRed(e.target.value)} />
+                            <input required type="text" placeholder="Username" onChange={e => setPlayerRed(e.target.value)} />
                         </label>
                         <label>
                             Score
-                            <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedPoints(parseInt(e.target.value))} />
+                            <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedPoints(parseInt(e.target.value))} />
                         </label>
                     </div>
                     <div className="right">
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input type="text" placeholder="Username" onChange={e => setPlayerBlue(e.target.value)} />
+                            <input required type="text" placeholder="Username" onChange={e => setPlayerBlue(e.target.value)} />
                         </label>
                         <label>
                             Score
-                            <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBluePoints(parseInt(e.target.value))} />
+                            <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBluePoints(parseInt(e.target.value))} />
                         </label>
                     </div>
                 </div>

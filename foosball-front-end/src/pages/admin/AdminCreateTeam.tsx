@@ -30,15 +30,15 @@ export const AdminCreateTeam = () => {
             <form autoComplete="off" onSubmit={makeTeamLocal}>
                 <label>
                     What will the name of the team be?
-                    <input type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
+                    <input required type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
                 </label>
                 <label>
                     Username
-                    <input type="text" placeholder="Username" onChange={e => setPlayer1(e.target.value)}/>
+                    <input required type="text" placeholder="Username" onChange={e => setPlayer1(e.target.value)}/>
                 </label>
                 <label>
                     Username
-                    <input type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)} />
+                    <input required type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)} />
                 </label>
                 {error()}
                 <button type="submit">Create team</button>
