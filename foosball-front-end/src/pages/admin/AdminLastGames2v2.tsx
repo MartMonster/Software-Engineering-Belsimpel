@@ -64,9 +64,17 @@ export const AdminLastGames2v2 = () => {
 
     const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
-    function openOptionsModal(id: number, text: string) {
+    const [team1Name, setTeam1Name] = useState("");
+    const [team2Name, setTeam2Name] = useState("");
+    const [team1Score, setTeam1Score] = useState(0);
+    const [team2Score, setTeam2Score] = useState(0);
+    function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
         setGameId(id);
         setModalText(text);
+        setTeam1Name(team1_name);
+        setTeam2Name(team2_name);
+        setTeam1Score(team1_score);
+        setTeam2Score(team2_score);
         setOptionsModalIsOpen(true);
     }
 
@@ -92,12 +100,14 @@ export const AdminLastGames2v2 = () => {
                     {games.map((game: Game2v2, index) => {
                         return (
                             <React.Fragment key={game.id}>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`)}>
+                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
                                     <td>Red</td>
                                     <td className='lastGames'>{game.team1_name}</td>
                                     <td>{game.team1_score}</td>
                                 </tr>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`)}>
+                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
                                     <td>Blue</td>
                                     <td className='lastGames'>{game.team2_name}</td>
                                     <td>{game.team2_score}</td>
@@ -115,7 +125,7 @@ export const AdminLastGames2v2 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`${editGame2v2Route}/${gameId}`}>
+                        <Link to={`${editGame2v2Route}/${gameId}?team1=${team1Name}&team2=${team2Name}&score1=${team1Score}&score2=${team2Score}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>

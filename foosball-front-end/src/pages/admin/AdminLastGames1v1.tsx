@@ -11,6 +11,10 @@ export const AdminLastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [player1, setPlayer1] = useState("");
+    const [player2, setPlayer2] = useState("");
+    const [score1, setScore1] = useState(0);
+    const [score2, setScore2] = useState(0);
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
         if (errorMessage !== "") {
@@ -62,9 +66,13 @@ export const AdminLastGames1v1 = () => {
 
     const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
-    function openOptionsModal(id: number, text:string) {
+    function openOptionsModal(id: number, text:string, player1: string, player2: string, score1: number, score2: number) {
         setGameId(id);
         setModalText(text);
+        setPlayer1(player1);
+        setPlayer2(player2);
+        setScore1(score1);
+        setScore2(score2);
         setOptionsModalIsOpen(true);
     }
 
@@ -88,12 +96,14 @@ export const AdminLastGames1v1 = () => {
                     {games.map((game: Game1v1, index) => {
                         return (
                             <React.Fragment key={index}>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`)}>
+                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
+                                game.player1_username, game.player2_username, game.player1_score, game.player2_score)}>
                                     <td>Red</td>
                                     <td className='lastGames'>{game.player1_username}</td>
                                     <td>{game.player1_score}</td>
                                 </tr>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`)}>
+                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
+                                    game.player1_username, game.player2_username, game.player1_score, game.player2_score)}>
                                     <td>Blue</td>
                                     <td className='lastGames'>{game.player2_username}</td>
                                     <td>{game.player2_score}</td>
@@ -111,7 +121,7 @@ export const AdminLastGames1v1 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`${editGame1v1Route}/${gameId}`}>
+                        <Link to={`${editGame1v1Route}/${gameId}?player1=${player1}&player2=${player2}&score1=${score1}&score2=${score2}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>

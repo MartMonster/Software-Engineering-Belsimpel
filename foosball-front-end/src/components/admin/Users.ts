@@ -25,6 +25,11 @@ export async function getTop10Users(page: number = 1, setErrorMessage: (string: 
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     pagination = { current_page: currentPage, last_page: lastPage };
     return { users, pagination };
@@ -53,6 +58,11 @@ export async function editPlayer(id: number, username: string, setErrorMessage: 
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     return b;
 }
@@ -78,6 +88,11 @@ export async function deleteUser(id: number, setErrorMessage: (string: string) =
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     return b;
 }

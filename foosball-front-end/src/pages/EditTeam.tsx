@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useNavigate, Link, useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
 import { editTeam } from '../components/axios';
 import { ownTeamsRoute } from './OwnTeams';
 
@@ -27,13 +27,19 @@ export const EditTeam = () => {
             navigateToOwnGames()
         }
     }
+    const [searchParams] = useSearchParams();
+    useEffect(() => {
+        if (searchParams.get("team") as string) {
+            setTeamName(searchParams.get("team") as string);
+        }
+    }, [searchParams])
     return (
         <div className="App">
             <h1>Edit your team</h1>
             <form autoComplete="off" onSubmit={saveTeam}>
                 <label>
                     Your new team name:
-                    <input required type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)} />
+                    <input required type="text" placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
                 </label>
                 {error()}
                 <button type="submit">Save team</button>

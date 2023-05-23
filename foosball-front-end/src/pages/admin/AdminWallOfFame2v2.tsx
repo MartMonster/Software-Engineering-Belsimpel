@@ -116,7 +116,7 @@ export const AdminWallOfFame2v2 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`/admin/teams/edit/${teamId}`}>
+                        <Link to={`/admin/teams/edit/${teamId}?team=${teamName}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>

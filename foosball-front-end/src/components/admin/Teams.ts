@@ -25,6 +25,11 @@ export async function getTop10Teams(page: number = 1, setErrorMessage: (string: 
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     pagination = { current_page: currentPage, last_page: lastPage };
     return {teams, pagination};
@@ -52,6 +57,11 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     return b;
 }
@@ -80,6 +90,11 @@ export async function makeTeam(team_name: string, player1_username: string, play
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     return b;
 }
@@ -105,6 +120,11 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
                 setErrorMessage(error.response.data);
             }
             console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+            }
         })
     return b;
 }

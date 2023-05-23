@@ -103,6 +103,11 @@ export async function logout() {
     })
     .catch(error => {
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
 }
 
@@ -123,6 +128,11 @@ export async function forgotPassword(email: string, setErrorMessage: (string: st
     })
     .catch(error => {
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }
@@ -148,6 +158,11 @@ export async function resetPassword(email: string, password: string, password_co
     })
     .catch(error => {
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }
@@ -169,6 +184,11 @@ export async function getIsAdmin(setErrorMessage: (string: string) => void) {
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
         b = false;
     });
     sessionStorage.setItem('isAdmin', b.toString());
@@ -200,6 +220,11 @@ export async function getUserSummary(setErrorMessage: (string: string) => void) 
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return data;
 }
@@ -229,6 +254,11 @@ export async function getTop10Users(setErrorMessage: (string: string) => void) {
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return users;
 }
@@ -255,6 +285,11 @@ export async function editUsername(username: string, setErrorMessage: (string: s
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }
@@ -286,6 +321,11 @@ export async function getTop10Teams(setErrorMessage: (string: string) => void) {
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return teams;
 }
@@ -327,6 +367,11 @@ export async function getLast10Games1v1(page: number = 1, setErrorMessage: (stri
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     pagination = {current_page: currentPage, last_page: lastPage};
     return {games, pagination};
@@ -356,6 +401,11 @@ export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string:
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { games, pagination };
@@ -393,6 +443,11 @@ export async function getLast10Games2v2(page: number = 1, setErrorMessage: (stri
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { games, pagination };
@@ -422,6 +477,11 @@ export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string:
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { games, pagination };
@@ -451,6 +511,11 @@ export async function getOwnTeams(page: number = 1, setErrorMessage: (string: st
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { teams, pagination };
@@ -483,6 +548,11 @@ export async function makeGame1v1(player2_username: string, player1_score: numbe
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     })
     return b;
 }
@@ -515,6 +585,11 @@ export async function makeGame2v2(player2_username: string, player3_username: st
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     })
     return b;
 }
@@ -542,6 +617,11 @@ export async function makeTeam(team_name: string, player2_username: string, setE
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     })
     return b;
 }
@@ -572,6 +652,11 @@ export async function editGame1v1(id: number, player1_score: number | undefined,
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     })
     return b;
 }
@@ -597,6 +682,11 @@ export async function deleteGame1v1(id:number, setErrorMessage: (string: string)
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     })
     return b;
 }
@@ -627,6 +717,11 @@ export async function editGame2v2(id: number, team1_score: number | undefined,
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }
@@ -652,6 +747,11 @@ export async function deleteGame2v2(id: number, setErrorMessage: (string: string
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }
@@ -678,6 +778,11 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }
@@ -703,6 +808,11 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
             setErrorMessage(error.response.data);
         }
         console.log(error);
+        if (error.response.status === 401 &&
+            (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+            sessionStorage.removeItem('loggedIn');
+            sessionStorage.removeItem('isAdmin');
+        }
     });
     return b;
 }

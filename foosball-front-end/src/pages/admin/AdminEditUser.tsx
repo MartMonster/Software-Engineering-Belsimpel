@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { editPlayer } from '../../components/admin/Users';
 import { wallOfFame1v1Route } from '../WallOfFame1v1';
 
 export const AdminEditUser = () => {
+    const [searchParams] = useSearchParams();
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
     const navigateToWoF1v1 = () => {
@@ -26,13 +27,18 @@ export const AdminEditUser = () => {
             navigateToWoF1v1();
         }
     }
+    useEffect(() => {
+        if (searchParams.get("username") as string) {
+            setUsername(searchParams.get("username") as string);
+        }
+    },[searchParams])
     return (
         <div className="App">
             <h1>Edit a player</h1>
             <form autoComplete="off" onSubmit={submitUsername}>
                 <div className="login">
                     <label>Username
-                        <input required type="text" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
+                        <input required type="text" placeholder="Username" defaultValue={username} onChange={e => setUsername(e.target.value)}/>
                     </label>
                     {error()}
                     <button type="submit">Edit player</button>

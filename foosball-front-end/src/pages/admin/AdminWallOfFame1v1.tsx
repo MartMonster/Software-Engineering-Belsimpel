@@ -107,7 +107,7 @@ export const AdminWallOfFame1v1 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`/admin/user/edit/${userId}`}>
+                        <Link to={`/admin/user/edit/${userId}?username=${username}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>

@@ -111,7 +111,7 @@ export const OwnTeams = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`${ownTeamsRoute}/${editTeamRoute}/${teamId}`}>
+                        <Link to={`${ownTeamsRoute}/${editTeamRoute}/${teamId}?team=${teamName}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>

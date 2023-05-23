@@ -22,8 +22,12 @@ const Dashboard = () => {
         }
     }, [errorMessage])
     useEffect(() => {
+        if (sessionStorage.getItem("username")) {
+            setUsername(sessionStorage.getItem("username") as string);
+        }
         getUserSummary(setErrorMessage).then((data) => {
             setUsername(data.username);
+            sessionStorage.setItem("username", data.username);
             setPosition(data.position);
             setElo(data.elo);
         });
@@ -58,7 +62,7 @@ const Dashboard = () => {
                 <Link className="dashboardLink" to={ownTeamsRoute}>
                     <button>Own teams</button>
                 </Link>
-                <Link className="dashboardLink" to={editUsernameRoute}>
+                <Link className="dashboardLink" to={`${editUsernameRoute}?username=${username}`}>
                     <button>Edit username</button>
                 </Link>
             </div>
