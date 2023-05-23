@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ownTeamsRoute } from "./OwnTeams";
 import { makeTeam } from '../components/axios';
@@ -11,9 +11,15 @@ export const CreateTeam = () => {
     }
     const [teamName, setTeamName] = useState("");
     const [teammate, setTeammate] = useState("");
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const makeTeamLocal = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await makeTeam(teamName, teammate)) {
+        if(await makeTeam(teamName, teammate, setErrorMessage)) {
             navigateToOwnTeams()
         }
     }
@@ -29,6 +35,7 @@ export const CreateTeam = () => {
                     What is the username of your teammate?
                     <input type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
                 </label>
+                {error()}
                 <button type="submit">Create team</button>
             </form>
         </div>

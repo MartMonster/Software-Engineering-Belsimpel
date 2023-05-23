@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { lastGames2v2Route } from '../LastGames2v2';
 import { editGame2v2 } from '../../components/admin/Games';
@@ -20,10 +20,16 @@ export const AdminEditGame2v2 = () => {
     const [bluePlayer2, setBluePlayer2] = useState("");
     const [redScore, setRedScore] = useState(0);
     const [blueScore, setBlueScore] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
 
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if (await editGame2v2(id, redPlayer1, redPlayer2, bluePlayer1, bluePlayer2, redScore, blueScore)) {
+        if (await editGame2v2(id, redPlayer1, redPlayer2, bluePlayer1, bluePlayer2, redScore, blueScore, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -63,6 +69,7 @@ export const AdminEditGame2v2 = () => {
                         </label>
                     </div>
                 </div>
+                {error()}
                 <button type="submit">Save game</button>
             </form>
             <Link to={'/admin/' + lastGames2v2Route}>

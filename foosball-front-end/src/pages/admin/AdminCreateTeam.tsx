@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ownTeamsRoute } from "../OwnTeams";
 import { makeTeam } from '../../components/admin/Teams';
@@ -12,9 +12,15 @@ export const AdminCreateTeam = () => {
     const [teamName, setTeamName] = useState("");
     const [player1, setPlayer1] = useState("");
     const [player2, setPlayer2] = useState("");
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const makeTeamLocal = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await makeTeam(teamName, player1, player2)) {
+        if(await makeTeam(teamName, player1, player2, setErrorMessage)) {
             navigateToOwnTeams()
         }
     }
@@ -34,6 +40,7 @@ export const AdminCreateTeam = () => {
                     Username
                     <input type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)} />
                 </label>
+                {error()}
                 <button type="submit">Create team</button>
             </form>
         </div>

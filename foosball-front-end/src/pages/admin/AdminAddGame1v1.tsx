@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames1v1Route } from "../LastGames1v1";
 import { makeGame1v1 } from '../../components/admin/Games';
@@ -11,9 +11,16 @@ export const AdminAddGame1v1 = () => {
     }
     const [redPoints, setRedPoints] = useState(0);
     const [bluePoints, setBluePoints] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await makeGame1v1(playerRed, playerBlue, redPoints, bluePoints)) {
+        if(await makeGame1v1(playerRed, playerBlue, redPoints, bluePoints, setErrorMessage)) {
             navigateToLastGames()
         }
     }
@@ -47,6 +54,7 @@ export const AdminAddGame1v1 = () => {
                         </label>
                     </div>
                 </div>
+                {error()}
                 <button type="submit">Enter game</button>
             </form>
         </div>

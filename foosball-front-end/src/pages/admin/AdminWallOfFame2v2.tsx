@@ -11,6 +11,18 @@ export const AdminWallOfFame2v2 = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const deleteError = useCallback(() => {
+        if (deleteErrorMessage !== "") {
+            return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
+        }
+    }, [deleteErrorMessage])
     
     const getTeams = useCallback(() => {
         let page = searchParams.get("page");
@@ -19,7 +31,7 @@ export const AdminWallOfFame2v2 = () => {
         }
         let pageNumber = parseInt(page);
         setPageNumber(pageNumber);
-        getTop10Teams(pageNumber).then((data) => {
+        getTop10Teams(pageNumber, setErrorMessage).then((data) => {
             setTeams(data.teams);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -48,7 +60,7 @@ export const AdminWallOfFame2v2 = () => {
     }
 
     async function removeTeam() {
-        if (await deleteTeam(teamId)) {
+        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
             getTeams();
             closeDeleteModal();
         }
@@ -68,6 +80,7 @@ export const AdminWallOfFame2v2 = () => {
         <div className="App">
             <h1>Wall of fame 2v2</h1>
             <p>Click on a team to edit or delete it.</p>
+            {error()}
             <table>
                 <thead>
                     <tr>
@@ -116,6 +129,7 @@ export const AdminWallOfFame2v2 = () => {
                 onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this team?</h2>
+                {deleteError()}
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeDeleteModal}>Cancel</button>

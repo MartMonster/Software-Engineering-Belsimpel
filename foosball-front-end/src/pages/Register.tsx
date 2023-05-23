@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { loginRoute } from "./Login";
 import { register } from '../components/axios';
@@ -11,6 +11,7 @@ export const Register = () => {
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
     const navigateToDashboard = () => {
         navigate("/");
@@ -18,10 +19,16 @@ export const Register = () => {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (await register(email, username, firstName, lastName, password, confirmPassword)) {
+        if (await register(email, username, firstName, lastName, password, confirmPassword, setErrorMessage)) {
             navigateToDashboard();
         }
     }
+
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
 
     return (
         <div className="App-header">
@@ -35,6 +42,7 @@ export const Register = () => {
                         <input type="text" placeholder="Last name" onChange={e => setLastName(e.target.value)} />
                         <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
                         <input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                        {error()}
                         <button type="submit">Register</button>
                     </div>
                 </form>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { lastGames1v1Route } from '../LastGames1v1';
 import { editGame1v1 } from '../../components/admin/Games';
@@ -13,9 +13,15 @@ export const AdminEditGame1v1 = () => {
     const navigateToOwnGames = () => {
         navigate('/admin/' + lastGames1v1Route);
     }
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if (await editGame1v1(id, playerRed, playerBlue, redPoints, bluePoints)) {
+        if (await editGame1v1(id, playerRed, playerBlue, redPoints, bluePoints, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -51,6 +57,7 @@ export const AdminEditGame1v1 = () => {
                         </label>
                     </div>
                 </div>
+                {error()}
                 <button type="submit">Save game</button>
             </form>
             <Link to={'/admin/' + lastGames1v1Route}>

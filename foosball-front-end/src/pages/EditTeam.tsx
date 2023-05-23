@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { editTeam } from '../components/axios';
 import { ownTeamsRoute } from './OwnTeams';
@@ -15,9 +15,15 @@ export const EditTeam = () => {
         navigate(ownTeamsRoute);
     }
     const [teamName, setTeamName] = useState('');
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const saveTeam = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if (await editTeam(id, teamName)) {
+        if (await editTeam(id, teamName, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -29,6 +35,7 @@ export const EditTeam = () => {
                     Your new team name:
                     <input type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)} />
                 </label>
+                {error()}
                 <button type="submit">Save team</button>
             </form>
             <Link to={ownTeamsRoute}>

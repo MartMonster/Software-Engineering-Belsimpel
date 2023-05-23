@@ -9,6 +9,12 @@ export const LastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
 
     const getGames = useCallback(() => {
         let page = searchParams.get("page");
@@ -16,7 +22,7 @@ export const LastGames1v1 = () => {
             page = "1";
         }
         let pageNumber = parseInt(page);
-        getLast10Games1v1(pageNumber).then((data) => {
+        getLast10Games1v1(pageNumber, setErrorMessage).then((data) => {
             setGames(data.games);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -33,6 +39,7 @@ export const LastGames1v1 = () => {
         <div className="App">
             <h1>Last 10 1v1 games</h1>
             <Link className="App-link" to={ownGames1v1Route}>See own games</Link>
+            {error()}
             <table>
                 <thead>
                     <tr>

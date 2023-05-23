@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editUsername } from '../components/axios';
 
@@ -9,9 +9,15 @@ export const EditUsername = () => {
     const navigateToDashboard = () => {
         navigate('/');
     }
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const submitUsername = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (await editUsername(username)) {
+        if (await editUsername(username, setErrorMessage)) {
             navigateToDashboard();
         }
     }
@@ -23,6 +29,7 @@ export const EditUsername = () => {
                     <label>Username
                         <input type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
                     </label>
+                    {error()}
                     <button type="submit">Edit username</button>
                     <button type="button" onClick={navigateToDashboard}>Cancel</button>
                 </div>

@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getTop10Teams, Team } from '../components/axios';
 
 export const wallOfFame2v2Route: string = "WallOfFame2v2"
 export const WallOfFame2v2 = () => {
     const [teams, setTeams] = useState(new Array<Team>());
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     useEffect(() => {
-        getTop10Teams().then((data) => {
+        getTop10Teams(setErrorMessage).then((data) => {
             setTeams(data);
             console.log(data);
         });
@@ -13,6 +19,7 @@ export const WallOfFame2v2 = () => {
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>
+            {error()}
             <table>
                 <thead>
                     <tr>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../components/axios';
 
@@ -9,13 +9,19 @@ const PasswordReset = () => {
     const [email] = useState(searchParams.get("email") as string);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const navigate = useNavigate();
     const navigateToDashboard = () => {
         navigate("/");
     }
     const sendResetCall = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (await resetPassword(email, password, confirmPassword, hash)) {
+        if (await resetPassword(email, password, confirmPassword, hash, setErrorMessage)) {
             navigateToDashboard();
         }
     }
@@ -34,6 +40,7 @@ const PasswordReset = () => {
                         <label>Confirm password
                             <input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         </label>
+                        {error()}
                         <input type="submit" value="Reset password" />
                     </div>
                 </form>

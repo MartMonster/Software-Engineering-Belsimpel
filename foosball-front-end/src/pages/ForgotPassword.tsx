@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { forgotPassword } from '../components/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginRoute } from './Login';
@@ -8,9 +8,15 @@ const ForgotPassword = () => {
     const navigateToDashboard = () => {
         navigate("/");
     }
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const sendResetEmail = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (await forgotPassword(email)) {
+        if (await forgotPassword(email, setErrorMessage)) {
             navigateToDashboard();
         }
     }
@@ -23,6 +29,7 @@ const ForgotPassword = () => {
                         <label>Email
                             <input type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         </label>
+                        {error()}
                         <input type="submit" value="Send reset email" />
                     </div>
                 </form>

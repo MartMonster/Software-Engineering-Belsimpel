@@ -4,21 +4,23 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
 
-async function cookie() {
+async function cookie(setErrorMessage: (string: string) => void) {
     let token;
     await axios.get('/sanctum/csrf-cookie')
         .then(response => {
             console.log(response.config.headers.get('X-XSRF-TOKEN'));
             token = response.config.headers.get('X-XSRF-TOKEN');
+            setErrorMessage("");
         })
         .catch(error => {
+            setErrorMessage(error.response.data.message);
             console.log(error);
         });
     return token;
 }
 
-export async function login(email: string, password: string) {
-    await cookie();
+export async function login(email: string, password: string, setErrorMessage: (string:string) => void) {
+    await cookie(setErrorMessage);
     let b: boolean = false;
     await axios.post('/login', {
         headers: {
@@ -31,19 +33,22 @@ export async function login(email: string, password: string) {
         if (response.status >= 200 && response.status < 300) {
             console.log(response);
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
         b = false;
     });
     sessionStorage.setItem('loggedIn', b.toString());
-    await getIsAdmin();
+    await getIsAdmin(setErrorMessage);
     return b;
 }
 
-export async function register(email: string, username: string, name: string, lastname: string, password: string, password_confirmation:string) {
-    await cookie();
+export async function register(email: string, username: string, name: string, lastname: string,
+    password: string, password_confirmation: string, setErrorMessage: (string: string) => void) {
+    await cookie(setErrorMessage);
     let b: boolean = false;
     await axios.post('/register', {
         headers: {
@@ -60,14 +65,16 @@ export async function register(email: string, username: string, name: string, la
         if (response.status >= 200 && response.status < 300) {
             console.log(response);
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
         b = false;
     });
     sessionStorage.setItem('loggedIn', b.toString());
-    await getIsAdmin();
+    await getIsAdmin(setErrorMessage);
     return b;
 }
 
@@ -87,8 +94,8 @@ export async function logout() {
     });
 }
 
-export async function forgotPassword(email:string) {
-    await cookie();
+export async function forgotPassword(email: string, setErrorMessage: (string: string) => void) {
+    await cookie(setErrorMessage);
     let b: boolean = false;
     await axios.post('/forgot-password', {
         headers: {
@@ -108,8 +115,9 @@ export async function forgotPassword(email:string) {
     return b;
 }
 
-export async function resetPassword(email:string, password:string, password_confirmation:string, token:string) {
-    await cookie();
+export async function resetPassword(email: string, password: string, password_confirmation: string,
+    token: string, setErrorMessage: (string: string) => void) {
+    await cookie(setErrorMessage);
     let b: boolean = false;
     await axios.post('/reset-password', {
         headers: {
@@ -133,7 +141,7 @@ export async function resetPassword(email:string, password:string, password_conf
 }
 
 
-export async function getIsAdmin() {
+export async function getIsAdmin(setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.get('/admin', {
         headers: {
@@ -143,6 +151,7 @@ export async function getIsAdmin() {
         console.log(response.data);
         b = response.data === 1;
     }).catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
         b = false;
     });
@@ -156,7 +165,7 @@ interface UserSummary {
     elo: number;
 }
 
-export async function getUserSummary() {
+export async function getUserSummary(setErrorMessage: (string: string) => void) {
     let data: UserSummary = {username: '', position: 0, elo: 0};
     await axios.get('/user/summary', {
         headers: {
@@ -166,8 +175,10 @@ export async function getUserSummary() {
     .then(response => {
         console.log(response.data);
         data = response.data;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return data;
@@ -179,7 +190,7 @@ export interface User{
     elo:number
 }
 
-export async function getTop10Users() {
+export async function getTop10Users(setErrorMessage: (string: string) => void) {
     let users:User[] = [];
     await axios.get('/user', {
         headers: {
@@ -189,14 +200,16 @@ export async function getTop10Users() {
     .then(response => {
         console.log(response);
         users = response.data;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return users;
 }
 
-export async function editUsername(username:string) {
+export async function editUsername(username: string, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.put('/user/username', {
         headers: {
@@ -208,9 +221,11 @@ export async function editUsername(username:string) {
         if (response.status >= 200 && response.status < 300) {
             b = true;
             console.log(response);
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return b;
@@ -224,7 +239,7 @@ export interface Team{
     elo:number
 }
 
-export async function getTop10Teams() {
+export async function getTop10Teams(setErrorMessage: (string: string) => void) {
     let teams:Team[] = [];
     await axios.get('/teams', {
         headers: {
@@ -234,8 +249,10 @@ export async function getTop10Teams() {
     .then(response => {
         console.log(response);
         teams = response.data;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return teams;
@@ -254,7 +271,7 @@ export interface PaginateInfo {
     last_page: number,
 }
 
-export async function getLast10Games1v1(page:number = 1) {
+export async function getLast10Games1v1(page: number = 1, setErrorMessage: (string: string) => void) {
     let games:Game1v1[] = [];
     let pagination:PaginateInfo;
     let currentPage = 1;
@@ -269,15 +286,17 @@ export async function getLast10Games1v1(page:number = 1) {
         games = response.data.data;
         currentPage = response.data.current_page;
         lastPage = response.data.last_page;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     pagination = {current_page: currentPage, last_page: lastPage};
     return {games, pagination};
 }
 
-export async function getOwnGames1v1(page: number = 1) {
+export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string: string) => void) {
     let games:Game1v1[] = [];
     let pagination: PaginateInfo;
     let currentPage = 1;
@@ -292,8 +311,10 @@ export async function getOwnGames1v1(page: number = 1) {
         games = response.data.data;
         currentPage = response.data.current_page;
         lastPage = response.data.last_page;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -308,7 +329,7 @@ export interface Game2v2 {
     team2_score: number
 }
 
-export async function getLast10Games2v2(page: number = 1) {
+export async function getLast10Games2v2(page: number = 1, setErrorMessage: (string: string) => void) {
     let games: Game2v2[] = [];
     let pagination: PaginateInfo;
     let currentPage = 1;
@@ -323,15 +344,17 @@ export async function getLast10Games2v2(page: number = 1) {
         games = response.data.data;
         currentPage = response.data.current_page;
         lastPage = response.data.last_page;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { games, pagination };
 }
 
-export async function getOwnGames2v2(page: number = 1) {
+export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string: string) => void) {
     let games: Game2v2[] = [];
     let pagination: PaginateInfo;
     let currentPage = 1;
@@ -346,15 +369,17 @@ export async function getOwnGames2v2(page: number = 1) {
         games = response.data.data;
         currentPage = response.data.current_page;
         lastPage = response.data.last_page;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { games, pagination };
 }
 
-export async function getOwnTeams(page: number = 1) {
+export async function getOwnTeams(page: number = 1, setErrorMessage: (string: string) => void) {
     let teams: Team[] = [];
     let pagination: PaginateInfo;
     let currentPage = 1;
@@ -369,15 +394,18 @@ export async function getOwnTeams(page: number = 1) {
         teams = response.data.data;
         currentPage = response.data.current_page;
         lastPage = response.data.last_page;
+        setErrorMessage("");
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     pagination = { current_page: currentPage, last_page: lastPage };
     return { teams, pagination };
 }
 
-export async function makeGame1v1(player2_username:string, player1_score:number, player2_score:number, player1_side:number) {
+export async function makeGame1v1(player2_username: string, player1_score: number, player2_score: number,
+    player1_side: number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.post('games1v1', {
         headers: {
@@ -392,15 +420,18 @@ export async function makeGame1v1(player2_username:string, player1_score:number,
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     })
     return b;
 }
 
-export async function makeGame2v2(player2_username:string, player3_username:string, player4_username:string, team1_score:number, team2_score:number, side:number) {
+export async function makeGame2v2(player2_username: string, player3_username: string, player4_username: string,
+    team1_score: number, team2_score: number, side: number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.post('games2v2', {
         headers: {
@@ -417,15 +448,17 @@ export async function makeGame2v2(player2_username:string, player3_username:stri
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     })
     return b;
 }
 
-export async function makeTeam(team_name:string, player2_username:string) {
+export async function makeTeam(team_name: string, player2_username: string, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.post('teams', {
         headers: {
@@ -438,15 +471,18 @@ export async function makeTeam(team_name:string, player2_username:string) {
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     })
     return b;
 }
 
-export async function editGame1v1(id:number, player1_score:number, player2_score:number, player1_side:number) {
+export async function editGame1v1(id: number, player1_score: number, player2_score: number,
+    player1_side: number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.put('games1v1/'+id, {
         headers: {
@@ -460,15 +496,17 @@ export async function editGame1v1(id:number, player1_score:number, player2_score
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     })
     return b;
 }
 
-export async function deleteGame1v1(id:number) {
+export async function deleteGame1v1(id:number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.delete('games1v1/'+id, {
         headers: {
@@ -479,15 +517,18 @@ export async function deleteGame1v1(id:number) {
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     })
     return b;
 }
 
-export async function editGame2v2(id:number, team1_score:number, team2_score:number, side:number) {
+export async function editGame2v2(id: number, team1_score: number, team2_score: number,
+    side: number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.put('games2v2/'+id, {
         headers: {
@@ -501,15 +542,17 @@ export async function editGame2v2(id:number, team1_score:number, team2_score:num
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return b;
 }
 
-export async function deleteGame2v2(id:number) {
+export async function deleteGame2v2(id: number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.delete('games2v2/'+id, {
         headers: {
@@ -520,15 +563,17 @@ export async function deleteGame2v2(id:number) {
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return b;
 }
 
-export async function editTeam(id:number, team_name:string) {
+export async function editTeam(id: number, team_name: string, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.put('teams/'+id, {
         headers: {
@@ -540,15 +585,17 @@ export async function editTeam(id:number, team_name:string) {
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return b;
 }
 
-export async function deleteTeam(id:number) {
+export async function deleteTeam(id: number, setErrorMessage: (string: string) => void) {
     let b:boolean = false;
     await axios.delete('teams/'+id, {
         headers: {
@@ -559,9 +606,11 @@ export async function deleteTeam(id:number) {
         console.log(response);
         if (response.status >= 200 && response.status < 300) {
             b = true;
+            setErrorMessage("");
         }
     })
     .catch(error => {
+        setErrorMessage(error.response.data.message);
         console.log(error);
     });
     return b;

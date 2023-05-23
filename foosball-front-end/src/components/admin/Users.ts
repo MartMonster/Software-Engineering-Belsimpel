@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PaginateInfo, User } from '../axios';
 
-export async function getTop10Users(page:number = 1) {
+export async function getTop10Users(page: number = 1, setErrorMessage: (string: string) => void) {
     let users: User[] = [];
     let pagination: PaginateInfo;
     let currentPage = 1;
@@ -16,15 +16,18 @@ export async function getTop10Users(page:number = 1) {
             users = response.data.data;
             currentPage = response.data.current_page;
             lastPage = response.data.last_page;
+            setErrorMessage("");
         })
         .catch(error => {
+            setErrorMessage(error.response.data.message);
             console.log(error);
         })
     pagination = { current_page: currentPage, last_page: lastPage };
     return { users, pagination };
 }
 
-export async function editPlayer(id:number, username:string) {
+
+export async function editPlayer(id: number, username: string, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.put(`admin/user/${id}`, {
         headers: {
@@ -36,15 +39,17 @@ export async function editPlayer(id:number, username:string) {
             console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
+                setErrorMessage("");
             }
         })
         .catch(error => {
+            setErrorMessage(error.response.data.message);
             console.log(error);
         })
     return b;
 }
 
-export async function deleteUser(id:number){
+export async function deleteUser(id: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.delete(`admin/user/${id}`, {
         headers: {
@@ -55,9 +60,11 @@ export async function deleteUser(id:number){
             console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
+                setErrorMessage("");
             }
         })
         .catch(error => {
+            setErrorMessage(error.response.data.message);
             console.log(error);
         })
     return b;

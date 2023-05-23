@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { lastGames1v1Route } from "./LastGames1v1";
 import { ownGames1v1Route } from "./OwnGames1v1";
@@ -18,9 +18,15 @@ export const EditGame1v1 = () => {
     const [myPoints, setMyPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const [side, setSide] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await editGame1v1(id, myPoints, opponentPoints, side)) {
+        if(await editGame1v1(id, myPoints, opponentPoints, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -43,6 +49,7 @@ export const EditGame1v1 = () => {
                     How many points did your opponent score?
                     <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
                 </label>
+                {error()}
                 <button type="submit">Save game</button>
             </form>
             <Link to={'/' + lastGames1v1Route +'/'+ ownGames1v1Route}>

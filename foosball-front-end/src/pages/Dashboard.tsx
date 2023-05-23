@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { wallOfFame1v1Route } from "./WallOfFame1v1";
 import { wallOfFame2v2Route } from "./WallOfFame2v2";
@@ -15,8 +15,14 @@ const Dashboard = () => {
     const [username, setUsername] = useState("");
     const [position, setPosition] = useState(0);
     const [elo, setElo] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     useEffect(() => {
-        getUserSummary().then((data) => {
+        getUserSummary(setErrorMessage).then((data) => {
             setUsername(data.username);
             setPosition(data.position);
             setElo(data.elo);
@@ -26,6 +32,7 @@ const Dashboard = () => {
         <div className="App">
             <h1>Dashboard</h1>
             <p>Hello {username}, you are in the top {position} players, and you have {elo} elo.</p>
+            {error()}
             <div className="dashboardButtons">
                 <Link className="dashboardLink" to={wallOfFame1v1Route}>
                     <button>Wall of fame 1v1</button>

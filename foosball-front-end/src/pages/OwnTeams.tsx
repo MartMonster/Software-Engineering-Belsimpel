@@ -10,6 +10,18 @@ export const OwnTeams = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const deleteError = useCallback(() => {
+        if (deleteErrorMessage !== "") {
+            return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
+        }
+    }, [deleteErrorMessage])
 
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [teamId, setTeamId] = useState(0);
@@ -23,7 +35,7 @@ export const OwnTeams = () => {
     }
 
     async function deleteTeamLocal() {
-        if (await deleteTeam(teamId)) {
+        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
             getTeams();
             closeModal();
         }
@@ -35,7 +47,7 @@ export const OwnTeams = () => {
         }
         let pageNumber = parseInt(page);
         setPageNumber(pageNumber);
-        getOwnTeams(pageNumber).then(data => {
+        getOwnTeams(pageNumber, setErrorMessage).then(data => {
             setTeams(data.teams);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -62,6 +74,7 @@ export const OwnTeams = () => {
         <div className="App">
             <h1>Your teams</h1>
             <p>Click on a team to edit or delete it.</p>
+            {error()}
             <table>
                 <thead>
                     <tr>
@@ -110,6 +123,7 @@ export const OwnTeams = () => {
             <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeModal}>
                 <h2>Are you sure you want to delete this team?</h2>
+                {deleteError()}
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeModal}>Cancel</button>

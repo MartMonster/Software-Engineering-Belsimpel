@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames2v2Route } from "./LastGames2v2";
 import { ownGames2v2Route } from "./OwnGames2v2";
@@ -16,10 +16,16 @@ export const AddGame2v2 = () => {
     const [myScore, setMyScore] = useState(0);
     const [opponentScore, setOpponentScore] = useState(0);
     const [side, setSide] = useState(1)
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
 
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await makeGame2v2(player2, player3, player4, myScore, opponentScore, side)) {
+        if(await makeGame2v2(player2, player3, player4, myScore, opponentScore, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -51,7 +57,8 @@ export const AddGame2v2 = () => {
                     How many points did your opponents score?
                     <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentScore(parseInt(e.target.value))}/>
                 </label>
-            <button type="submit">Enter game</button>
+                {error()}
+                <button type="submit">Enter game</button>
             </form>
         </div>
     );

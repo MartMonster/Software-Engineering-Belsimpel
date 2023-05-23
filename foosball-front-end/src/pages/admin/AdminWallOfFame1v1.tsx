@@ -11,6 +11,18 @@ export const AdminWallOfFame1v1 = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const deleteError = useCallback(() => {
+        if (deleteErrorMessage !== "") {
+            return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
+        }
+    }, [deleteErrorMessage])
     
     const getUsers = useCallback(() => {
         let page = searchParams.get("page");
@@ -19,7 +31,7 @@ export const AdminWallOfFame1v1 = () => {
         }
         let pageNumber = parseInt(page);
         setPageNumber(pageNumber);
-        getTop10Users(pageNumber).then((data) => {
+        getTop10Users(pageNumber, setErrorMessage).then((data) => {
             setUsers(data.users);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -45,7 +57,7 @@ export const AdminWallOfFame1v1 = () => {
     }
 
     async function removeUser() {
-        if (await deleteUser(userId)) {
+        if (await deleteUser(userId, setDeleteErrorMessage)) {
             getUsers();
             closeDeleteModal();
         }
@@ -66,6 +78,7 @@ export const AdminWallOfFame1v1 = () => {
         <div className="App">
             <h1>Wall of fame 1v1</h1>
             <p>Click on a user to edit or delete them.</p>
+            {error()}
             <table>
                 <thead>
                     <tr>
@@ -107,6 +120,7 @@ export const AdminWallOfFame1v1 = () => {
                 onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this user?</h2>
+                {deleteError()}
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeDeleteModal}>Cancel</button>

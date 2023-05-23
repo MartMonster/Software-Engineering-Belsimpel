@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getLast10Games1v1, Game1v1 } from '../../components/axios';
 import { deleteGame1v1 } from '../../components/admin/Games';
 import Modal from 'react-modal';
@@ -11,15 +11,27 @@ export const AdminLastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const deleteError = useCallback(() => {
+        if (deleteErrorMessage !== "") {
+            return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
+        }
+    }, [deleteErrorMessage])
+    
     useEffect(getGames, [searchParams, setSearchParams]);
-
     function getGames() {
         let page = searchParams.get("page");
         if (page === null) {
             page = "1";
         }
         let pageNumber = parseInt(page);
-        getLast10Games1v1(pageNumber).then((data) => {
+        getLast10Games1v1(pageNumber, setErrorMessage).then((data) => {
             setGames(data.games);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -42,7 +54,7 @@ export const AdminLastGames1v1 = () => {
     }
 
     async function deleteGame() {
-        if (await deleteGame1v1(gameId)) {
+        if (await deleteGame1v1(gameId, setDeleteErrorMessage)) {
             getGames();
             closeDeleteModal();
         }
@@ -63,6 +75,7 @@ export const AdminLastGames1v1 = () => {
         <div className="App">
             <h1>Last 10 1v1 games</h1>
             <p>Click on a game to edit or delete it.</p>
+            {error()}
             <table>
                 <thead>
                     <tr>
@@ -111,6 +124,7 @@ export const AdminLastGames1v1 = () => {
                 onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this game?</h2>
+                {deleteError()}
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeDeleteModal}>Cancel</button>

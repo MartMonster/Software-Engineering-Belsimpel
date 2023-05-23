@@ -11,6 +11,18 @@ export const AdminLastGames2v2 = () => {
     const [games, setGames] = useState<Game2v2[]>([]);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const deleteError = useCallback(() => {
+        if (deleteErrorMessage !== "") {
+            return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
+        }
+    }, [deleteErrorMessage])
 
     const getGames = useCallback(() => {
         let page = searchParams.get("page");
@@ -18,7 +30,7 @@ export const AdminLastGames2v2 = () => {
             page = "1";
         }
         let pageNumber = parseInt(page);
-        getLast10Games2v2(pageNumber).then((data) => {
+        getLast10Games2v2(pageNumber, setErrorMessage).then((data) => {
             setGames(data.games);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -44,7 +56,7 @@ export const AdminLastGames2v2 = () => {
     }
 
     async function deleteGame() {
-        if (await deleteGame2v2(gameId)) {
+        if (await deleteGame2v2(gameId, setDeleteErrorMessage)) {
             getGames();
             closeDeleteModal();
         }
@@ -67,6 +79,7 @@ export const AdminLastGames2v2 = () => {
         <div className="App">
             <h1>Last 10 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
+            {error()}
             <table>
                 <thead>
                     <tr>
@@ -115,6 +128,7 @@ export const AdminLastGames2v2 = () => {
                 onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this game?</h2>
+                {deleteError()}
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeDeleteModal}>Cancel</button>

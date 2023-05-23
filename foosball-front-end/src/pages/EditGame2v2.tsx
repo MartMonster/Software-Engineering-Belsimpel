@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { editGame2v2 } from '../components/axios';
 import { ownGames2v2Route } from './OwnGames2v2';
@@ -18,9 +18,15 @@ export const EditGame2v2 = () => {
     const [myPoints, setMyPoints] = useState(0);
     const [opponentPoints, setOpponentPoints] = useState(0);
     const [side, setSide] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("")
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if (await editGame2v2(id, myPoints, opponentPoints, side)) {
+        if (await editGame2v2(id, myPoints, opponentPoints, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -43,6 +49,7 @@ export const EditGame2v2 = () => {
                     How many points did your opponents score?
                     <input type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentPoints(parseInt(e.target.value))} />
                 </label>
+                {error()}
                 <button type="submit">Save game</button>
             </form>
             <Link to={'/' + lastGames2v2Route + '/' + ownGames2v2Route}>

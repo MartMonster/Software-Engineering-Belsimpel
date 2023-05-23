@@ -367,3 +367,12 @@ tr td {
 .lastGames {
   max-width: 50vw;
 }
+
+.errorMessage {
+  color: red;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-align: center;
+  margin: 0em;
+  transition: all 0.5s ease;
+}
