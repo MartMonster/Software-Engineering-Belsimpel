@@ -19,7 +19,11 @@ export async function getTop10Teams(page: number = 1, setErrorMessage: (string: 
             setErrorMessage("");
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -42,7 +46,11 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -66,7 +74,11 @@ export async function makeTeam(team_name: string, player1_username: string, play
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -87,7 +99,11 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;

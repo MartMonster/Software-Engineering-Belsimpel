@@ -19,7 +19,11 @@ export async function getTop10Users(page: number = 1, setErrorMessage: (string: 
             setErrorMessage("");
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -43,7 +47,11 @@ export async function editPlayer(id: number, username: string, setErrorMessage: 
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -64,7 +72,11 @@ export async function deleteUser(id: number, setErrorMessage: (string: string) =
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;

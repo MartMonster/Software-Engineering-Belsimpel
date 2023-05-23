@@ -20,7 +20,11 @@ export async function makeGame1v1(player1_username: string, player2_username: st
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -41,7 +45,11 @@ export async function deleteGame1v1(id: number, setErrorMessage: (string: string
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -67,7 +75,11 @@ export async function editGame1v1(id: number, player1_username: string, player2_
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -95,7 +107,11 @@ export async function makeGame2v2(player1_username: string, player2_username: st
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -116,7 +132,11 @@ export async function deleteGame2v2(id: number, setErrorMessage: (string: string
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
@@ -144,7 +164,11 @@ export async function editGame2v2(id: number, player1_username: string, player2_
             }
         })
         .catch(error => {
-            setErrorMessage(error.response.data.message);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
             console.log(error);
         })
     return b;
