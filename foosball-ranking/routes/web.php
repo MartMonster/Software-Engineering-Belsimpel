@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminGames1v1Controller;
+use App\Http\Controllers\Admin\AdminGames2v2Controller;
+use App\Http\Controllers\Admin\AdminTeamsController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\User\Games1v1Controller;
 use App\Http\Controllers\User\Games2v2Controller;
 use App\Http\Controllers\User\TeamsController;
@@ -77,9 +80,22 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('/admin')->group(function () {
-        Route::controller(AdminController::class)->group(function () {
+        Route::controller(AdminUserController::class)->group(function () {
             Route::get('/', 'isAdmin');
-            Route::middleware(['admin'])->group(function () {
+        });
+
+        Route::middleware(['admin'])->group(function () {
+            Route::controller(AdminUserController::class)->group(function () {
+                Route::prefix('/user')->group(function () {
+                    Route::get('/', 'getTop10Users');
+
+                    Route::put('/{id}', 'editPlayer');
+
+                    Route::delete('/{id}', 'deletePlayer');
+                });
+            });
+
+            Route::controller(AdminGames1v1Controller::class)->group(function () {
                 Route::prefix('/games1v1')->group(function () {
                     Route::post('/', 'create1v1Game');
 
@@ -87,7 +103,9 @@ Route::middleware(['auth'])->group(function () {
 
                     Route::delete('/{id}', 'delete1v1Game');
                 });
+            });
 
+            Route::controller(AdminGames2v2Controller::class)->group(function () {
                 Route::prefix('/games2v2')->group(function () {
                     Route::post('/', 'create2v2Game');
 
@@ -95,7 +113,9 @@ Route::middleware(['auth'])->group(function () {
 
                     Route::delete('/{id}', 'delete2v2Game');
                 });
+            });
 
+            Route::controller(AdminTeamsController::class)->group(function () {
                 Route::prefix('/teams')->group(function () {
                     Route::get('/', 'getTop10Teams');
 
@@ -104,14 +124,6 @@ Route::middleware(['auth'])->group(function () {
                     Route::put('/{id}', 'updateTeam');
 
                     Route::delete('/{id}', 'deleteTeam');
-                });
-
-                Route::prefix('/user')->group(function () {
-                    Route::get('/', 'getTop10Users');
-
-                    Route::put('/{id}', 'editPlayer');
-
-                    Route::delete('/{id}', 'deletePlayer');
                 });
             });
         });
