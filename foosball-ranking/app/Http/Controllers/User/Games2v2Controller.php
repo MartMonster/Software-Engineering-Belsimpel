@@ -62,9 +62,8 @@ class Games2v2Controller extends Controller
 
     public function getOwnGames()
     {
-        $result = DB::table('games2v2 as g')
-            ->join('foosball_teams as t1', 'g.team1_id', '=', 't1.id')
-            ->join('foosball_teams as t2', 'g.team2_id', '=', 't2.id')
+        $result = Game2v2::join('foosball_teams as t1', 'games2v2.team1_id', '=', 't1.id')
+            ->join('foosball_teams as t2', 'games2v2.team2_id', '=', 't2.id')
             ->join('users as p', function ($join) {
                 $join->on('t1.player1_id', '=', 'p.id')
                     ->orOn('t1.player2_id', '=', 'p.id')
@@ -72,10 +71,10 @@ class Games2v2Controller extends Controller
                     ->orOn('t2.player2_id', '=', 'p.id');
             })
             ->where('p.id', '=', Auth::id())
-            ->orderBy('g.created_at', 'desc')
-            ->select('g.id as id',
-                'g.team1_score as team1_score',
-                'g.team2_score as team2_score',
+            ->orderBy('games2v2.created_at', 'desc')
+            ->select('games2v2.id as id',
+                'games2v2.team1_score as team1_score',
+                'games2v2.team2_score as team2_score',
                 't1.team_name AS team1_name',
                 't2.team_name AS team2_name'
             )->paginate(10);
@@ -84,13 +83,12 @@ class Games2v2Controller extends Controller
 
     public function getLast10Games()
     {
-        $result = DB::table('games2v2 as g')
-            ->join('foosball_teams as t1', 'g.team1_id', '=', 't1.id')
-            ->join('foosball_teams as t2', 'g.team2_id', '=', 't2.id')
-            ->orderBy('g.created_at', 'desc')
-            ->select('g.id as id',
-                'g.team1_score as team1_score',
-                'g.team2_score as team2_score',
+        $result = Game2v2::join('foosball_teams as t1', 'games2v2.team1_id', '=', 't1.id')
+            ->join('foosball_teams as t2', 'games2v2.team2_id', '=', 't2.id')
+            ->orderBy('games2v2.created_at', 'desc')
+            ->select('games2v2.id as id',
+                'games2v2.team1_score as team1_score',
+                'games2v2.team2_score as team2_score',
                 't1.team_name AS team1_name',
                 't2.team_name AS team2_name'
             )->paginate(10);
