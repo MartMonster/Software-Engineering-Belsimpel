@@ -40,8 +40,8 @@ class TeamsController extends Controller
     public function createTeam(Request $request)
     {
         $request->validate([
-            'team_name' => ['required','unique:'.FoosballTeam::class],
-            'player2_username' => ['required','exists:'.User::class.',username']
+            'team_name' => ['required', 'unique:' . FoosballTeam::class],
+            'player2_username' => ['required', 'exists:' . User::class . ',username']
 
         ]);
         $player2 = User::where('username', $request->player2_username)->first();
@@ -52,7 +52,7 @@ class TeamsController extends Controller
     public function updateTeam(Request $request, string $id)
     {
         $request->validate([
-            'team_name' => ['required','unique:'.FoosballTeam::class]
+            'team_name' => ['required', 'unique:' . FoosballTeam::class]
         ]);
         $team = FoosballTeam::find($id);
         if ($team == null)

@@ -15,12 +15,26 @@ class RegistrationTest extends TestCase
             'name' => 'Test',
             'lastname' => 'User',
             'username' => 'testUser',
-            'email' => 'test@example.com',
+            'email' => 'test@belsimpel.nl',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
         $response->assertNoContent();
+    }
+
+    public function test_new_users_cannot_register_with_invalid_email(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'Test',
+            'lastname' => 'User',
+            'username' => 'testUser',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertSessionHasErrors(['email']);
     }
 }

@@ -100,8 +100,8 @@ class AdminController extends Controller
         $ids[1] = Games2v2Controller::getIdFromUsername($request->player2_username);
         $ids[2] = Games2v2Controller::getIdFromUsername($request->player3_username);
         $ids[3] = Games2v2Controller::getIdFromUsername($request->player4_username);
-        $team1_id = FoosballTeam::getTeamWithUsers($ids[0], $ids[1])->id;
-        $team2_id = FoosballTeam::getTeamWithUsers($ids[2], $ids[3])->id;
+        $team1_id = FoosballTeam::getOrCreateTeamWithUsers($ids[0], $ids[1])->id;
+        $team2_id = FoosballTeam::getOrCreateTeamWithUsers($ids[2], $ids[3])->id;
         Game2v2::updateGameIdScores($game, $team1_id, $team2_id, $request->team1_score, $request->team2_score, 1);
         return response('Game succesfully updated', 200);
     }

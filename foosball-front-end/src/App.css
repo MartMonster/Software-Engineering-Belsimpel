@@ -54,11 +54,13 @@
 }
 
 .login {
-  /* flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  /* flex-grow: 1; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  display: inline;
+  align-self: center;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   text-align: center;
   width: 85vw;
 }
@@ -91,13 +93,8 @@ input {
 
 hr {
   display: block;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
   border-radius: 0.5em;
-  margin-left: auto;
-  margin-right: auto;
-  border-style: inset;
-  border-width: 1px;
+  margin: 0.5em auto;
   width: 90%;
   border: 2px solid gray;
 }
@@ -155,38 +152,36 @@ th {
 .left {
   width: 50%;
   text-align: left;
-  margin: 1em 0em .5em 1em;
+  margin: 1em 0 .5em 1em;
 }
 
 .right {
   width: 50%;
   text-align: right;
-  margin: 1em 1em .5em 0em;
+  margin: 1em 1em .5em 0;
 }
 
 .left-3 {
   width: 33%;
   text-align: center;
-  margin: 1em 1em .5em 0em;
+  margin: 1em 1em .5em 0;
 }
 
 .right-3 {
   width: 33%;
   text-align: center;
-  margin: 1em 1em .5em 0em;
+  margin: 1em 1em .5em 0;
 }
 
 .middle-3 {
   width: 33%;
   text-align: center;
-  margin: 1em 1em .5em 0em;
+  margin: 1em 1em .5em 0;
 }
 
 .editButton {
   background-color: #3E4451;
   /* background-color: orange; */
-  color: black;
-  color: #61dafb;
   color: orange;
   /* height: auto; */
   width: auto;
@@ -195,16 +190,14 @@ th {
 .deleteButton {
   background-color: #3E4451;
   /* background-color: red; */
-  color: black;
-  color: #61dafb;
   color: red;
   /* height: 4em; */
   width: auto;
 }
 
 .tableCol {
-  display:"flex";
-  flex-direction:"column";
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 0;
   margin: 0;
@@ -292,7 +285,7 @@ th {
 }
 
 .editDeleteGame td {
-  border: 0px;
+  border: 0;
   border-left: 1px solid white;
   border-right: 1px solid white;
 }
@@ -318,7 +311,7 @@ th {
 
 .pagination-container ul {
   list-style: none;
-  padding: 0em;
+  padding: 0;
 }
 
 .pagination .page-button .App-link:hover {
@@ -378,6 +371,6 @@ tr td {
   font-size: 0.8em;
   font-weight: 600;
   text-align: center;
-  margin: 0em;
+  margin: 0;
   transition: all 0.5s ease;
 }
