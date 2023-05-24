@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\User\Games2v2Controller;
 use App\Models\FoosballTeam;
 use App\Models\Game2v2;
 use App\Models\User;
@@ -31,10 +30,10 @@ class AdminGames2v2Controller extends Controller
         if ($game == null)
             return response('Not found', 404);
         $ids = array();
-        $ids[0] = Games2v2Controller::getIdFromUsername($request->player1_username);
-        $ids[1] = Games2v2Controller::getIdFromUsername($request->player2_username);
-        $ids[2] = Games2v2Controller::getIdFromUsername($request->player3_username);
-        $ids[3] = Games2v2Controller::getIdFromUsername($request->player4_username);
+        $ids[0] = User::getIdFromUsername($request->player1_username);
+        $ids[1] = User::getIdFromUsername($request->player2_username);
+        $ids[2] = User::getIdFromUsername($request->player3_username);
+        $ids[3] = User::getIdFromUsername($request->player4_username);
         $team1_id = FoosballTeam::getOrCreateTeamWithUsers($ids[0], $ids[1])->id;
         $team2_id = FoosballTeam::getOrCreateTeamWithUsers($ids[2], $ids[3])->id;
         Game2v2::updateGameIdScores($game, $team1_id, $team2_id, $request->team1_score, $request->team2_score, 1);

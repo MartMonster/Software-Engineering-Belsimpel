@@ -18,7 +18,6 @@ class FoosballTeam extends Model
         if (is_null($team_name) || $team_name == "")
             return response("Invalid Team Name", 400);
 
-        /// TODO: remove this weird dependency
         if (self::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
             return response("Team with these users already exists", 400);
 
@@ -34,7 +33,7 @@ class FoosballTeam extends Model
 
     }
 
-    public static function getTeamWithUsers($id1, $id2)
+    private static function getTeamWithUsers($id1, $id2)
     {
         $team = FoosballTeam::where(fn($query) => $query->where('player1_id', $id1)
             ->where('player2_id', $id2)

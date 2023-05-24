@@ -8,7 +8,6 @@ use App\Models\Game2v2;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class Games2v2Controller extends Controller
 {
@@ -49,15 +48,6 @@ class Games2v2Controller extends Controller
         self::checkIfPlayedInGame($id);
         Game2v2::where('id', $id)->delete();
         return response('Game succesfully deleted', 200);
-    }
-
-    public static function getIdFromUsername($username)
-    {
-        $user = User::where('username', $username)->first();
-        if (is_null($user)) {
-            return null;
-        }
-        return $user->id;
     }
 
     public function getOwnGames()
