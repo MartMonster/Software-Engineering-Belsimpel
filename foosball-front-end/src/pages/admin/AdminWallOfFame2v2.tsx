@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Team } from '../../components/endpoints/player/axios';
+import { Team } from '../../components/endpoints/player/Teams';
 import { deleteTeam, getTop10Teams } from '../../components/endpoints/admin/Teams';
 import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';

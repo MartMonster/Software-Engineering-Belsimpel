@@ -1,22 +1,21 @@
 import axios from 'axios';
-import { User } from '../player/Users';
-import { PaginateInfo } from '../../paginate';
 
-export async function getTop10Users(page: number = 1, setErrorMessage: (string: string) => void) {
-    let users: User[] = [];
-    let pagination: PaginateInfo;
-    let currentPage = 1;
-    let lastPage = 1;
-    await axios.get(`admin/user?page=${page}`, {
+interface UserSummary {
+    username: string;
+    position: number;
+    elo: number;
+}
+
+export async function getUserSummary(setErrorMessage: (string: string) => void) {
+    let data: UserSummary = { username: '', position: 0, elo: 0 };
+    await axios.get('/user/summary', {
         headers: {
             Accept: 'application/json'
         }
     })
         .then(response => {
-            console.log(response);
-            users = response.data.data;
-            currentPage = response.data.current_page;
-            lastPage = response.data.last_page;
+            console.log(response.data);
+            data = response.data;
             setErrorMessage("");
         })
         .catch(error => {
@@ -31,57 +30,58 @@ export async function getTop10Users(page: number = 1, setErrorMessage: (string: 
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
                 window.location.reload();
-                window.location.reload();
             }
-        })
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { users, pagination };
+        });
+    return data;
 }
 
-
-export async function editPlayer(id: number, username: string, setErrorMessage: (string: string) => void) {
-    let b: boolean = false;
-    await axios.put(`admin/user/${id}`, {
-        headers: {
-            Accept: 'application/json'
-        },
-        username
-    })
-        .then(response => {
-            console.log(response);
-            if (response.status >= 200 && response.status < 300) {
-                b = true;
-                setErrorMessage("");
-            }
-        })
-        .catch(error => {
-            if (error.response.data.message) {
-                setErrorMessage(error.response.data.message);
-            } else {
-                setErrorMessage(error.response.data);
-            }
-            console.log(error);
-            if (error.response.status === 401 &&
-                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
-                sessionStorage.removeItem('loggedIn');
-                sessionStorage.removeItem('isAdmin');
-                window.location.reload();
-            }
-        })
-    return b;
+export interface User {
+    id: number,
+    username: string,
+    elo: number
 }
 
-export async function deleteUser(id: number, setErrorMessage: (string: string) => void) {
-    let b: boolean = false;
-    await axios.delete(`admin/user/${id}`, {
+export async function getTop10Users(setErrorMessage: (string: string) => void) {
+    let users: User[] = [];
+    await axios.get('/user', {
         headers: {
             Accept: 'application/json'
         }
     })
         .then(response => {
             console.log(response);
+            users = response.data;
+            setErrorMessage("");
+        })
+        .catch(error => {
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
+            console.log(error);
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+                window.location.reload();
+            }
+        });
+    return users;
+}
+
+export async function editUsername(username: string, setErrorMessage: (string: string) => void) {
+    let b: boolean = false;
+    await axios.put('/user/username', {
+        headers: {
+            Accept: 'application/json'
+        },
+        username
+    })
+        .then(response => {
             if (response.status >= 200 && response.status < 300) {
                 b = true;
+                console.log(response);
                 setErrorMessage("");
             }
         })
@@ -98,6 +98,6 @@ export async function deleteUser(id: number, setErrorMessage: (string: string) =
                 sessionStorage.removeItem('isAdmin');
                 window.location.reload();
             }
-        })
+        });
     return b;
 }

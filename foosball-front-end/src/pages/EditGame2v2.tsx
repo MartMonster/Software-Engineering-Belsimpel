@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { editGame2v2 } from '../components/endpoints/player/axios';
+import { editGame2v2 } from '../components/endpoints/player/Games';
 import { ownGames2v2Route } from './OwnGames2v2';
 import { lastGames2v2Route } from './LastGames2v2';
 

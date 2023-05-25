@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { registerRoute } from "./Register";
-import { login } from '../components/endpoints/player/axios';
+import { login } from '../components/endpoints/player/Login';
 
 export const loginRoute:string = '/login';
 export const Login = () => {

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { forgotPassword } from '../components/endpoints/player/axios';
+import { forgotPassword } from '../components/endpoints/player/Login';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginRoute } from './Login';
 const ForgotPassword = () => {

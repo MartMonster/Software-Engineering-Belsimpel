@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../components/endpoints/player/axios';
+import { resetPassword } from '../components/endpoints/player/Login';
 
 const PasswordReset = () => {
     const params = useParams();

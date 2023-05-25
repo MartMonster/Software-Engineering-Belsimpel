@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { editUsername } from '../components/endpoints/player/axios';
+import { editUsername } from '../components/endpoints/player/Users';
 
 export const editUsernameRoute = 'username';
 export const EditUsername = () => {

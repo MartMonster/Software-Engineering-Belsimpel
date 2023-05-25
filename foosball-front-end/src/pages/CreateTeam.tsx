@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ownTeamsRoute } from "./OwnTeams";
-import { makeTeam } from '../components/endpoints/player/axios';
+import { makeTeam } from '../components/endpoints/player/Teams';
 
 export const createTeamRoute: string = "CreateTeam"
 export const CreateTeam = () => {

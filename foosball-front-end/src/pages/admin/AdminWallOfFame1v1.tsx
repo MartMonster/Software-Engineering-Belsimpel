@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { User } from '../../components/endpoints/player/axios';
+import { User } from '../../components/endpoints/player/Users';
 import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import { deleteUser, getTop10Users } from '../../components/endpoints/admin/Users';

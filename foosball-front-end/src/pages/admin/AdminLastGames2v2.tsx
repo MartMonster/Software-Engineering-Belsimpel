@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getLast10Games2v2, Game2v2 } from '../../components/endpoints/player/axios';
+import { getLast10Games2v2, Game2v2 } from '../../components/endpoints/player/Games';
 import { deleteGame2v2 } from '../../components/endpoints/admin/Games';
 import { Link, useSearchParams } from 'react-router-dom';
 import { editGame2v2Route } from '../EditGame2v2';

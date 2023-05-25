@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames2v2Route } from "./LastGames2v2";
 import { ownGames2v2Route } from "./OwnGames2v2";
-import { makeGame2v2 } from '../components/endpoints/player/axios';
+import { makeGame2v2 } from '../components/endpoints/player/Games';
 
 export const addGame2v2Route: string = "AddGame2v2"
 export const AddGame2v2 = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, Navigate } from "react-router-dom";
 import { loginRoute } from "./Login";
-import { logout } from '../components/endpoints/player/axios';
+import { logout } from '../components/endpoints/player/Login';
 
 // TODO: change this back to false
 const DEBUG:boolean = false;
