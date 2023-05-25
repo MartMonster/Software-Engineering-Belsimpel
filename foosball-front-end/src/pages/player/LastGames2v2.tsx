@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from "react-router-dom";
 import { ownGames2v2Route } from "./OwnGames2v2";
-import { getLast10Games2v2, Game2v2 } from '../components/endpoints/player/Games';
-import paginationButtons from '../components/paginate';
+import { getLast10Games2v2, Game2v2 } from '../../components/endpoints/player/Games';
+import paginationButtons from '../../components/paginate';
 
 export const lastGames2v2Route: string = "LastGames2v2"
 export const LastGames2v2 = () => {
@@ -51,12 +51,12 @@ export const LastGames2v2 = () => {
                     {games.map((game: Game2v2, index) => {
                         return (
                             <React.Fragment key={game.id}>
-                                <tr>
+                                <tr className='redRow'>
                                     <td>Red</td>
                                     <td className='lastGames'>{game.team1_name}</td>
                                     <td>{game.team1_score}</td>
                                 </tr>
-                                <tr>
+                                <tr className='blueRow'>
                                     <td>Blue</td>
                                     <td className='lastGames'>{game.team2_name}</td>
                                     <td>{game.team2_score}</td>

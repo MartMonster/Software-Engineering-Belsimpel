@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { registerRoute } from "./Register";
-import { login } from '../components/endpoints/player/Login';
+import { login } from '../components/endpoints/Login';
 
 export const loginRoute:string = '/login';
 export const Login = () => {
@@ -29,13 +29,13 @@ export const Login = () => {
     return (
         <div className="App-header">
             <div className="App">
-                <h1>Welcome to the foosball tracking website!</h1>
+                <h1 className='title'>Welcome to the foosball tracking website!</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="login">
                         <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
                         {error()}
-                        <button type='submit'>Login</button>
+                        <button type="submit" className='submitButton'>Login</button>
                     </div>
                 </form>
                 <p>Forgot password? <Link className='App-link' to='/forgot-password'>Click here!</Link></p>

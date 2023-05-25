@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { editGame2v2 } from '../components/endpoints/player/Games';
+import { editGame2v2 } from '../../components/endpoints/player/Games';
 import { ownGames2v2Route } from './OwnGames2v2';
 import { lastGames2v2Route } from './LastGames2v2';
 
@@ -59,7 +59,7 @@ export const EditGame2v2 = () => {
                     <input required type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))} />
                 </label>
                 {error()}
-                <button type="submit">Save game</button>
+                <button type="submit" className='submitButton'>Save game</button>
             </form>
             <Link to={'/' + lastGames2v2Route + '/' + ownGames2v2Route}>
                 <button>Cancel</button>

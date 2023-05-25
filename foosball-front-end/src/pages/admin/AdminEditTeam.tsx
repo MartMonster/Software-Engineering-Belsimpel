@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { wallOfFame2v2Route } from '../WallOfFame2v2';
+import { wallOfFame2v2Route } from '../player/WallOfFame2v2';
 import { editTeam } from '../../components/endpoints/admin/Teams';
 
 export const AdminEditTeam = () => {
@@ -41,7 +41,7 @@ export const AdminEditTeam = () => {
                         <input required type="text" placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
                     </label>
                     {error()}
-                    <button type="submit">Edit team</button>
+                    <button type="submit" className='submitButton'>Edit team</button>
                     <button type="button" onClick={navigateToWoF2v2}>Cancel</button>
                 </div>
             </form>

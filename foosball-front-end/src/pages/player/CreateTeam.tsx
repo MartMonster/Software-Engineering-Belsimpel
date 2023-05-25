@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ownTeamsRoute } from "./OwnTeams";
-import { makeTeam } from '../components/endpoints/player/Teams';
+import { makeTeam } from '../../components/endpoints/player/Teams';
 
 export const createTeamRoute: string = "CreateTeam"
 export const CreateTeam = () => {
@@ -36,7 +36,7 @@ export const CreateTeam = () => {
                     <input required type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
                 </label>
                 {error()}
-                <button type="submit">Create team</button>
+                <button type="submit" className='submitButton'>Create team</button>
             </form>
         </div>
     );

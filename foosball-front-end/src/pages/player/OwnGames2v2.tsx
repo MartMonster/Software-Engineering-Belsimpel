@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getOwnGames1v1, Game1v1, deleteGame1v1 } from '../components/endpoints/player/Games';
-import { editGame1v1Route } from './EditGame1v1';
-import { lastGames1v1Route } from './LastGames1v1';
+import { getOwnGames2v2, Game2v2, deleteGame2v2 } from '../../components/endpoints/player/Games';
+import { editGame2v2Route } from './EditGame2v2';
+import { lastGames2v2Route } from './LastGames2v2';
 import Modal from 'react-modal';
-import paginationButtons from '../components/paginate';
+import paginationButtons from '../../components/paginate';
 
 Modal.setAppElement('html');
-export const ownGames1v1Route: string = "self";
-export const OwnGames1v1 = () => {
+export const ownGames2v2Route: string = "self";
+export const OwnGames2v2 = () => {
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-    const [gameId, setGameId] = useState(0);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [errorMessage, setErrorMessage] = useState("")
-    const [player1, setPlayer1] = useState("");
-    const [score1, setScore1] = useState(0);
-    const [score2, setScore2] = useState(0);
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -29,6 +25,7 @@ export const OwnGames1v1 = () => {
         }
     }, [deleteErrorMessage])
 
+    const [gameId, setGameId] = useState(0);
     function openDeleteModal() {
         setDeleteModalIsOpen(true);
         setOptionsModalIsOpen(false);
@@ -38,14 +35,21 @@ export const OwnGames1v1 = () => {
         setDeleteModalIsOpen(false);
     }
 
-    const [games, setGames] = useState<Game1v1[]>([]);
-    const getGames = useCallback (() => {
+    async function deleteGame() {
+        if (await deleteGame2v2(gameId, setDeleteErrorMessage)) {
+            getGames();
+            closeDeleteModal();
+        }
+    }
+
+    const [games, setGames] = useState<Game2v2[]>([]);
+    const getGames = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
             page = "1";
         }
         let pageNumber = parseInt(page);
-        getOwnGames1v1(pageNumber, setErrorMessage).then((data) => {
+        getOwnGames2v2(pageNumber, setErrorMessage).then((data) => {
             setGames(data.games);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
@@ -57,21 +61,19 @@ export const OwnGames1v1 = () => {
 
     useEffect(getGames, [getGames]);
 
-    async function deleteGame() {
-        if(await deleteGame1v1(gameId, setDeleteErrorMessage)) {
-            getGames();
-            closeDeleteModal();
-        }
-    }
-
     const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
-    function openOptionsModal(id: number, text: string, player1: string, score1: number, score2: number) {
+    const [team1Name, setTeam1Name] = useState("");
+    const [team2Name, setTeam2Name] = useState("");
+    const [team1Score, setTeam1Score] = useState(0);
+    const [team2Score, setTeam2Score] = useState(0);
+    function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
         setGameId(id);
         setModalText(text);
-        setPlayer1(player1);
-        setScore1(score1);
-        setScore2(score2);
+        setTeam1Name(team1_name);
+        setTeam2Name(team2_name);
+        setTeam1Score(team1_score);
+        setTeam2Score(team2_score);
         setOptionsModalIsOpen(true);
     }
 
@@ -80,32 +82,32 @@ export const OwnGames1v1 = () => {
     }
     return (
         <div className="App">
-            <h1>Your last 10 1v1 games</h1>
+            <h1>Your last 10 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
             {error()}
             <table>
                 <thead>
                     <tr>
                         <th>Side</th>
-                        <th>Players</th>
+                        <th>Teams</th>
                         <th>Scores</th>
                     </tr>
                 </thead>
                 <tbody className='editDeleteGame'>
-                    {games.map((game:Game1v1, index) => {
+                    {games.map((game:Game2v2, index) => {
                         return (
                             <React.Fragment key={index}>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
-                                    game.player1_username, game.player1_score, game.player2_score)}>
+                                <tr className='redRow' onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                    game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
                                     <td>Red</td>
-                                    <td className='lastGames'>{game.player1_username}</td>
-                                    <td>{game.player1_score}</td>
+                                    <td className='lastGames'>{game.team1_name}</td>
+                                    <td>{game.team1_score}</td>
                                 </tr>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
-                                    game.player1_username, game.player1_score, game.player2_score)}>
+                                <tr className='blueRow' onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                    game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
                                     <td>Blue</td>
-                                    <td className='lastGames'>{game.player2_username}</td>
-                                    <td>{game.player2_score}</td>
+                                    <td className='lastGames'>{game.team2_name}</td>
+                                    <td>{game.team2_score}</td>
                                 </tr>
                             </React.Fragment>
                         );
@@ -120,7 +122,7 @@ export const OwnGames1v1 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`/${lastGames1v1Route}/${editGame1v1Route}/${gameId}?player1=${player1}&score1=${score1}&score2=${score2}`}>
+                        <Link to={`/${lastGames2v2Route}/${editGame2v2Route}/${gameId}?team1=${team1Name}&team2=${team2Name}&score1=${team1Score}&score2=${team2Score}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>
@@ -152,13 +154,13 @@ export const OwnGames1v1 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={'/' + lastGames1v1Route+ '/' + ownGames1v1Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link' to={'/' + lastGames2v2Route + '/' + ownGames2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={'/' + lastGames1v1Route + '/' + ownGames1v1Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link' to={'/' + lastGames2v2Route + '/' + ownGames2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }

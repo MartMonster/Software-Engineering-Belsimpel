@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getOwnGames2v2, Game2v2, deleteGame2v2 } from '../components/endpoints/player/Games';
-import { editGame2v2Route } from './EditGame2v2';
-import { lastGames2v2Route } from './LastGames2v2';
+import { getOwnTeams, Team, deleteTeam } from '../../components/endpoints/player/Teams';
 import Modal from 'react-modal';
-import paginationButtons from '../components/paginate';
+import { editTeamRoute } from './EditTeam';
+import paginationButtons from '../../components/paginate';
 
-Modal.setAppElement('html');
-export const ownGames2v2Route: string = "self";
-export const OwnGames2v2 = () => {
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+export const ownTeamsRoute: string = "/Teams";
+export const OwnTeams = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [pageNumber, setPageNumber] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
         if (errorMessage !== "") {
@@ -25,32 +23,32 @@ export const OwnGames2v2 = () => {
         }
     }, [deleteErrorMessage])
 
-    const [gameId, setGameId] = useState(0);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [teamId, setTeamId] = useState(0);
     function openDeleteModal() {
         setDeleteModalIsOpen(true);
         setOptionsModalIsOpen(false);
     }
 
-    function closeDeleteModal() {
+    function closeModal() {
         setDeleteModalIsOpen(false);
     }
 
-    async function deleteGame() {
-        if (await deleteGame2v2(gameId, setDeleteErrorMessage)) {
-            getGames();
-            closeDeleteModal();
+    async function deleteTeamLocal() {
+        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
+            getTeams();
+            closeModal();
         }
     }
-
-    const [games, setGames] = useState<Game2v2[]>([]);
-    const getGames = useCallback(() => {
+    const getTeams = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
             page = "1";
         }
         let pageNumber = parseInt(page);
-        getOwnGames2v2(pageNumber, setErrorMessage).then((data) => {
-            setGames(data.games);
+        setPageNumber(pageNumber);
+        getOwnTeams(pageNumber, setErrorMessage).then(data => {
+            setTeams(data.teams);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
             }
@@ -58,22 +56,14 @@ export const OwnGames2v2 = () => {
             console.log(data);
         });
     }, [searchParams, setSearchParams])
-
-    useEffect(getGames, [getGames]);
+    const [teams, setTeams] = useState<Team[]>([]);
+    useEffect(getTeams, [getTeams]);
 
     const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
-    const [modalText, setModalText] = useState('');
-    const [team1Name, setTeam1Name] = useState("");
-    const [team2Name, setTeam2Name] = useState("");
-    const [team1Score, setTeam1Score] = useState(0);
-    const [team2Score, setTeam2Score] = useState(0);
-    function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
-        setGameId(id);
-        setModalText(text);
-        setTeam1Name(team1_name);
-        setTeam2Name(team2_name);
-        setTeam1Score(team1_score);
-        setTeam2Score(team2_score);
+    const [teamName, setTeamName] = useState('');
+    function openOptionsModal(id: number, name: string) {
+        setTeamId(id);
+        setTeamName(name);
         setOptionsModalIsOpen(true);
     }
 
@@ -82,47 +72,46 @@ export const OwnGames2v2 = () => {
     }
     return (
         <div className="App">
-            <h1>Your last 10 2v2 games</h1>
-            <p>Click on a game to edit or delete it.</p>
+            <h1>Your teams</h1>
+            <p>Click on a team to edit or delete it.</p>
             {error()}
             <table>
                 <thead>
                     <tr>
-                        <th>Side</th>
-                        <th>Teams</th>
-                        <th>Scores</th>
+                        <th>#</th>
+                        <th>Team name</th>
+                        <th>Players</th>
+                        <th>Elo</th>
                     </tr>
                 </thead>
-                <tbody className='editDeleteGame'>
-                    {games.map((game:Game2v2, index) => {
+                <tbody>
+                    {teams.map((team: Team, index) => {
                         return (
-                            <React.Fragment key={index}>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
-                                    game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
-                                    <td>Red</td>
-                                    <td className='lastGames'>{game.team1_name}</td>
-                                    <td>{game.team1_score}</td>
-                                </tr>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
-                                    game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
-                                    <td>Blue</td>
-                                    <td className='lastGames'>{game.team2_name}</td>
-                                    <td>{game.team2_score}</td>
-                                </tr>
-                            </React.Fragment>
+                            <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
+                                <td>{(index + 1) * pageNumber}</td>
+                                <td className='teamName'>{team.team_name}</td>
+                                <td>
+                                    <div className="tableCol">
+                                        <p className='WoF2v2'>{team.player1_username}</p>
+                                        <p className='WoF2v2'>{team.player2_username}</p>
+                                    </div>
+                                </td>
+                                <td>{Math.round(team.elo)}</td>
+                            </tr>
                         );
-                    })}
+                    })
+                    }
                 </tbody>
             </table>
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
-                <h2>Options for game: {modalText}</h2>
+                <h2>Options for team: {teamName}</h2>
                 <div className="row">
                     <div className='left-3'>
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`/${lastGames2v2Route}/${editGame2v2Route}/${gameId}?team1=${team1Name}&team2=${team2Name}&score1=${team1Score}&score2=${team2Score}`}>
+                        <Link to={`${ownTeamsRoute}/${editTeamRoute}/${teamId}?team=${teamName}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>
@@ -132,16 +121,15 @@ export const OwnGames2v2 = () => {
                 </div>
             </Modal>
             <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeDeleteModal}
-                contentLabel="Example Modal">
-                <h2>Are you sure you want to delete this game?</h2>
+                onRequestClose={closeModal}>
+                <h2>Are you sure you want to delete this team?</h2>
                 {deleteError()}
                 <div className="row">
                     <div className='left'>
-                        <button onClick={closeDeleteModal}>Cancel</button>
+                        <button onClick={closeModal}>Cancel</button>
                     </div>
                     <div className='right'>
-                        <button onClick={deleteGame} className='deleteButton'>Delete</button>
+                        <button onClick={deleteTeamLocal} className='deleteButton'>Delete</button>
                     </div>
                 </div>
             </Modal>
@@ -154,13 +142,13 @@ export const OwnGames2v2 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={'/' + lastGames2v2Route + '/' + ownGames2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link' to={ownTeamsRoute + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={'/' + lastGames2v2Route + '/' + ownGames2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link' to={ownTeamsRoute + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }

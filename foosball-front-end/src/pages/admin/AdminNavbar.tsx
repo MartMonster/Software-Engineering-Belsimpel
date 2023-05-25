@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, Navigate } from "react-router-dom";
 import { loginRoute } from "../Login";
-import { logout } from '../../components/endpoints/player/Login';
+import { logout } from '../../components/endpoints/Login';
 
 const DEBUG:boolean = false;
 
@@ -20,7 +20,7 @@ export const AdminNavbar = () => {
     return (
         <div className="App-header">
             <nav>
-                <div className="row">
+                <div className="rowNav">
                     <div className="left">
                         <Link className='App-link' to="/admin">Dashboard</Link>
                     </div>
@@ -29,7 +29,6 @@ export const AdminNavbar = () => {
                     </div>
                 </div>
             </nav>
-            <hr/>
             <Outlet />
         </div>
     );

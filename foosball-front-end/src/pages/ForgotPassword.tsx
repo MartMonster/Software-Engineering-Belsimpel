@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { forgotPassword } from '../components/endpoints/player/Login';
+import { forgotPassword } from '../components/endpoints/Login';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginRoute } from './Login';
 const ForgotPassword = () => {
@@ -23,14 +23,14 @@ const ForgotPassword = () => {
     return (
         <div className="App-header">
             <div className="App">
-                <h1>Forgot password</h1>
+                <h1 className='title'>Forgot password</h1>
                 <form autoComplete="off" onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email
                             <input required type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         </label>
                         {error()}
-                        <button type="submit">Send reset email</button>
+                        <button type="submit" className='submitButton'>Send reset email</button>
                     </div>
                 </form>
                 <p>Back to the <Link className='App-link' to={loginRoute}>Login page.</Link></p>

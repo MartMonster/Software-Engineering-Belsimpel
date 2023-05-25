@@ -38,6 +38,6 @@ npm start
 To get it working for every device (including your phone) on your local network, you need to make some changes:
 - First get the local ip address of the computer you will host the project on.
 - Change the `.env` file (in the `foosball-ranking` directory) variable `FRONTEND_URL` to have your local ip instead of localhost. That will most likely look something like the following: `FRONTEND_URL=http://192.168.X.XXX:3000`
-- Change the `axios.tsx` file (in directory `foosball-front-end/src/components`) to use the baseURL of your own ip, which will most likely look something like the following: `axios.defaults.baseURL = 'http://192.168.X.XXX:8000';`
+- Change the `Login.ts` file (in directory `foosball-front-end/src/components/endpoints`) to use the baseURL of your own ip, which will most likely look something like the following: `axios.defaults.baseURL = 'http://192.168.X.XXX:8000';`
 
 After this you can run the project like normal, and navigate to the URL you specified in the `.env` file. (localhost does not work with these changes)

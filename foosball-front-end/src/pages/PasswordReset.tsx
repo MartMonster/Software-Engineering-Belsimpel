@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../components/endpoints/player/Login';
+import { resetPassword } from '../components/endpoints/Login';
 
 const PasswordReset = () => {
     const params = useParams();
@@ -28,7 +28,7 @@ const PasswordReset = () => {
     return (
         <div className="App-header">
             <div className='App'>
-                <h1>Reset password</h1>
+                <h1 className='title'>Reset password</h1>
                 <form autoComplete="off" onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
@@ -41,7 +41,7 @@ const PasswordReset = () => {
                             <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         </label>
                         {error()}
-                        <button type="submit">Reset password</button>
+                        <button type="submit" className='submitButton'>Reset password</button>
                     </div>
                 </form>
             </div>

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { lastGames1v1Route } from '../LastGames1v1';
+import { lastGames1v1Route } from '../player/LastGames1v1';
 import { editGame1v1 } from '../../components/endpoints/admin/Games';
 
 export const AdminEditGame1v1 = () => {
@@ -73,7 +73,7 @@ export const AdminEditGame1v1 = () => {
                     </div>
                 </div>
                 {error()}
-                <button type="submit">Save game</button>
+                <button type="submit" className='submitButton'>Save game</button>
             </form>
             <Link to={'/admin/' + lastGames1v1Route}>
                 <button>Cancel</button>

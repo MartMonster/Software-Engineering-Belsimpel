@@ -3,7 +3,7 @@ import { getLast10Games1v1, Game1v1 } from '../../components/endpoints/player/Ga
 import { deleteGame1v1 } from '../../components/endpoints/admin/Games';
 import Modal from 'react-modal';
 import { Link, useSearchParams } from 'react-router-dom';
-import { editGame1v1Route } from '../EditGame1v1';
+import { editGame1v1Route } from '../player/EditGame1v1';
 import paginationButtons from '../../components/paginate';
 
 export const lastGames1v1Route: string = "LastGames1v1"
@@ -96,13 +96,13 @@ export const AdminLastGames1v1 = () => {
                     {games.map((game: Game1v1, index) => {
                         return (
                             <React.Fragment key={index}>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
+                                <tr className='redRow' onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
                                 game.player1_username, game.player2_username, game.player1_score, game.player2_score)}>
                                     <td>Red</td>
                                     <td className='lastGames'>{game.player1_username}</td>
                                     <td>{game.player1_score}</td>
                                 </tr>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
+                                <tr className='blueRow' onClick={() => openOptionsModal(game.id, `${game.player1_username} vs ${game.player2_username}`,
                                     game.player1_username, game.player2_username, game.player1_score, game.player2_score)}>
                                     <td>Blue</td>
                                     <td className='lastGames'>{game.player2_username}</td>

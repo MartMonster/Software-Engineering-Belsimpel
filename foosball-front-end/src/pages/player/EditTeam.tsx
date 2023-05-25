@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { editTeam } from '../components/endpoints/player/Teams';
+import { editTeam } from '../../components/endpoints/player/Teams';
 import { ownTeamsRoute } from './OwnTeams';
 
 export const editTeamRoute: string = "edit"
@@ -42,7 +42,7 @@ export const EditTeam = () => {
                     <input required type="text" placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
                 </label>
                 {error()}
-                <button type="submit">Save team</button>
+                <button type="submit" className='submitButton'>Save team</button>
             </form>
             <Link to={ownTeamsRoute}>
                 <button>Cancel</button>

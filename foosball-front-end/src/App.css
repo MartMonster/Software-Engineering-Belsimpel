@@ -1,10 +1,11 @@
 * {
   background-color: #282c34;
+  background-color: #fff;
 }
 
 .App {
   text-align: center;
-  margin: 1em;
+  margin: 0em;
   width: 100vw;
 }
 
@@ -20,18 +21,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #fff;
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
   /* justify-content: center; */
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #000;
 }
 
 .App-link {
-  color: #61dafb;
+  color: #009ddf;
   align-items: center;
 }
 
@@ -75,7 +76,9 @@ button {
   font-size: 1em;
   border-radius: 0.5em;
   color: white;
-  background-color: #282c34;
+  background-color: #009ddf;
+  border-color: #009ddf;
+  border-style: outset;
   width: 75%;
   margin: 0.5vh;
 }
@@ -86,8 +89,8 @@ input {
   height: 3em;
   font-size: 1em;
   border-radius: 0.5em;
-  color: white;
-  background-color: #282c34;
+  color: black;
+  /* background-color: #009ddf; */
   margin: 0.5vh;
 }
 
@@ -126,7 +129,7 @@ select {
   font-size: 1em;
   border-radius: 0.5em;
   color: white;
-  background-color: #282c34;
+  background-color: #009ddf;
   margin: 0.5vh;
 }
 
@@ -138,7 +141,7 @@ table {
 
 td,
 th {
-  border: 1px solid white;
+  border: 1px solid #666;
   text-align: center;
   padding: 0.4em;
 }
@@ -147,17 +150,22 @@ th {
   display: flex;
   width: 100vw;
   justify-content: center;
+  align-items: center;
 }
 
 .left {
   width: 50%;
   text-align: left;
-  margin: 1em 0 .5em 1em;
+  align-items: center;
+  justify-content: center;
+  margin: 1em .5em .5em .5em;
 }
 
 .right {
   width: 50%;
   text-align: right;
+  align-items: center;
+  justify-content: center;
   margin: 1em 1em .5em 0;
 }
 
@@ -180,19 +188,27 @@ th {
 }
 
 .editButton {
-  background-color: #3E4451;
+  background-color: #f26522;
+  border-color: #f26522;
   /* background-color: orange; */
-  color: orange;
+  color: white;
   /* height: auto; */
   width: auto;
 }
 
 .deleteButton {
-  background-color: #3E4451;
+  background-color: #ff0002;
+  border-color: #ff0002;
   /* background-color: red; */
-  color: red;
+  color: white;
   /* height: 4em; */
   width: auto;
+}
+
+.submitButton {
+  background-color: #5fb500;
+  border-color: #5fb500;
+  color: white;
 }
 
 .tableCol {
@@ -220,12 +236,12 @@ th {
   transform: translateY(-50%);
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   align-self: center;
   justify-self: center;
   text-align: center;
   border-radius: 0.5em;
-  background-color: #282c34;
+  background-color: #fff;
 }
 
 .Modal button {
@@ -277,17 +293,34 @@ th {
 }
 
 .editDeleteGame tr:nth-child(even) {
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #666;
 }
 
 .editDeleteGame tr:nth-child(odd) {
-  border-top: 1px solid white;
+  border-top: 1px solid #666;
 }
 
 .editDeleteGame td {
   border: 0;
-  border-left: 1px solid white;
-  border-right: 1px solid white;
+  border-left: 1px solid #666;
+  border-right: 1px solid #666;
+}
+
+.redRow * {
+  background-color: #f8cccd;
+}
+
+.blueRow * {
+  background-color: #d8e5ee;
+}
+
+thead tr * {
+  background-color: #009ddf;
+  color: white;
+}
+
+tr:nth-child(even) * {
+  background-color: #ccc;
 }
 
 .pagination {
@@ -301,7 +334,7 @@ th {
 .pagination .page-button .App-link {
   font-size: 1em;
   font-weight: 600;
-  color: #00a8ff;
+  color: #009ddf;
   background: #fff;
   padding: .2em .5em;
   border-radius: .3em;
@@ -316,14 +349,14 @@ th {
 
 .pagination .page-button .App-link:hover {
   color: #fff;
-  background: #00a8ff;
+  background: #009ddf;
 }
 
 .pagination .page-button-active .App-link {
   font-size: 1em;
   font-weight: 600;
   color: #fff;
-  background: #00a8ff;
+  background: #009ddf;
   padding: .2em .5em;
   border-radius: .3em;
   cursor: pointer;
@@ -373,4 +406,38 @@ tr td {
   text-align: center;
   margin: 0;
   transition: all 0.5s ease;
+}
+
+.rowNav {
+  background-color: #009ddf;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.rowNav * {
+  font-weight: 500;
+  color: white;
+  background-color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.rowNav .left {
+  margin-left: .5em;
+}
+
+.rowNav .right {
+  margin-right: .5em;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  padding: .2em;
+  margin-bottom: 1em;
+  background-color: #009ddf;
+  color: white;
 }

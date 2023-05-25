@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { ownTeamsRoute } from "../OwnTeams";
+import { ownTeamsRoute } from "../player/OwnTeams";
 import { makeTeam } from '../../components/endpoints/admin/Teams';
 
 export const createTeamRoute: string = "CreateTeam"
@@ -41,7 +41,7 @@ export const AdminCreateTeam = () => {
                     <input required type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)} />
                 </label>
                 {error()}
-                <button type="submit">Create team</button>
+                <button type="submit" className='submitButton'>Create team</button>
             </form>
         </div>
     );

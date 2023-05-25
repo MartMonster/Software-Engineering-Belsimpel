@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { getLast10Games2v2, Game2v2 } from '../../components/endpoints/player/Games';
 import { deleteGame2v2 } from '../../components/endpoints/admin/Games';
 import { Link, useSearchParams } from 'react-router-dom';
-import { editGame2v2Route } from '../EditGame2v2';
+import { editGame2v2Route } from '../player/EditGame2v2';
 import Modal from 'react-modal';
 import paginationButtons from '../../components/paginate';
 
@@ -100,13 +100,13 @@ export const AdminLastGames2v2 = () => {
                     {games.map((game: Game2v2, index) => {
                         return (
                             <React.Fragment key={game.id}>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                <tr className='redRow' onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
                                 game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
                                     <td>Red</td>
                                     <td className='lastGames'>{game.team1_name}</td>
                                     <td>{game.team1_score}</td>
                                 </tr>
-                                <tr onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                <tr className='blueRow' onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
                                 game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
                                     <td>Blue</td>
                                     <td className='lastGames'>{game.team2_name}</td>

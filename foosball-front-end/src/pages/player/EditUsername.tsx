@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { editUsername } from '../components/endpoints/player/Users';
+import { editUsername } from '../../components/endpoints/player/Users';
 
 export const editUsernameRoute = 'username';
 export const EditUsername = () => {
@@ -36,7 +36,7 @@ export const EditUsername = () => {
                         <input required type="text" placeholder="Username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
                     </label>
                     {error()}
-                    <button type="submit">Edit username</button>
+                    <button type="submit" className='submitButton'>Edit username</button>
                     <button type="button" onClick={navigateToDashboard}>Cancel</button>
                 </div>
             </form>

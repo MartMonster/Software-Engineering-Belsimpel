@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames2v2Route } from "./LastGames2v2";
 import { ownGames2v2Route } from "./OwnGames2v2";
-import { makeGame2v2 } from '../components/endpoints/player/Games';
+import { makeGame2v2 } from '../../components/endpoints/player/Games';
 
 export const addGame2v2Route: string = "AddGame2v2"
 export const AddGame2v2 = () => {
@@ -58,7 +58,7 @@ export const AddGame2v2 = () => {
                     <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentScore(parseInt(e.target.value))}/>
                 </label>
                 {error()}
-                <button type="submit">Enter game</button>
+                <button type="submit" className='submitButton'>Enter game</button>
             </form>
         </div>
     );
