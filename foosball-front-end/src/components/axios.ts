@@ -50,7 +50,7 @@ export async function login(email: string, password: string, setErrorMessage: (s
         b = false;
     });
     sessionStorage.setItem('loggedIn', b.toString());
-    await getIsAdmin(setErrorMessage);
+    await getIsAdmin();
     return b;
 }
 
@@ -86,7 +86,7 @@ export async function register(email: string, username: string, name: string, la
         b = false;
     });
     sessionStorage.setItem('loggedIn', b.toString());
-    await getIsAdmin(setErrorMessage);
+    await getIsAdmin();
     return b;
 }
 
@@ -168,7 +168,7 @@ export async function resetPassword(email: string, password: string, password_co
 }
 
 
-export async function getIsAdmin(setErrorMessage: (string: string) => void) {
+export async function getIsAdmin() {
     let b: boolean = false;
     await axios.get('/admin', {
         headers: {
@@ -178,11 +178,6 @@ export async function getIsAdmin(setErrorMessage: (string: string) => void) {
         console.log(response.data);
         b = response.data === 1;
     }).catch(error => {
-        if (error.response.data.message) {
-            setErrorMessage(error.response.data.message);
-        } else {
-            setErrorMessage(error.response.data);
-        }
         console.log(error);
         if (error.response.status === 401 &&
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
