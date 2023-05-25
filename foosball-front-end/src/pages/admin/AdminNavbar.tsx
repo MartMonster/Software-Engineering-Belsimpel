@@ -11,7 +11,7 @@ export const AdminNavbar = () => {
     let isAdmin = sessionStorage.getItem("isAdmin") === "true";
     if (!loggedIn && !DEBUG) {
         console.log("user not logged in!")
-        return <Navigate to="login"/>;
+        return <Navigate to="/login"/>;
     }
     if (!isAdmin) {
         console.log("user is not admin!")

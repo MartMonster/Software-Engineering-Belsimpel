@@ -12,11 +12,11 @@ export const Navbar = () => {
     let isAdmin = sessionStorage.getItem("isAdmin") === "true";
     if (!loggedIn && !DEBUG) {
         console.log("user not logged in!")
-        return <Navigate to="login"/>;
+        return <Navigate to="/login"/>;
     }
     if (isAdmin) {
         console.log("user is admin!")
-        return <Navigate to="admin"/>;
+        return <Navigate to="/admin"/>;
     }
     return (
         <div className="App-header">

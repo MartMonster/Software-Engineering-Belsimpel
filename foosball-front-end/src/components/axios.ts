@@ -107,6 +107,7 @@ export async function logout() {
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
 }
@@ -132,6 +133,7 @@ export async function forgotPassword(email: string, setErrorMessage: (string: st
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;
@@ -162,6 +164,7 @@ export async function resetPassword(email: string, password: string, password_co
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;
@@ -183,6 +186,7 @@ export async function getIsAdmin() {
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
         b = false;
     });
@@ -219,6 +223,7 @@ export async function getUserSummary(setErrorMessage: (string: string) => void) 
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return data;
@@ -253,6 +258,7 @@ export async function getTop10Users(setErrorMessage: (string: string) => void) {
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return users;
@@ -284,6 +290,7 @@ export async function editUsername(username: string, setErrorMessage: (string: s
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;
@@ -320,6 +327,7 @@ export async function getTop10Teams(setErrorMessage: (string: string) => void) {
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return teams;
@@ -366,6 +374,7 @@ export async function getLast10Games1v1(page: number = 1, setErrorMessage: (stri
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     pagination = {current_page: currentPage, last_page: lastPage};
@@ -400,6 +409,7 @@ export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string:
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -442,6 +452,7 @@ export async function getLast10Games2v2(page: number = 1, setErrorMessage: (stri
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -476,6 +487,7 @@ export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string:
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -510,6 +522,7 @@ export async function getOwnTeams(page: number = 1, setErrorMessage: (string: st
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -547,6 +560,7 @@ export async function makeGame1v1(player2_username: string, player1_score: numbe
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     })
     return b;
@@ -584,6 +598,7 @@ export async function makeGame2v2(player2_username: string, player3_username: st
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     })
     return b;
@@ -616,6 +631,7 @@ export async function makeTeam(team_name: string, player2_username: string, setE
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     })
     return b;
@@ -651,6 +667,7 @@ export async function editGame1v1(id: number, player1_score: number | undefined,
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     })
     return b;
@@ -681,6 +698,7 @@ export async function deleteGame1v1(id:number, setErrorMessage: (string: string)
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     })
     return b;
@@ -716,6 +734,7 @@ export async function editGame2v2(id: number, team1_score: number | undefined,
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;
@@ -746,6 +765,7 @@ export async function deleteGame2v2(id: number, setErrorMessage: (string: string
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;
@@ -777,6 +797,7 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;
@@ -807,6 +828,7 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
+            window.location.reload();
         }
     });
     return b;

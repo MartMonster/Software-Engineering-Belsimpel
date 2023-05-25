@@ -29,6 +29,7 @@ export async function getTop10Teams(page: number = 1, setErrorMessage: (string: 
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -61,6 +62,7 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -94,6 +96,7 @@ export async function makeTeam(team_name: string, player1_username: string, play
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -124,6 +127,7 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;

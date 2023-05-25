@@ -30,6 +30,7 @@ export async function makeGame1v1(player1_username: string, player2_username: st
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -60,6 +61,7 @@ export async function deleteGame1v1(id: number, setErrorMessage: (string: string
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -95,6 +97,7 @@ export async function editGame1v1(id: number, player1_username: string, player2_
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -133,6 +136,7 @@ export async function makeGame2v2(player1_username: string, player2_username: st
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -163,6 +167,7 @@ export async function deleteGame2v2(id: number, setErrorMessage: (string: string
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -201,6 +206,7 @@ export async function editGame2v2(id: number, player1_username: string, player2_
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;

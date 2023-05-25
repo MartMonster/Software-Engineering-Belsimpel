@@ -29,6 +29,8 @@ export async function getTop10Users(page: number = 1, setErrorMessage: (string: 
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
+                window.location.reload();
             }
         })
     pagination = { current_page: currentPage, last_page: lastPage };
@@ -62,6 +64,7 @@ export async function editPlayer(id: number, username: string, setErrorMessage: 
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
@@ -92,6 +95,7 @@ export async function deleteUser(id: number, setErrorMessage: (string: string) =
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
+                window.location.reload();
             }
         })
     return b;
