@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { User } from '../../components/axios';
+import { User } from '../../components/endpoints/player/axios';
 import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';
-import { deleteUser, getTop10Users } from '../../components/admin/Users';
+import { deleteUser, getTop10Users } from '../../components/endpoints/admin/Users';
 import paginationButtons from '../../components/paginate';
 
 export const wallOfFame1v1Route: string = "WallOfFame1v1"

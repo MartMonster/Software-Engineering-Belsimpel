@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { loginRoute } from "./Login";
-import { register } from '../components/axios';
+import { register } from '../components/endpoints/player/axios';
 
 export const registerRoute: string = '/register';
 export const Register = () => {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
 import { lastGames1v1Route } from "./LastGames1v1";
 import { ownGames1v1Route } from "./OwnGames1v1";
-import { editGame1v1 } from '../components/axios';
+import { editGame1v1 } from '../components/endpoints/player/axios';
 
 export const editGame1v1Route:string = "edit"
 export const EditGame1v1 = () => {

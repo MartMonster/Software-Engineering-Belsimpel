@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { editTeam } from '../components/axios';
+import { editTeam } from '../components/endpoints/player/axios';
 import { ownTeamsRoute } from './OwnTeams';
 
 export const editTeamRoute: string = "edit"

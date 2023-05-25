@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PaginateInfo, Team } from '../axios';
+import { PaginateInfo, Team } from '../player/axios';
 
 export async function getTop10Teams(page: number = 1, setErrorMessage: (string: string) => void) {
     let teams: Team[] = [];

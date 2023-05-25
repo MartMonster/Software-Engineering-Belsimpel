@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PaginateInfo, User } from '../axios';
+import { PaginateInfo, User } from '../player/axios';
 
 export async function getTop10Users(page: number = 1, setErrorMessage: (string: string) => void) {
     let users: User[] = [];

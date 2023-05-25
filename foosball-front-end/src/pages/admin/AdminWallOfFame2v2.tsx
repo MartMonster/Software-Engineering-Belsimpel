@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Team } from '../../components/axios';
-import { deleteTeam, getTop10Teams } from '../../components/admin/Teams';
+import { Team } from '../../components/endpoints/player/axios';
+import { deleteTeam, getTop10Teams } from '../../components/endpoints/admin/Teams';
 import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import paginationButtons from '../../components/paginate';

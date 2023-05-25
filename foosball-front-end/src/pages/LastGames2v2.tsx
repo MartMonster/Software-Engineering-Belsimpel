@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams } from "react-router-dom";
 import { ownGames2v2Route } from "./OwnGames2v2";
-import { getLast10Games2v2, Game2v2 } from '../components/axios';
+import { getLast10Games2v2, Game2v2 } from '../components/endpoints/player/axios';
 import paginationButtons from '../components/paginate';
 
 export const lastGames2v2Route: string = "LastGames2v2"

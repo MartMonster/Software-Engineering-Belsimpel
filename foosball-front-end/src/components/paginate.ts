@@ -1,4 +1,4 @@
-import { PaginateInfo } from './axios';
+import { PaginateInfo } from './endpoints/player/axios';
 
 export default function paginationButtons(paginateInfo: PaginateInfo) {
     let buttons = [];

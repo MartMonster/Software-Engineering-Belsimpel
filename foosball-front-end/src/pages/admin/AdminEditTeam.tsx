@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { wallOfFame2v2Route } from '../WallOfFame2v2';
-import { editTeam } from '../../components/admin/Teams';
+import { editTeam } from '../../components/endpoints/admin/Teams';
 
 export const AdminEditTeam = () => {
     const [teamName, setTeamName] = useState("");

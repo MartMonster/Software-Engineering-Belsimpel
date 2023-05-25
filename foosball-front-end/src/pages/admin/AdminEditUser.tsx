@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { editPlayer } from '../../components/admin/Users';
+import { editPlayer } from '../../components/endpoints/admin/Users';
 import { wallOfFame1v1Route } from '../WallOfFame1v1';
 
 export const AdminEditUser = () => {

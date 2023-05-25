@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getLast10Games1v1, Game1v1 } from '../../components/axios';
-import { deleteGame1v1 } from '../../components/admin/Games';
+import { getLast10Games1v1, Game1v1 } from '../../components/endpoints/player/axios';
+import { deleteGame1v1 } from '../../components/endpoints/admin/Games';
 import Modal from 'react-modal';
 import { Link, useSearchParams } from 'react-router-dom';
 import { editGame1v1Route } from '../EditGame1v1';

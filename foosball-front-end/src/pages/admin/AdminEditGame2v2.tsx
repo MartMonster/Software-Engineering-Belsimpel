@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { lastGames2v2Route } from '../LastGames2v2';
-import { editGame2v2 } from '../../components/admin/Games';
+import { editGame2v2 } from '../../components/endpoints/admin/Games';
 
 export const AdminEditGame2v2 = () => {
     const idPar = useParams();

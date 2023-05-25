@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { lastGames1v1Route } from "../LastGames1v1";
-import { makeGame1v1 } from '../../components/admin/Games';
+import { makeGame1v1 } from '../../components/endpoints/admin/Games';
 
 export const addGame1v1Route:string = "AddGame1v1"
 export const AdminAddGame1v1 = () => {

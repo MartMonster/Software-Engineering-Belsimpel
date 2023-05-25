@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getTop10Users, User } from '../components/axios';
+import { getTop10Users, User } from '../components/endpoints/player/axios';
 
 export const wallOfFame1v1Route:string = "WallOfFame1v1"
 export const WallOfFame1v1 = () => {
