@@ -13,8 +13,8 @@ import { editUsernameRoute } from './EditUsername';
 
 const Dashboard = () => {
     const [username, setUsername] = useState("");
-    const [position, setPosition] = useState<number>();
-    const [elo, setElo] = useState<number>();
+    const [position, setPosition] = useState<number>(0);
+    const [elo, setElo] = useState<number>(0);
     const [errorMessage, setErrorMessage] = useState("")
     const error = useCallback(() => {
         if (errorMessage !== "") {
@@ -35,7 +35,7 @@ const Dashboard = () => {
     return (
         <div className="App">
             <h1>Dashboard</h1>
-            <p>Hello {username}, you are in the top {position} players, and you have {elo} elo.</p>
+            <p>Hello {username}, you are in the top {position} players, and you have {Math.round(elo)} elo.</p>
             {error()}
             <div className="dashboardButtons">
                 <Link className="dashboardLink" to={wallOfFame1v1Route}>
