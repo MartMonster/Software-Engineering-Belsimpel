@@ -39,7 +39,7 @@ export const AddGame1v1 = () => {
                 </label>
                 <label>
                     What is the username of your opponent?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setOpponent(e.target.value)}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setOpponent(e.target.value)}/>
                 </label>
                 <label>
                     How many points did you score?

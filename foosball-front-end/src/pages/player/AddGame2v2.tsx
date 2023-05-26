@@ -42,12 +42,12 @@ export const AddGame2v2 = () => {
                 </label>
                 <label>
                     What is the username of your teammate?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setPlayer2(e.target.value)}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setPlayer2(e.target.value)}/>
                 </label>
                 <label>
                     What are the usernames of your opponents?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setPlayer3(e.target.value)}/>
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setPlayer4(e.target.value)}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setPlayer3(e.target.value)}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setPlayer4(e.target.value)}/>
                 </label>
                 <label>
                     How many points did your team score?

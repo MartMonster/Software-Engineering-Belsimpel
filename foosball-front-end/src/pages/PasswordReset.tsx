@@ -32,7 +32,7 @@ const PasswordReset = () => {
                 <form autoComplete="off" onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" value={email} disabled/>
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} value={email} disabled/>
                         </label>
                         <label>New password
                             <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />

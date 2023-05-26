@@ -38,7 +38,7 @@ export const AdminEditUser = () => {
             <form autoComplete="off" onSubmit={submitUsername}>
                 <div className="login">
                     <label>Username
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" defaultValue={username} onChange={e => setUsername(e.target.value)}/>
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" defaultValue={username} onChange={e => setUsername(e.target.value)}/>
                     </label>
                     {error()}
                     <button type="submit" className='submitButton'>Edit player</button>

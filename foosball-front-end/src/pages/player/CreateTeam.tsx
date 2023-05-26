@@ -29,11 +29,11 @@ export const CreateTeam = () => {
             <form autoComplete="off" onSubmit={makeTeamLocal}>
                 <label>
                     What will the name of your team be?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Team name" onChange={e => setTeamName(e.target.value)}/>
                 </label>
                 <label>
                     What is the username of your teammate?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setTeammate(e.target.value)}/>
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Create team</button>

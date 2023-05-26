@@ -35,7 +35,7 @@ export const AdminAddGame1v1 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setPlayerRed(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setPlayerRed(e.target.value)} />
                         </label>
                         <label>
                             Score
@@ -46,7 +46,7 @@ export const AdminAddGame1v1 = () => {
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setPlayerBlue(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setPlayerBlue(e.target.value)} />
                         </label>
                         <label>
                             Score

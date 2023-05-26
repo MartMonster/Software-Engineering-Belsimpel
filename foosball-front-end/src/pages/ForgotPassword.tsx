@@ -27,7 +27,7 @@ const ForgotPassword = () => {
                 <form autoComplete="off" onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Send reset email</button>
