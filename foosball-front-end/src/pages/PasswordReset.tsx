@@ -32,13 +32,13 @@ const PasswordReset = () => {
                 <form autoComplete="off" onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
-                            <input required type="text" value={email} disabled/>
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" value={email} disabled/>
                         </label>
                         <label>New password
-                            <input required type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
                         </label>
                         <label>Confirm password
-                            <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Reset password</button>

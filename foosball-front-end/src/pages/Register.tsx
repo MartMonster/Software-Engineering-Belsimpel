@@ -36,12 +36,12 @@ export const Register = () => {
                 <h1 className='title'>Welcome to the foosball tracking website!</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="login">
-                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                        <input required type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
-                        <input required type="text" placeholder="First name" onChange={e => setFirstName(e.target.value)} />
-                        <input required type="text" placeholder="Last name" onChange={e => setLastName(e.target.value)} />
-                        <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-                        <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setUsername(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="First name" onChange={e => setFirstName(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Last name" onChange={e => setLastName(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         {error()}
                         <button type="submit" className='submitButton'>Register</button>
                     </div>

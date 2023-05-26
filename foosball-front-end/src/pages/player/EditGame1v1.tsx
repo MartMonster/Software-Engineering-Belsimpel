@@ -55,11 +55,11 @@ export const EditGame1v1 = () => {
                 </label>
                 <label>
                     How many points did you score?
-                    <input required type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={myPoints} onChange={e => setMyPoints(parseInt(e.target.value))}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={myPoints} onChange={e => setMyPoints(parseInt(e.target.value))}/>
                 </label>
                 <label>
                     How many points did your opponent score?
-                    <input required type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Save game</button>

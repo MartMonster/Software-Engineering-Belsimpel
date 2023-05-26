@@ -39,7 +39,7 @@ export const EditTeam = () => {
             <form autoComplete="off" onSubmit={saveTeam}>
                 <label>
                     Your new team name:
-                    <input required type="text" placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Save team</button>

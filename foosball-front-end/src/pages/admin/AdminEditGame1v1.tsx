@@ -53,22 +53,22 @@ export const AdminEditGame1v1 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input required type="text" placeholder="Username" defaultValue={playerRed} onChange={e => setPlayerRed(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" defaultValue={playerRed} onChange={e => setPlayerRed(e.target.value)} />
                         </label>
                         <label>
                             Score
-                            <input required type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={redPoints} onChange={e => setRedPoints(parseInt(e.target.value))} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={redPoints} onChange={e => setRedPoints(parseInt(e.target.value))} />
                         </label>
                     </div>
                     <div className="right">
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input required type="text" placeholder="Username" defaultValue={playerBlue} onChange={e => setPlayerBlue(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" defaultValue={playerBlue} onChange={e => setPlayerBlue(e.target.value)} />
                         </label>
                         <label>
                             Score
-                            <input required type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={bluePoints} onChange={e => setBluePoints(parseInt(e.target.value))} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={bluePoints} onChange={e => setBluePoints(parseInt(e.target.value))} />
                         </label>
                     </div>
                 </div>

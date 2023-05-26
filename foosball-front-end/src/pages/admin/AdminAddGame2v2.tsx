@@ -37,30 +37,30 @@ export const AdminAddGame2v2 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input required type="text" placeholder="Username" onChange={e => setRedPlayer1(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setRedPlayer1(e.target.value)} />
                         </label>
                         <label>
                             Username
-                            <input required type="text" placeholder="Username" onChange={e => setRedPlayer2(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setRedPlayer2(e.target.value)} />
                         </label>
                         <label>
                             Points
-                            <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedScore(parseInt(e.target.value))} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedScore(parseInt(e.target.value))} />
                         </label>
                     </div>
                     <div className="right">
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input required type="text" placeholder="Username" onChange={e => setBluePlayer1(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setBluePlayer1(e.target.value)} />
                         </label>
                         <label>
                             Username
-                            <input required type="text" placeholder="Username" onChange={e => setBluePlayer2(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" placeholder="Username" onChange={e => setBluePlayer2(e.target.value)} />
                         </label>
                         <label>
                             Points
-                            <input required type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBlueScore(parseInt(e.target.value))} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBlueScore(parseInt(e.target.value))} />
                         </label>
                     </div>
                 </div>
