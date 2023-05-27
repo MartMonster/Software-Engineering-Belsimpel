@@ -185,7 +185,6 @@ export async function getIsAdmin() {
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
             sessionStorage.removeItem('isAdmin');
-            window.location.reload();
         }
         b = false;
     });
