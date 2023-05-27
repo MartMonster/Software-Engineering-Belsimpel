@@ -106,7 +106,6 @@ export async function logout() {
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
-                window.location.reload();
             }
         });
 }
@@ -132,7 +131,6 @@ export async function forgotPassword(email: string, setErrorMessage: (string: st
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
-                window.location.reload();
             }
         });
     return b;
@@ -163,7 +161,6 @@ export async function resetPassword(email: string, password: string, password_co
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
                 sessionStorage.removeItem('isAdmin');
-                window.location.reload();
             }
         });
     return b;
