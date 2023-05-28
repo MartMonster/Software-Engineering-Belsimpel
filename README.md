@@ -1,25 +1,36 @@
 # Software-Engineering-Belsimpel
-## Prerequisites:
-To run this project you need `node` with `npm`, and `composer`. To run this project you need to follow both of the "how to run" instructions below on the same physical device, otherwise it will not work.
+## Docker (no live update)
+### Prerequisites
+To run the dockerized version of this project you need `docker` and `docker-compose`.
 
-## Back-End
-### Documentation/API specification
+### How to run
+In both the root directory and in the `foosball-ranking` directory rename the `default.env` file to `.env`. If you want to change the database properties make sure to rename them in both files, otherwise it will not work.
+
+Then run `docker-compose up` in the root directory.
+To see changes after editing project files, you need to either restart the application by running `docker-compose up --build` or following the `How to run` instructions in the `Dev` section.
+
+## Dev (with live update)
+### Prerequisites
+To run this project you need `node` with `npm`, `composer` (`php`), and `docker` installed. To run this project you need to follow both of the "how to run" instructions below on the same physical device, otherwise it will not work.
+
+### Back-End
+#### Documentation/API specification
 inside the `Documentation` directory there a file `openapi.yaml`. This is our API specification
 in regard to the API endpoints.
 You can open this file either with your editor of choice, where you might need an add-on/plugin
 to view this file correctly, or open [https://editor.swagger.io/](https://editor.swagger.io/) and pasting the contents
 of our file into it.
 
-### How to run
+#### How to run
 First make sure you are in the `foosball-ranking` directory, and rename the `.env.example` file to `.env`
-#### Linux
+##### Linux
 ```bash
 composer update
 sudo chmod o+w ./storage/ -R # This is to give permission to sail to read/write into log files
 ./vendor/laravel/sail/bin/sail up -d
 ./vendor/laravel/sail/bin/sail artisan migrate --seed
 ```
-#### Windows
+##### Windows
 ```bash
 cd foosball-ranking
 composer update
@@ -27,14 +38,14 @@ bash ./vendor/laravel/sail/bin/sail up -d
 bash ./vendor/laravel/sail/bin/sail artisan migrate --seed
 ```
 
-## Front-End
-### How to run
+### Front-End
+#### How to run
 First make sure you are in the `foosball-front-end` directory
 ```bash
 npm update
 npm start
 ```
-## Running on your local IP
+### Running on your local IP
 To get it working for every device (including your phone) on your local network, you need to make some changes:
 - First get the local ip address of the computer you will host the project on.
 - Change the `.env` file (in the `foosball-ranking` directory) variable `FRONTEND_URL` to have your local ip instead of localhost. That will most likely look something like the following: `FRONTEND_URL=http://192.168.X.XXX:3000`
