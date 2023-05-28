@@ -1,6 +1,6 @@
 version: '3'
 services:
-    laravel.test2:
+    laravel:
         build: 
             context: /foosball-ranking
             dockerfile: Dockerfile
@@ -16,7 +16,7 @@ services:
             - sail
         depends_on:
             - mariadb
-        entrypoint: sh -c "sleep 30 && php artisan migrate:fresh --seed && php artisan serve --host=0.0.0.0"
+        entrypoint: sh -c "sleep 30 && php artisan migrate --seed && php artisan serve --host=0.0.0.0"
     mariadb:
         image: 'mariadb:10'
         ports:
@@ -41,6 +41,20 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    front-end-dev:
+        build:
+            context: /foosball-front-end
+            dockerfile: Dockerfile
+        volumes:
+            - /foosball-front-end:/usr/src/app
+            - /usr/src/app/node_modules
+        command: npm run start
+        ports:
+            - '${FORWARD_FRONT_END_PORT:-3000}:3000'
+        networks:
+            - sail
+        depends_on:
+            - laravel
 networks:
     sail:
         driver: bridge
