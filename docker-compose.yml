@@ -53,8 +53,6 @@ services:
             - '${FORWARD_FRONT_END_PORT:-3000}:3000'
         networks:
             - sail
-        depends_on:
-            - laravel
 networks:
     sail:
         driver: bridge
