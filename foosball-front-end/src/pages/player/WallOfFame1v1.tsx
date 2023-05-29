@@ -16,6 +16,9 @@ export const WallOfFame1v1 = () => {
         getTop10Users(setErrorMessage).then((data) => {
             setUsers(data);
             console.log(data);
+            if (data.length === 0) {
+                setErrorMessage("No players found.");
+            }
         });
     },[setUsers]);
 

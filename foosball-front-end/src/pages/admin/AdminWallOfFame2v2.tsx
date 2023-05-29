@@ -43,6 +43,9 @@ export const AdminWallOfFame2v2 = () => {
                 setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
+            if (data.teams.length === 0) {
+                setErrorMessage("No teams found.");
+            }
             console.log(data);
         });
     }, [setTeams, searchParams, setSearchParams]);
