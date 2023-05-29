@@ -16,5 +16,8 @@ RUN npm ci
 # Bundle app source
 COPY . /app
 
+RUN npm run build
+RUN npm install serve -g
+
 EXPOSE 3000
 # CMD [ "node", "server.js" ]

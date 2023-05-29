@@ -49,7 +49,7 @@ services:
         volumes:
             - ./foosball-front-end:/usr/src/app
             - /usr/src/app/node_modules
-        command: npm run start
+        command: serve -s build -l 3000
         ports:
             - '${FORWARD_FRONT_END_PORT:-3000}:3000'
 networks:
