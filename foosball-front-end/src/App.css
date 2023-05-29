@@ -441,3 +441,7 @@ tr td {
   background-color: #009ddf;
   color: white;
 }
+
+select option {
+  color: black;
+}
