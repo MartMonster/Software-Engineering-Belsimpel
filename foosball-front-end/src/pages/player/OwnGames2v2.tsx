@@ -47,6 +47,9 @@ export const OwnGames2v2 = () => {
                 setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
+            if (data.games.length === 0) {
+                setErrorMessage("No games found.");
+            }
             console.log(data);
         });
     }, [searchParams, setSearchParams])

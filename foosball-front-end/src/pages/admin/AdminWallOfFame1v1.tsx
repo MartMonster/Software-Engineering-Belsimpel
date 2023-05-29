@@ -43,6 +43,9 @@ export const AdminWallOfFame1v1 = () => {
                 setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
+            if (data.users.length === 0) {
+                setErrorMessage("No players found.");
+            }
             console.log(data);
         });
     }, [searchParams, setSearchParams]);
