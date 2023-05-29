@@ -6,17 +6,21 @@ import { makeGame1v1 } from '../../components/endpoints/admin/Games';
 export const addGame1v1Route:string = "AddGame1v1"
 export const AdminAddGame1v1 = () => {
     const navigate = useNavigate();
-    const navigateToLastGames = () => {
-        navigate('/admin/' + lastGames1v1Route);
-    }
     const [redPoints, setRedPoints] = useState<number>();
     const [bluePoints, setBluePoints] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
+    const [playerRed, setPlayerRed] = useState("");
+    const [playerBlue, setPlayerBlue] = useState("");
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+    
+    const navigateToLastGames = () => {
+        navigate('/admin/' + lastGames1v1Route);
+    }
 
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
@@ -24,8 +28,7 @@ export const AdminAddGame1v1 = () => {
             navigateToLastGames()
         }
     }
-    const [playerRed, setPlayerRed] = useState("");
-    const [playerBlue, setPlayerBlue] = useState("");
+    
     return (
         <div className="App">
             <h1>Make a new 1v1 game</h1>

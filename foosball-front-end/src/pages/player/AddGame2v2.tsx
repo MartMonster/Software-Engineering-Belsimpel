@@ -7,9 +7,6 @@ import { makeGame2v2 } from '../../components/endpoints/player/Games';
 export const addGame2v2Route: string = "AddGame2v2"
 export const AddGame2v2 = () => {
     const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
-    }
     const [player2, setPlayer2] = useState("");
     const [player3, setPlayer3] = useState("");
     const [player4, setPlayer4] = useState("");
@@ -17,6 +14,11 @@ export const AddGame2v2 = () => {
     const [opponentScore, setOpponentScore] = useState<number>();
     const [side, setSide] = useState(1)
     const [errorMessage, setErrorMessage] = useState("")
+
+    const navigateToOwnGames = () => {
+        navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
+    }
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -29,6 +31,7 @@ export const AddGame2v2 = () => {
             navigateToOwnGames()
         }
     }
+    
     return (
         <div className="App">
             <h1>Make a new 2v2 game</h1>

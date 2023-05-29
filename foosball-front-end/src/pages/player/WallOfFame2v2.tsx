@@ -5,17 +5,22 @@ export const wallOfFame2v2Route: string = "WallOfFame2v2"
 export const WallOfFame2v2 = () => {
     const [teams, setTeams] = useState(new Array<Team>());
     const [errorMessage, setErrorMessage] = useState("")
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    useEffect(() => {
+
+    const getTeams = useCallback(() => {
         getTop10Teams(setErrorMessage).then((data) => {
             setTeams(data);
             console.log(data);
         });
-    }, []);
+    },[setTeams]);
+
+    useEffect(getTeams, [getTeams]);
+
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>

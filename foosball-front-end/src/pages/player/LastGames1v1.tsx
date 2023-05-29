@@ -9,7 +9,8 @@ export const LastGames1v1 = () => {
     const [games, setGames] = useState<Game1v1[]>([]);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -32,9 +33,8 @@ export const LastGames1v1 = () => {
         });
     }, [searchParams, setSearchParams]);
 
-    useEffect(() => {
-        getGames();
-    }, [getGames]);
+    useEffect(getGames, [getGames]);
+
     return (
         <div className="App">
             <h1>Last 10 1v1 games</h1>

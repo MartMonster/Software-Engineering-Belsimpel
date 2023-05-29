@@ -7,30 +7,35 @@ import { lastGames2v2Route } from './LastGames2v2';
 export const editGame2v2Route: string = "edit"
 export const EditGame2v2 = () => {
     const idPar = useParams();
-    let id: number = 0;
-    if (idPar) {
-        id = idPar.id as unknown as number;
-    }
     const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
-    }
     const [myPoints, setMyPoints] = useState<number>();
     const [opponentPoints, setOpponentPoints] = useState<number>();
     const [side, setSide] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
+    const [searchParams] = useSearchParams();
+
+    let id: number = 0;
+    if (idPar) {
+        id = idPar.id as unknown as number;
+    }
+    
+    const navigateToOwnGames = () => {
+        navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
+    }
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if (await editGame2v2(id, myPoints, opponentPoints, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
-    const [searchParams] = useSearchParams();
+
     useEffect(() => {
         if (searchParams.get("score1") as string) {
             setMyPoints(parseInt(searchParams.get("score1") as string));
@@ -39,6 +44,7 @@ export const EditGame2v2 = () => {
             setOpponentPoints(parseInt(searchParams.get("score2") as string));
         }
     }, [searchParams])
+    
     return (
         <div className="App">
             <h1>Edit your 2v2 game</h1>

@@ -5,15 +5,6 @@ import { editGame2v2 } from '../../components/endpoints/admin/Games';
 
 export const AdminEditGame2v2 = () => {
     const idPar = useParams();
-    let id: number = 0;
-    if (idPar) {
-        id = idPar.id as unknown as number;
-    }
-    const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/admin/' + lastGames2v2Route);
-    }
-    
     const [searchParams] = useSearchParams();
     const [redPlayer1, setRedPlayer1] = useState("");
     const [redPlayer2, setRedPlayer2] = useState("");
@@ -22,6 +13,17 @@ export const AdminEditGame2v2 = () => {
     const [redScore, setRedScore] = useState<number>();
     const [blueScore, setBlueScore] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
+    const navigate = useNavigate();
+
+    let id: number = 0;
+    if (idPar) {
+        id = idPar.id as unknown as number;
+    }
+
+    const navigateToOwnGames = () => {
+        navigate('/admin/' + lastGames2v2Route);
+    }
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -34,6 +36,7 @@ export const AdminEditGame2v2 = () => {
             navigateToOwnGames()
         }
     }
+
     // TODO: now uses team names but should use usernames
     useEffect(() => {
         if (searchParams.get("team1") as string) {
@@ -49,6 +52,7 @@ export const AdminEditGame2v2 = () => {
             setBlueScore(parseInt(searchParams.get("score2") as string));
         }
     }, [searchParams])
+
     return (
         <div className="App">
             <h1>Edit your 2v2 game</h1>

@@ -6,24 +6,28 @@ import { makeTeam } from '../../components/endpoints/admin/Teams';
 export const createTeamRoute: string = "CreateTeam"
 export const AdminCreateTeam = () => {
     const navigate = useNavigate();
-    const navigateToOwnTeams = () => {
-        navigate(ownTeamsRoute);
-    }
     const [teamName, setTeamName] = useState("");
     const [player1, setPlayer1] = useState("");
     const [player2, setPlayer2] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
+    const navigateToOwnTeams = () => {
+        navigate(ownTeamsRoute);
+    }
+    
     const makeTeamLocal = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await makeTeam(teamName, player1, player2, setErrorMessage)) {
             navigateToOwnTeams()
         }
     }
+    
     return (
         <div className="App">
             <h1>Make a new foosball team</h1>

@@ -17,28 +17,23 @@ export const OwnGames1v1 = () => {
     const [player1, setPlayer1] = useState("");
     const [score1, setScore1] = useState(0);
     const [score2, setScore2] = useState(0);
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
+    const [games, setGames] = useState<Game1v1[]>([]);
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    const [modalText, setModalText] = useState('');
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
         }
     }, [deleteErrorMessage])
 
-    function openDeleteModal() {
-        setDeleteModalIsOpen(true);
-        setOptionsModalIsOpen(false);
-    }
-
-    function closeDeleteModal() {
-        setDeleteModalIsOpen(false);
-    }
-
-    const [games, setGames] = useState<Game1v1[]>([]);
     const getGames = useCallback (() => {
         let page = searchParams.get("page");
         if (page === null) {
@@ -64,8 +59,15 @@ export const OwnGames1v1 = () => {
         }
     }
 
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
-    const [modalText, setModalText] = useState('');
+    function openDeleteModal() {
+        setDeleteModalIsOpen(true);
+        setOptionsModalIsOpen(false);
+    }
+
+    function closeDeleteModal() {
+        setDeleteModalIsOpen(false);
+    }
+
     function openOptionsModal(id: number, text: string, player1: string, score1: number, score2: number) {
         setGameId(id);
         setModalText(text);
@@ -78,6 +80,7 @@ export const OwnGames1v1 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
+    
     return (
         <div className="App">
             <h1>Your last 10 1v1 games</h1>

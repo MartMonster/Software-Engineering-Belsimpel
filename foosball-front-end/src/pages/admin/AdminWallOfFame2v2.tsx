@@ -12,12 +12,18 @@ export const AdminWallOfFame2v2 = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [teamId, setTeamId] = useState(0);
+    const [teamName, setTeamName] = useState('');
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
@@ -41,14 +47,14 @@ export const AdminWallOfFame2v2 = () => {
         });
     }, [setTeams, searchParams, setSearchParams]);
 
-    useEffect(() => {
-        getTeams();
-    }, [getTeams]);
+    useEffect(getTeams, [getTeams]);
 
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-    
-    const [teamId, setTeamId] = useState(0);
-    const [teamName, setTeamName] = useState('');
+    async function removeTeam() {
+        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
+            getTeams();
+            closeDeleteModal();
+        }
+    }
 
     function openDeleteModal() {
         setOptionsModalIsOpen(false);
@@ -59,14 +65,6 @@ export const AdminWallOfFame2v2 = () => {
         setDeleteModalIsOpen(false);
     }
 
-    async function removeTeam() {
-        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
-            getTeams();
-            closeDeleteModal();
-        }
-    }
-
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     function openOptionsModal(id:number, name:string) {
         setTeamId(id);
         setTeamName(name);
@@ -76,6 +74,7 @@ export const AdminWallOfFame2v2 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
+    
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>

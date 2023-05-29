@@ -13,6 +13,7 @@ export const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
+    
     const navigateToDashboard = () => {
         navigate("/");
     }

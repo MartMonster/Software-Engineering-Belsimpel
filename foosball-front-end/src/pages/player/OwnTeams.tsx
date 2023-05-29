@@ -11,35 +11,25 @@ export const OwnTeams = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [teamId, setTeamId] = useState(0);
+    const [teams, setTeams] = useState<Team[]>([]);
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    const [teamName, setTeamName] = useState('');
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
         }
     }, [deleteErrorMessage])
 
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-    const [teamId, setTeamId] = useState(0);
-    function openDeleteModal() {
-        setDeleteModalIsOpen(true);
-        setOptionsModalIsOpen(false);
-    }
-
-    function closeModal() {
-        setDeleteModalIsOpen(false);
-    }
-
-    async function deleteTeamLocal() {
-        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
-            getTeams();
-            closeModal();
-        }
-    }
     const getTeams = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
@@ -56,11 +46,25 @@ export const OwnTeams = () => {
             console.log(data);
         });
     }, [searchParams, setSearchParams])
-    const [teams, setTeams] = useState<Team[]>([]);
+    
     useEffect(getTeams, [getTeams]);
 
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
-    const [teamName, setTeamName] = useState('');
+    async function deleteTeamLocal() {
+        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
+            getTeams();
+            closeModal();
+        }
+    }
+
+    function openDeleteModal() {
+        setDeleteModalIsOpen(true);
+        setOptionsModalIsOpen(false);
+    }
+
+    function closeModal() {
+        setDeleteModalIsOpen(false);
+    }
+
     function openOptionsModal(id: number, name: string) {
         setTeamId(id);
         setTeamName(name);
@@ -70,6 +74,7 @@ export const OwnTeams = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
+    
     return (
         <div className="App">
             <h1>Your teams</h1>

@@ -12,12 +12,18 @@ export const AdminWallOfFame1v1 = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [userId, setUserId] = useState(0);
+    const [username, setUsername] = useState('');
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
@@ -43,9 +49,12 @@ export const AdminWallOfFame1v1 = () => {
     
     useEffect(getUsers, [getUsers]);
 
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-    const [userId, setUserId] = useState(0);
-    const [username, setUsername] = useState('');
+    async function removeUser() {
+        if (await deleteUser(userId, setDeleteErrorMessage)) {
+            getUsers();
+            closeDeleteModal();
+        }
+    }
 
     function openDeleteModal() {
         setDeleteModalIsOpen(true);
@@ -56,14 +65,6 @@ export const AdminWallOfFame1v1 = () => {
         setDeleteModalIsOpen(false);
     }
 
-    async function removeUser() {
-        if (await deleteUser(userId, setDeleteErrorMessage)) {
-            getUsers();
-            closeDeleteModal();
-        }
-    }
-
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     function openOptionsModal(id: number, name: string) {
         setUserId(id);
         setUsername(name);

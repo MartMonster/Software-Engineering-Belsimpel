@@ -7,25 +7,29 @@ import { makeGame1v1 } from '../../components/endpoints/player/Games';
 export const addGame1v1Route:string = "AddGame1v1"
 export const AddGame1v1 = () => {
     const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
-    }
     const [opponent, setOpponent] = useState("");
     const [myPoints, setMyPoints] = useState<number>();
     const [opponentPoints, setOpponentPoints] = useState<number>();
     const [side, setSide] = useState(1);
     const [errorMessage, setErrorMessage] = useState("")
+
+    const navigateToOwnGames = () => {
+        navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
+    }
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await makeGame1v1(opponent, myPoints, opponentPoints, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
+    
     return (
         <div className="App">
             <h1>Make a new 1v1 game</h1>

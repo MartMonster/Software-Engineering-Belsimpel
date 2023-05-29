@@ -6,9 +6,6 @@ import { makeGame2v2 } from '../../components/endpoints/admin/Games';
 export const addGame2v2Route: string = "AddGame2v2"
 export const AdminAddGame2v2 = () => {
     const navigate = useNavigate();
-    const navigateToLastGames = () => {
-        navigate('/admin/' + lastGames2v2Route);
-    }
     const [redPlayer1, setRedPlayer1] = useState("");
     const [redPlayer2, setRedPlayer2] = useState("");
     const [bluePlayer1, setBluePlayer1] = useState("");
@@ -16,11 +13,16 @@ export const AdminAddGame2v2 = () => {
     const [redScore, setRedScore] = useState<number>();
     const [blueScore, setBlueScore] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+    
+    const navigateToLastGames = () => {
+        navigate('/admin/' + lastGames2v2Route);
+    }
 
     const makeGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
@@ -28,6 +30,7 @@ export const AdminAddGame2v2 = () => {
             navigateToLastGames()
         }
     }
+    
     return (
         <div className="App">
             <h1>Make a new 2v2 game</h1>

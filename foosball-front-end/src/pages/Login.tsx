@@ -9,6 +9,7 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
+
     const navigateToDashboard = () => {
         navigate("/");
     }
@@ -26,6 +27,7 @@ export const Login = () => {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     },[errorMessage])
+    
     return (
         <div className="App-header">
             <div className="App">

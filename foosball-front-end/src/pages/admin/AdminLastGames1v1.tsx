@@ -16,20 +16,25 @@ export const AdminLastGames1v1 = () => {
     const [score1, setScore1] = useState(0);
     const [score2, setScore2] = useState(0);
     const [errorMessage, setErrorMessage] = useState("")
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const [gameId, setGameId] = useState(0);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    const [modalText, setModalText] = useState('');
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
         }
     }, [deleteErrorMessage])
-    
-    useEffect(getGames, [searchParams, setSearchParams]);
-    function getGames() {
+
+    const getGames = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
             page = "1";
@@ -43,10 +48,16 @@ export const AdminLastGames1v1 = () => {
             setPaginateButtons(paginationButtons(data.pagination));
             console.log(data);
         });
-    }
+    }, [searchParams, setSearchParams]);
+    
+    useEffect(getGames, [getGames]);
 
-    const [gameId, setGameId] = useState(0);
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    async function deleteGame() {
+        if (await deleteGame1v1(gameId, setDeleteErrorMessage)) {
+            getGames();
+            closeDeleteModal();
+        }
+    }
 
     function openDeleteModal() {
         setDeleteModalIsOpen(true);
@@ -57,15 +68,6 @@ export const AdminLastGames1v1 = () => {
         setDeleteModalIsOpen(false);
     }
 
-    async function deleteGame() {
-        if (await deleteGame1v1(gameId, setDeleteErrorMessage)) {
-            getGames();
-            closeDeleteModal();
-        }
-    }
-
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
-    const [modalText, setModalText] = useState('');
     function openOptionsModal(id: number, text:string, player1: string, player2: string, score1: number, score2: number) {
         setGameId(id);
         setModalText(text);
@@ -79,6 +81,7 @@ export const AdminLastGames1v1 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
+
     return (
         <div className="App">
             <h1>Last 10 1v1 games</h1>

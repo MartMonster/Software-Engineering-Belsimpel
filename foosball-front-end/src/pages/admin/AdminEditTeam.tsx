@@ -4,34 +4,40 @@ import { wallOfFame2v2Route } from '../player/WallOfFame2v2';
 import { editTeam } from '../../components/endpoints/admin/Teams';
 
 export const AdminEditTeam = () => {
+    const idPar = useParams();
     const [teamName, setTeamName] = useState("");
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const navigateToWoF2v2 = () => {
-        navigate('/admin/' + wallOfFame2v2Route);
-    }
-    const idPar = useParams();
+    const [errorMessage, setErrorMessage] = useState("")
+
     let id: number = 0;
     if (idPar) {
         id = idPar.id as unknown as number;
     }
-    const [errorMessage, setErrorMessage] = useState("")
+
+    const navigateToWoF2v2 = () => {
+        navigate('/admin/' + wallOfFame2v2Route);
+    }
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
     const submitTeamName = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if (await editTeam(id, teamName, setErrorMessage)) {
             navigateToWoF2v2();
         }
     }
+
     useEffect(() => {
         if (searchParams.get("team") as string) {
             setTeamName(searchParams.get("team") as string);
         }
     }, [searchParams])
+    
     return (
         <div className="App">
             <h1>Edit a team</h1>

@@ -7,30 +7,35 @@ import { editGame1v1 } from '../../components/endpoints/player/Games';
 export const editGame1v1Route:string = "edit"
 export const EditGame1v1 = () => {
     const idPar = useParams();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const [myPoints, setMyPoints] = useState<number>();
+    const [opponentPoints, setOpponentPoints] = useState<number>();
+    const [side, setSide] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("");
+
     let id: number = 0;
     if (idPar) {
         id = idPar.id as unknown as number;
     }
-    const navigate = useNavigate();
+    
     const navigateToOwnGames = () => {
         navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
     }
-    const [myPoints, setMyPoints] = useState<number>();
-    const [opponentPoints, setOpponentPoints] = useState<number>();
-    const [side, setSide] = useState(1);
-    const [errorMessage, setErrorMessage] = useState("")
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await editGame1v1(id, myPoints, opponentPoints, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
-    const [searchParams] = useSearchParams();
+
     useEffect(() => {
         if (searchParams.get("player1") as string === sessionStorage.getItem("username")) {
             setSide(1);
@@ -42,6 +47,7 @@ export const EditGame1v1 = () => {
             setOpponentPoints(parseInt(searchParams.get("score1") as string));
         }
     }, [searchParams])
+    
     return (
         <div className="App">
             <h1>Edit your 1v1 game</h1>

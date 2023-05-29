@@ -10,6 +10,7 @@ export const LastGames2v2 = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [errorMessage, setErrorMessage] = useState("")
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>

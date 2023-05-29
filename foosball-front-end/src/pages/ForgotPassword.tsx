@@ -5,21 +5,25 @@ import { loginRoute } from './Login';
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("")
+
     const navigateToDashboard = () => {
         navigate("/");
     }
-    const [errorMessage, setErrorMessage] = useState("")
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
     const sendResetEmail = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if (await forgotPassword(email, setErrorMessage)) {
             navigateToDashboard();
         }
     }
+    
     return (
         <div className="App-header">
             <div className="App">

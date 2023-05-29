@@ -12,37 +12,29 @@ export const OwnGames2v2 = () => {
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
+    const [gameId, setGameId] = useState(0);
+    const [games, setGames] = useState<Game2v2[]>([]);
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+    const [modalText, setModalText] = useState('');
+    const [team1Name, setTeam1Name] = useState("");
+    const [team2Name, setTeam2Name] = useState("");
+    const [team1Score, setTeam1Score] = useState(0);
+    const [team2Score, setTeam2Score] = useState(0);
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
         }
     }, [deleteErrorMessage])
 
-    const [gameId, setGameId] = useState(0);
-    function openDeleteModal() {
-        setDeleteModalIsOpen(true);
-        setOptionsModalIsOpen(false);
-    }
-
-    function closeDeleteModal() {
-        setDeleteModalIsOpen(false);
-    }
-
-    async function deleteGame() {
-        if (await deleteGame2v2(gameId, setDeleteErrorMessage)) {
-            getGames();
-            closeDeleteModal();
-        }
-    }
-
-    const [games, setGames] = useState<Game2v2[]>([]);
     const getGames = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
@@ -61,12 +53,22 @@ export const OwnGames2v2 = () => {
 
     useEffect(getGames, [getGames]);
 
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
-    const [modalText, setModalText] = useState('');
-    const [team1Name, setTeam1Name] = useState("");
-    const [team2Name, setTeam2Name] = useState("");
-    const [team1Score, setTeam1Score] = useState(0);
-    const [team2Score, setTeam2Score] = useState(0);
+    async function deleteGame() {
+        if (await deleteGame2v2(gameId, setDeleteErrorMessage)) {
+            getGames();
+            closeDeleteModal();
+        }
+    }
+
+    function openDeleteModal() {
+        setDeleteModalIsOpen(true);
+        setOptionsModalIsOpen(false);
+    }
+
+    function closeDeleteModal() {
+        setDeleteModalIsOpen(false);
+    }
+
     function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
         setGameId(id);
         setModalText(text);
@@ -80,6 +82,7 @@ export const OwnGames2v2 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
+    
     return (
         <div className="App">
             <h1>Your last 10 2v2 games</h1>

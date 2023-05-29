@@ -6,30 +6,35 @@ import { editGame1v1 } from '../../components/endpoints/admin/Games';
 export const AdminEditGame1v1 = () => {
     const idPar = useParams();
     let id: number = 0;
+    const [searchParams] = useSearchParams();
+    const [playerRed, setPlayerRed] = useState("");
+    const [playerBlue, setPlayerBlue] = useState("");
+    const [redPoints, setRedPoints] = useState<number>();
+    const [bluePoints, setBluePoints] = useState<number>();
+    const [errorMessage, setErrorMessage] = useState("")
+    const navigate = useNavigate();
+    
     if (idPar) {
         id = idPar.id as unknown as number;
     }
-    const navigate = useNavigate();
-    const navigateToOwnGames = () => {
-        navigate('/admin/' + lastGames1v1Route);
-    }
-    const [errorMessage, setErrorMessage] = useState("")
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
+    const navigateToOwnGames = () => {
+        navigate('/admin/' + lastGames1v1Route);
+    }
+
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if (await editGame1v1(id, playerRed, playerBlue, redPoints, bluePoints, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
-    const [searchParams] = useSearchParams();
-    const [playerRed, setPlayerRed] = useState("");
-    const [playerBlue, setPlayerBlue] = useState("");
-    const [redPoints, setRedPoints] = useState<number>();
-    const [bluePoints, setBluePoints] = useState<number>();
+
     useEffect(() => {
         if (searchParams.get("player1") as string) {
             setPlayerRed(searchParams.get("player1") as string);
@@ -44,6 +49,7 @@ export const AdminEditGame1v1 = () => {
             setBluePoints(parseInt(searchParams.get("score2") as string));
         }
     }, [searchParams])
+
     return (
         <div className="App">
             <h1>Edit a 1v1 game</h1>

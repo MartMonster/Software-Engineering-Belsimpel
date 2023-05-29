@@ -9,22 +9,26 @@ const PasswordReset = () => {
     const [email] = useState(searchParams.get("email") as string);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    const navigate = useNavigate();
+    
     const navigateToDashboard = () => {
         navigate("/");
     }
+
     const sendResetCall = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if (await resetPassword(email, password, confirmPassword, hash, setErrorMessage)) {
             navigateToDashboard();
         }
     }
+    
     return (
         <div className="App-header">
             <div className='App'>

@@ -17,6 +17,7 @@ export const AdminNavbar = () => {
         console.log("user is not admin!")
         return <Navigate to="/" />;
     }
+    
     return (
         <div className="App-header">
             <nav>

@@ -7,26 +7,31 @@ export const EditUsername = () => {
     const [searchParams] = useSearchParams();
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("")
+
     const navigateToDashboard = () => {
         navigate('/');
     }
-    const [errorMessage, setErrorMessage] = useState("")
+    
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
+
     const submitUsername = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if (await editUsername(username, setErrorMessage)) {
             navigateToDashboard();
         }
     }
+
     useEffect(() => {
         if (searchParams.get("username") as string) {
             setUsername(searchParams.get("username") as string);
         }
     }, [searchParams])
+    
     return (
         <div className="App">
             <h1>Edit your username</h1>

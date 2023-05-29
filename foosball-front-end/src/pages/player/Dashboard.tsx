@@ -15,13 +15,15 @@ const Dashboard = () => {
     const [username, setUsername] = useState("");
     const [position, setPosition] = useState<number>(0);
     const [elo, setElo] = useState<number>(0);
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    useEffect(() => {
+
+    const getUsers = useCallback(() => {
         if (sessionStorage.getItem("username")) {
             setUsername(sessionStorage.getItem("username") as string);
         }
@@ -32,6 +34,9 @@ const Dashboard = () => {
             setElo(data.elo);
         });
     }, []);
+
+    useEffect(getUsers, [getUsers]);
+
     return (
         <div className="App">
             <h1>Dashboard</h1>
