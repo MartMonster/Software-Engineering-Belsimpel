@@ -308,12 +308,12 @@ th {
   border-right: 1px solid #666;
 }
 
-.redRow * {
-  background-color: #f8cccd;
+.redRow td:first-child {
+  background-color: #e43239;
 }
 
-.blueRow * {
-  background-color: #d8e5ee;
+.blueRow td:first-child {
+  background-color: #1bbbff;
 }
 
 thead tr * {
