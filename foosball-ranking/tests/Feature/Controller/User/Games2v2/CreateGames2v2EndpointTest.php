@@ -19,8 +19,10 @@ class CreateGames2v2EndpointTest extends TestCase
         $players = self::create_players(4);
         $team1 = self::createTeam($players[0], $players[1], "TestTeam1");
         $team2 = self::createTeam($players[2], $players[3], "TestTeam2");
-        $gameInDb = self::create2v2Game($players[0], $players[1], $players[2], $players[3], 10, 5, 1);
+        $result = self::create2v2Game($players[0], $players[1], $players[2], $players[3], 10, 5, 1);
 
+        $result[0]->assertStatus(201);
+        $gameInDb = $result[1];
         $this->assertNotNull($gameInDb);
         $expectedGame = self::createExpectedGame($team1, $team2, 10, 5);
 
@@ -28,6 +30,79 @@ class CreateGames2v2EndpointTest extends TestCase
         $this->assertEquals($gameInDb, $expectedGame);
     }
 
+    public function test_user_can_create_2v2_games_and_teams_get_created(): void
+    {
+        $players = self::create_players(4);
+        $result = self::create2v2Game($players[0], $players[1], $players[2], $players[3], 10, 5, 1);
+
+        $result[0]->assertStatus(201);
+        $gameInDb = $result[1];
+
+        $this->assertNotNull($gameInDb);
+        $team1 = self::findTeam($players[0], $players[1]);
+        $team2 = self::findTeam($players[2], $players[3]);
+        $expectedGame = self::createExpectedGame($team1, $team2, 10, 5);
+
+        $gameInDb = self::returnGameWithNoProtectedAttributes($gameInDb);
+        $this->assertEquals($gameInDb, $expectedGame);
+        $this->assertNotNull($this->findTeam($players[0], $players[1]));
+        $this->assertNotNull($this->findTeam($players[2], $players[3]));
+    }
+
+
+    public function test_user_cannot_create_2v2_game_when_one_player_does_not_exists(): void
+    {
+        $players = self::create_players(3);
+        $nonExistentPlayer = new stdClass();
+        $nonExistentPlayer->username = "John";
+        $nonExistentPlayer->id = null;
+        $result = self::create2v2Game($players[0], $players[1], $players[2], $nonExistentPlayer, 10, 5, 1);
+
+
+        $result[0]->assertStatus(404);
+        $gameInDb = $result[1];
+
+        $this->assertNull($gameInDb);
+        
+    }
+
+    public function test_teams_get_swapped_based_on_side(): void
+    {
+        $players = self::create_players(4);
+        $team1 = self::createTeam($players[0], $players[1], "TestTeam1");
+        $team2 = self::createTeam($players[2], $players[3], "TestTeam2");
+        $result = self::create2v2Game($players[0], $players[1], $players[2], $players[3], 10, 5, 2);
+
+        $result[0]->assertStatus(201);
+        $gameInDb = $result[1];
+        $this->assertNotNull($gameInDb);
+        $expectedGame = self::createExpectedGame($team2, $team1, 5, 10);
+
+        $gameInDb = self::returnGameWithNoProtectedAttributes($gameInDb);
+        $this->assertEquals($gameInDb, $expectedGame);
+        
+    }
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private static function create_players($x)
     {
         $players = array();
@@ -51,6 +126,7 @@ class CreateGames2v2EndpointTest extends TestCase
         return self::findTeam($player1, $player2, $teamName);
     }
 
+
     private function findTeam($player1, $player2)
     {
         $team = FoosballTeam::where('player1_id', $player1->id)
@@ -70,16 +146,16 @@ class CreateGames2v2EndpointTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->post('/games2v2', [
+        $response=$this->post('/games2v2', [
             "player2_username" => $player2->username,
             "player3_username" => $player3->username,
             "player4_username" => $player4->username,
             "team1_score" => $team1_score,
             "team2_score" => $team2_score,
-            "side" => 1
+            "side" => $side
         ]);
         $this->post('/logout');
-        return self::find2v2Game($player1, $player2, $player3, $player4, $team1_score, $team2_score, $side);
+        return array( $response,self::find2v2Game($player1, $player2, $player3, $player4, $team1_score, $team2_score, $side));
     }
 
     private function find2v2Game($player1, $player2, $player3, $player4, $team1_score, $team2_score, $side)
@@ -90,6 +166,19 @@ class CreateGames2v2EndpointTest extends TestCase
         } else {
             $team1 = self::findTeam($player3, $player4);
             $team2 = self::findTeam($player1, $player2);
+            $tmp=$team1_score;
+            $team1_score=$team2_score;
+            $team2_score=$tmp;
+        }
+
+        //To avoid php complaining we force create the id property
+        if(is_null($team1)){
+            $team1= new stdClass();
+            $team1->id=null;
+        } 
+        if(is_null($team2)){
+            $team2= new stdClass();
+            $team2->id=null;
         }
         $game = Game2v2::where('team1_id', $team1->id)
             ->where('team2_id', $team2->id)
