@@ -1,4 +1,10 @@
 # Software-Engineering-Belsimpel
+## Hosting on an ip/domain
+To host this application on an ip address, or domain, change the `APP_URL` and `FRONTEND_URL` in the `.env` file in the `foosball-ranking` directory to reflect on where you want to host it (for example `APP_URL=http://foosball.belsimpel.nl:8000` and `FRONTEND_URL=http://foosball.belsimpel.nl`).
+
+After that, change `axios.defaults.baseURL` (line 4 of `Login.ts` in the following directory: `foosball-front-end/src/components/endpoints/`) to the `APP_URL` you have defined in the `.env` file (for example `axios.defaults.baseURL = 'http://foosball.belsimpel.nl:8000'`).
+
+To see the changes you probably need to rebuild the docker containers, and refresh your browser.
 ## Docker (no live update)
 ### Prerequisites
 To run the dockerized version of this project you need `docker` and `docker-compose`.
