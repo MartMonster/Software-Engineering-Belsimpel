@@ -34,8 +34,8 @@ export const Login = () => {
                 <h1 className='title'>Welcome to the foosball tracking website!</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="login">
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
                         {error()}
                         <button type="submit" className='submitButton'>Login</button>
                     </div>
