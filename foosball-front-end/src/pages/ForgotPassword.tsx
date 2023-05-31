@@ -28,10 +28,10 @@ const ForgotPassword = () => {
         <div className="App-header">
             <div className="App">
                 <h1 className='title'>Forgot password</h1>
-                <form autoComplete="off" onSubmit={sendResetEmail}>
+                <form onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                            <input required type="text" maxLength={255} placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Send reset email</button>
