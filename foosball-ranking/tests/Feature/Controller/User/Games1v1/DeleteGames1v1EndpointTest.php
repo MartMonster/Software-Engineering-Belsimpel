@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Controller\User\Games1v1;
 
+use App\Models\Game1v1;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Game1v1;
 
 class DeleteGames1v1EndpointTest extends TestCase
 {
@@ -16,7 +16,7 @@ class DeleteGames1v1EndpointTest extends TestCase
         //First create the two players
         $player1 = User::factory()->create();
 
-        $player2=  User::factory()->create();
+        $player2 = User::factory()->create();
         $this->post('/login', [
             'email' => $player1->email,
             'password' => 'password',
@@ -25,21 +25,21 @@ class DeleteGames1v1EndpointTest extends TestCase
 
         //Create the game
         $this->post('/games1v1', [
-            'player2_username'=>$player2->username,
-            'player2_score'=>10,
-            'player1_score'=>7,
-            'player1_side'=>1,
+            'player2_username' => $player2->username,
+            'player2_score' => 10,
+            'player1_score' => 7,
+            'player1_side' => 1,
         ])->assertStatus(201);
-        
+
         //Make sure the game exists
-        $game=Game1v1::where( 'player2_id' , $player2->id)
-        ->where('player1_id' , $player1->id)
-        ->where('player2_score' , 10)
-        ->where('player1_score' , 7)->first();
+        $game = Game1v1::where('player2_id', $player2->id)
+            ->where('player1_id', $player1->id)
+            ->where('player2_score', 10)
+            ->where('player1_score', 7)->first();
         $this->assertNotNull($game);
 
         //Delete the game
-        $this->delete('/games1v1/'.$game->id)->assertStatus(200);
+        $this->delete('/games1v1/' . $game->id)->assertStatus(200);
 
         //Make sure the game is deleted
         $this->assertNull(Game1v1::find($game->id));
@@ -50,7 +50,7 @@ class DeleteGames1v1EndpointTest extends TestCase
         //First create the two players
         $player1 = User::factory()->create();
 
-        $player2=  User::factory()->create();
+        $player2 = User::factory()->create();
         $this->post('/login', [
             'email' => $player1->email,
             'password' => 'password',
@@ -59,21 +59,21 @@ class DeleteGames1v1EndpointTest extends TestCase
 
         //Create the game
         $this->post('/games1v1', [
-            'player2_username'=>$player2->username,
-            'player2_score'=>10,
-            'player1_score'=>7,
-            'player1_side'=>2,
+            'player2_username' => $player2->username,
+            'player2_score' => 10,
+            'player1_score' => 7,
+            'player1_side' => 2,
         ])->assertStatus(201);
-        
+
         //Make sure the game exists
-        $game=Game1v1::where( 'player2_id' , $player1->id)
-        ->where('player1_id' , $player2->id)
-        ->where('player2_score' , 7)
-        ->where('player1_score' , 10)->first();
+        $game = Game1v1::where('player2_id', $player1->id)
+            ->where('player1_id', $player2->id)
+            ->where('player2_score', 7)
+            ->where('player1_score', 10)->first();
         $this->assertNotNull($game);
 
         //Delete the game
-        $this->delete('/games1v1/'.$game->id)->assertStatus(200);
+        $this->delete('/games1v1/' . $game->id)->assertStatus(200);
 
         //Make sure the game is deleted
         $this->assertNull(Game1v1::find($game->id));
@@ -84,9 +84,9 @@ class DeleteGames1v1EndpointTest extends TestCase
         //First create the two players
         $player1 = User::factory()->create();
 
-        $player2=  User::factory()->create();
+        $player2 = User::factory()->create();
 
-        $player3=  User::factory()->create();
+        $player3 = User::factory()->create();
 
         $this->post('/login', [
             'email' => $player1->email,
@@ -96,10 +96,10 @@ class DeleteGames1v1EndpointTest extends TestCase
 
         //Create the game
         $this->post('/games1v1', [
-            'player2_username'=>$player2->username,
-            'player2_score'=>10,
-            'player1_score'=>7,
-            'player1_side'=>2,
+            'player2_username' => $player2->username,
+            'player2_score' => 10,
+            'player1_score' => 7,
+            'player1_side' => 2,
         ])->assertStatus(201);
 
         //log out and then login as the third player
@@ -109,17 +109,17 @@ class DeleteGames1v1EndpointTest extends TestCase
             'email' => $player3->email,
             'password' => 'password',
         ]);
-        
-        
+
+
         //Make sure the game exists
-        $game=Game1v1::where( 'player2_id' , $player1->id)
-        ->where('player1_id' , $player2->id)
-        ->where('player2_score' , 7)
-        ->where('player1_score' , 10)->first();
+        $game = Game1v1::where('player2_id', $player1->id)
+            ->where('player1_id', $player2->id)
+            ->where('player2_score', 7)
+            ->where('player1_score', 10)->first();
         $this->assertNotNull($game);
 
         //Delete the game
-        $this->delete('/games1v1/'.$game->id)->assertStatus(401);
+        $this->delete('/games1v1/' . $game->id)->assertStatus(401);
 
         //Make sure the game is not deleted
         $this->assertNotNull(Game1v1::find($game->id));
@@ -145,7 +145,7 @@ class DeleteGames1v1EndpointTest extends TestCase
         //First create the two players
         $player1 = User::factory()->create();
 
-        $player2=  User::factory()->create();
+        $player2 = User::factory()->create();
         $this->post('/login', [
             'email' => $player1->email,
             'password' => 'password',
@@ -154,17 +154,17 @@ class DeleteGames1v1EndpointTest extends TestCase
 
         //Create the game
         $this->post('/games1v1', [
-            'player2_username'=>$player2->username,
-            'player2_score'=>10,
-            'player1_score'=>7,
-            'player1_side'=>1,
+            'player2_username' => $player2->username,
+            'player2_score' => 10,
+            'player1_score' => 7,
+            'player1_side' => 1,
         ])->assertStatus(201);
-        
+
         //Make sure the game exists
-        $game=Game1v1::where( 'player2_id' , $player2->id)
-        ->where('player1_id' , $player1->id)
-        ->where('player2_score' , 10)
-        ->where('player1_score' , 7)->first();
+        $game = Game1v1::where('player2_id', $player2->id)
+            ->where('player1_id', $player1->id)
+            ->where('player2_score', 10)
+            ->where('player1_score', 7)->first();
         $this->assertNotNull($game);
 
         //logot and then make sure that we've succesfully logged out
@@ -172,12 +172,11 @@ class DeleteGames1v1EndpointTest extends TestCase
         $this->assertGuest();
 
         //Try to delete the game
-        $this->json('delete','/games1v1/'.$game->id)->assertStatus(401);
+        $this->json('delete', '/games1v1/' . $game->id)->assertStatus(401);
 
         //Make sure the game  is  not deleted
         $this->assertNotNull(Game1v1::find($game->id));
     }
 
-   
 
 }

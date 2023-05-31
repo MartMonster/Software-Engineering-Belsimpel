@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, Navigate } from "react-router-dom";
 import { loginRoute } from "../Login";
-import { logout } from '../../components/axios';
+import { logout } from '../../components/endpoints/Login';
 
 const DEBUG:boolean = false;
 
@@ -11,16 +11,17 @@ export const AdminNavbar = () => {
     let isAdmin = sessionStorage.getItem("isAdmin") === "true";
     if (!loggedIn && !DEBUG) {
         console.log("user not logged in!")
-        return <Navigate to="login"/>;
+        return <Navigate to="/login"/>;
     }
     if (!isAdmin) {
         console.log("user is not admin!")
         return <Navigate to="/" />;
     }
+    
     return (
         <div className="App-header">
             <nav>
-                <div className="row">
+                <div className="rowNav">
                     <div className="left">
                         <Link className='App-link' to="/admin">Dashboard</Link>
                     </div>
@@ -29,7 +30,6 @@ export const AdminNavbar = () => {
                     </div>
                 </div>
             </nav>
-            <hr/>
             <Outlet />
         </div>
     );

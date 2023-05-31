@@ -15,8 +15,8 @@ class Game2v2 extends Model
     public static function store($player1, $player2, $player3, $player4, $team1_score, $team2_score, $team1_side)
     {
         $game = new Game2v2;
-        $team1 = FoosballTeam::getTeamWithUsers($player1->id, $player2->id);
-        $team2 = FoosballTeam::getTeamWithUsers($player3->id, $player4->id);
+        $team1 = FoosballTeam::getOrCreateTeamWithUsers($player1->id, $player2->id);
+        $team2 = FoosballTeam::getOrCreateTeamWithUsers($player3->id, $player4->id);
         $updatedElo = EloCalculator::calculateElo($team1->elo, $team2->elo, $team1_score, $team2_score);
         self::updateGameIdScores($game, $team1->id, $team2->id, $team1_score, $team2_score, $team1_side);
         FoosballTeam::where('id', $team1->id)->update(['elo' => $updatedElo[0]]);

@@ -1,4 +1,7 @@
-import { PaginateInfo } from './axios';
+export interface PaginateInfo {
+    current_page: number,
+    last_page: number,
+}
 
 export default function paginationButtons(paginateInfo: PaginateInfo) {
     let buttons = [];

@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //
+    public function getPosElo(): string
+    {
+        $usPosElo = new UserSummary();
+        $usPosElo->username = Auth::user()->username;
+        $usPosElo->position = $this->getPosition();
+        $usPosElo->elo = $this->getElo();
+        return $usPosElo;
+    }
+
     private function getPosition(): int
     {
         $userId = Auth::id();
@@ -30,15 +39,6 @@ class UserController extends Controller
         $userId = Auth::id();
         $user = User::findOrFail($userId);
         return $user->elo;
-    }
-
-    public function getPosElo(): string
-    {
-        $usPosElo = new UserSummary();
-        $usPosElo->username = Auth::user()->username;
-        $usPosElo->position = $this->getPosition();
-        $usPosElo->elo = $this->getElo();
-        return $usPosElo;
     }
 
     public function editUsername(Request $request)

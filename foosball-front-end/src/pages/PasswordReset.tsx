@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../components/axios';
+import { resetPassword } from '../components/endpoints/Login';
 
 const PasswordReset = () => {
     const params = useParams();
@@ -9,32 +9,43 @@ const PasswordReset = () => {
     const [email] = useState(searchParams.get("email") as string);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    
     const navigateToDashboard = () => {
         navigate("/");
     }
+
     const sendResetCall = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (await resetPassword(email, password, confirmPassword, hash)) {
+        if (await resetPassword(email, password, confirmPassword, hash, setErrorMessage)) {
             navigateToDashboard();
         }
     }
+    
     return (
         <div className="App-header">
             <div className='App'>
-                <h1>Reset password</h1>
+                <h1 className='title'>Reset password</h1>
                 <form autoComplete="off" onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
-                            <input type="text" value={email} disabled/>
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} value={email} disabled/>
                         </label>
                         <label>New password
-                            <input type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
                         </label>
                         <label>Confirm password
-                            <input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         </label>
-                        <input type="submit" value="Reset password" />
+                        {error()}
+                        <button type="submit" className='submitButton'>Reset password</button>
                     </div>
                 </form>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Team } from '../../components/axios';
-import { deleteTeam, getTop10Teams } from '../../components/admin/Teams';
+import { Team } from '../../components/endpoints/player/Teams';
+import { deleteTeam, getTop10Teams } from '../../components/endpoints/admin/Teams';
 import { Link, useSearchParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import paginationButtons from '../../components/paginate';
@@ -11,6 +11,24 @@ export const AdminWallOfFame2v2 = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [pageNumber, setPageNumber] = useState(1);
+    const [errorMessage, setErrorMessage] = useState("")
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState("")
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [teamId, setTeamId] = useState(0);
+    const [teamName, setTeamName] = useState('');
+    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
+
+    const error = useCallback(() => {
+        if (errorMessage !== "") {
+            return <p className='errorMessage'>{errorMessage.toString()}</p>
+        }
+    }, [errorMessage])
+    
+    const deleteError = useCallback(() => {
+        if (deleteErrorMessage !== "") {
+            return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
+        }
+    }, [deleteErrorMessage])
     
     const getTeams = useCallback(() => {
         let page = searchParams.get("page");
@@ -19,24 +37,27 @@ export const AdminWallOfFame2v2 = () => {
         }
         let pageNumber = parseInt(page);
         setPageNumber(pageNumber);
-        getTop10Teams(pageNumber).then((data) => {
+        getTop10Teams(pageNumber, setErrorMessage).then((data) => {
             setTeams(data.teams);
             if (pageNumber > data.pagination.last_page || pageNumber < 1) {
                 setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
+            if (data.teams.length === 0) {
+                setErrorMessage("No teams found.");
+            }
             console.log(data);
         });
     }, [setTeams, searchParams, setSearchParams]);
 
-    useEffect(() => {
-        getTeams();
-    }, [getTeams]);
+    useEffect(getTeams, [getTeams]);
 
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-    
-    const [teamId, setTeamId] = useState(0);
-    const [teamName, setTeamName] = useState('');
+    async function removeTeam() {
+        if (await deleteTeam(teamId, setDeleteErrorMessage)) {
+            getTeams();
+            closeDeleteModal();
+        }
+    }
 
     function openDeleteModal() {
         setOptionsModalIsOpen(false);
@@ -47,14 +68,6 @@ export const AdminWallOfFame2v2 = () => {
         setDeleteModalIsOpen(false);
     }
 
-    async function removeTeam() {
-        if (await deleteTeam(teamId)) {
-            getTeams();
-            closeDeleteModal();
-        }
-    }
-
-    const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     function openOptionsModal(id:number, name:string) {
         setTeamId(id);
         setTeamName(name);
@@ -64,10 +77,12 @@ export const AdminWallOfFame2v2 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
+    
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>
             <p>Click on a team to edit or delete it.</p>
+            {error()}
             <table>
                 <thead>
                     <tr>
@@ -82,14 +97,14 @@ export const AdminWallOfFame2v2 = () => {
                         return (
                             <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
                                 <td>{(index + 1)*pageNumber}</td>
-                                <td>{team.team_name}</td>
+                                <td className='teamName'>{team.team_name}</td>
                                 <td>
                                     <div className="tableCol">
-                                        <p>{team.player1_username}</p>
-                                        <p>{team.player2_username}</p>
+                                        <p className='WoF2v2'>{team.player1_username}</p>
+                                        <p className='WoF2v2'>{team.player2_username}</p>
                                     </div>
                                 </td>
-                                <td>{team.elo}</td>
+                                <td>{Math.round(team.elo)}</td>
                             </tr>
                         )
                     })}
@@ -103,7 +118,7 @@ export const AdminWallOfFame2v2 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`/admin/teams/edit/${teamId}`}>
+                        <Link to={`/admin/teams/edit/${teamId}?team=${teamName}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>
@@ -116,6 +131,7 @@ export const AdminWallOfFame2v2 = () => {
                 onRequestClose={closeDeleteModal}
                 contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this team?</h2>
+                {deleteError()}
                 <div className="row">
                     <div className='left'>
                         <button onClick={closeDeleteModal}>Cancel</button>

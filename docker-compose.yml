@@ -1,0 +1,60 @@
+version: '3'
+services:
+    laravel:
+        build: 
+            context: ./foosball-ranking
+            dockerfile: Dockerfile
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        command: 'php artisan serve --host=0.0.0.0'
+        volumes:
+            - './foosball-ranking:/var/www/html'
+        ports:
+            - '${FORWARD_LARAVEL_PORT:-8000}:8000'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        networks:
+            - sail
+        depends_on:
+            - mariadb
+        entrypoint: sh -c "sleep 30 && php artisan migrate --seed && php artisan serve --host=0.0.0.0"
+    mariadb:
+        image: 'mariadb:10'
+        restart: always
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        volumes:
+            - 'sail-mariadb:/var/lib/mysql'
+            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
+    front-end-dev:
+        build:
+            context: ./foosball-front-end
+            dockerfile: Dockerfile
+        volumes:
+            - ./foosball-front-end:/usr/src/app
+            - /usr/src/app/node_modules
+        command: serve -s build -l 3000
+        ports:
+            - '${FORWARD_FRONT_END_PORT:-3000}:3000'
+networks:
+    sail:
+        driver: bridge
+volumes:
+    sail-mariadb:
+        driver: local

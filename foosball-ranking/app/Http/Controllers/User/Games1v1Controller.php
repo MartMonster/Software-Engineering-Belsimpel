@@ -7,52 +7,48 @@ use App\Models\Game1v1;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class Games1v1Controller extends Controller
 {
     public function getOwnGames()
     {
-        return DB::table('games1v1 as g')
-            ->where('g.player1_id', Auth::id())->orWhere('g.player2_id', Auth::id())
-            ->join('users as p1', 'g.player1_id', '=', 'p1.id')
-            ->join('users as p2', 'g.player2_id', '=', 'p2.id')
-            ->orderBy('g.created_at', 'desc')
-            ->select('g.id as id',
-                'g.player1_score as player1_score',
-                'g.player2_score as player2_score',
+        return Game1v1::where('games1v1.player1_id', Auth::id())->orWhere('games1v1.player2_id', Auth::id())
+            ->join('users as p1', 'games1v1.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'games1v1.player2_id', '=', 'p2.id')
+            ->orderBy('games1v1.created_at', 'desc')
+            ->select('games1v1.id as id',
+                'games1v1.player1_score as player1_score',
+                'games1v1.player2_score as player2_score',
                 'p1.username AS player1_username',
                 'p2.username AS player2_username')->paginate(10);
-        // TODO: update the above to use eloquent
-//        return Game1v1::where('player1_id', Auth::id())->orWhere('player2_id', Auth::id())->
-//        orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function getLast10Games()
     {
-        return DB::table('games1v1 as g')
-            ->join('users as p1', 'g.player1_id', '=', 'p1.id')
-            ->join('users as p2', 'g.player2_id', '=', 'p2.id')
-            ->orderBy('g.created_at', 'desc')
-            ->select('g.id as id',
-                'g.player1_score as player1_score',
-                'g.player2_score as player2_score',
+        return Game1v1::join('users as p1', 'games1v1.player1_id', '=', 'p1.id')
+            ->join('users as p2', 'games1v1.player2_id', '=', 'p2.id')
+            ->orderBy('games1v1.created_at', 'desc')
+            ->select('games1v1.id as id',
+                'games1v1.player1_score as player1_score',
+                'games1v1.player2_score as player2_score',
                 'p1.username AS player1_username',
                 'p2.username AS player2_username')->paginate(10);
-        // TODO: update the above to use eloquent
-//        return Game1v1::orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'player1_score' => 'required|integer',
+            'player2_score' => 'required|integer',
+            'player1_side' => 'required|integer',
+            'player2_username' => 'required|string|exists:users,username'
+        ]);
         $player2 = User::where('username', $request->player2_username)->first();
         $player1 = Auth::user();
-        if (is_null($player2)) {
-            return response('Second user not found', 404);
-        }
         if ($player1->username == $player2->username) {
             return response('Bad request', 400);
         }
+
 
         return Game1v1::store(
             $player1,

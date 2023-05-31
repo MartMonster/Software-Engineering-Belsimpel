@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\User\Games2v2Controller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,18 +15,17 @@ class FoosballTeam extends Model
         $team->player1_id = $player1_id;
         $team->player2_id = $player2_id;
 
-        if(is_null($team_name)||$team_name=="")
+        if (is_null($team_name) || $team_name == "")
             return response("Invalid Team Name", 400);
-        
-        /// TODO: remove this weird dependency 
-        if (Games2v2Controller::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
-            return response("Bad request", 400);
 
-        if (FoosballTeam::where('team_name',$team_name)->first()!=null)
-            return response("Team name already taken",400);
+        if (self::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
+            return response("Team with these users already exists", 400);
+
+        if (FoosballTeam::where('team_name', $team_name)->first() != null)
+            return response("Team name already taken", 400);
 
         if ($team->player1_id == $team->player2_id)
-            return response("Bad request", 400);
+            return response("Not all players are unique", 400);
         $team->team_name = $team_name;
 
         $team->save();
@@ -35,8 +33,20 @@ class FoosballTeam extends Model
 
     }
 
+    private static function getTeamWithUsers($id1, $id2)
+    {
+        $team = FoosballTeam::where(fn($query) => $query->where('player1_id', $id1)
+            ->where('player2_id', $id2)
+        )->orWhere(fn($query) => $query->where('player1_id', $id2)
+            ->where('player2_id', $id1)
+        )->first();
+        return $team;
+    }
+
     public static function updateTeamName($team_name, string $id)
     {
+        if (is_null($team_name) || $team_name == "")
+            return response("Invalid Team Name", 400);
         $team = FoosballTeam::find($id);
         if ($team == null)
             return response('Not found', 404);
@@ -54,7 +64,7 @@ class FoosballTeam extends Model
         return response('Team deleted', 200);
     }
 
-    public static function getTeamWithUsers($id1, $id2)
+    public static function getOrCreateTeamWithUsers($id1, $id2)
     {
         $team = FoosballTeam::where(fn($query) => $query->where('player1_id', $id1)
             ->where('player2_id', $id2)
