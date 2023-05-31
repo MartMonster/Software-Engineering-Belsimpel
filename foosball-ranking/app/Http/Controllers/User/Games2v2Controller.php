@@ -92,6 +92,11 @@ class Games2v2Controller extends Controller
         $players[1] = User::where('username', $request->player2_username)->first();
         $players[2] = User::where('username', $request->player3_username)->first();
         $players[3] = User::where('username', $request->player4_username)->first();
+        $request->validate([
+            'team1_score' => 'required|integer',
+            'team2_score' => 'required|integer',
+            'side' => 'required|integer',
+        ]);
         if (in_array(null, $players, true)) {
             return response("Not found", 404);
         }

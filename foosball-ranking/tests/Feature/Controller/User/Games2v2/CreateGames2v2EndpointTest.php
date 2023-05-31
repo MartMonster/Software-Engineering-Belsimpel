@@ -83,6 +83,88 @@ class CreateGames2v2EndpointTest extends TestCase
         
     }
 
+    public function test_checks_if_the_4_players_are_different(): void
+    {
+        $players=self::create_players(3);
+        $result = self::create2v2Game($players[0], $players[1], $players[2], $players[2], 10, 5, 1);
+        $result[0]->assertStatus(400);
+        $this->assertNull($result[1]);
+
+    }
+
+    public function test_user_cannot_create_2v2_game_when_one_player_is_missing(): void
+    {
+        $players = self::create_players(3);
+        $this->post('/login', [
+            'email' => $players[0]->email,
+            'password' => 'password',
+        ]);
+        $this->json('post','/games2v2', [
+            "player3_username" => $players[1]->username,
+            "player4_username" => $players[2]->username,
+            "team1_score" => 10,
+            "team2_score" => 5,
+            "side" => 1
+        ])->assertStatus(404);
+    }
+    public function test_returns_appropiate_response_if_any_of_the_scores_are_missing(): void
+    {
+        $players = self::create_players(4);
+        $this->post('/login', [
+            'email' => $players[0]->email,
+            'password' => 'password',
+        ]);
+        $this->json('post','/games2v2', [
+            "player2_username" => $players[1]->username,
+            "player3_username" => $players[2]->username,
+            "player4_username" => $players[3]->username,
+            "team1_score" => 10,
+            "side" => 1
+        ])->assertStatus(422);
+        $this->json('post','/games2v2', [
+            "player2_username" => $players[1]->username,
+            "player3_username" => $players[2]->username,
+            "player4_username" => $players[3]->username,
+            "team2_score" => 10,
+            "side" => 1
+        ])->assertStatus(422);
+        $this->json('post','/games2v2', [
+            "player2_username" => $players[1]->username,
+            "player3_username" => $players[2]->username,
+            "player4_username" => $players[3]->username,
+            "side" => 1
+        ])->assertStatus(422);
+    }
+    public function test_returns_appropiate_response_if_any_of_the_side_is_not_specified(): void
+    {
+        $players = self::create_players(4);
+        $this->post('/login', [
+            'email' => $players[0]->email,
+            'password' => 'password',
+        ]);
+        $this->json('post','/games2v2', [
+            "player2_username" => $players[1]->username,
+            "player3_username" => $players[2]->username,
+            "player4_username" => $players[3]->username,
+            "team1_score" => 10,
+            "team2_score" => 10,
+        ])->assertStatus(422);
+    }
+    public function test_returns_appropiate_response_if_creating_game_and_not_authenticated(): void
+    {
+        $players = self::create_players(4);
+        $this->assertGuest();
+        $this->json('post','/games2v2', [
+            "player2_username" => $players[1]->username,
+            "player3_username" => $players[2]->username,
+            "player4_username" => $players[3]->username,
+            "team1_score" => 10,
+            "team2_score" => 10,
+            "side" => 1
+        ])->assertStatus(401);
+        $this->assertNull(self::find2v2Game($players[0], $players[1], $players[2], $players[3], 10, 10, 1));
+    }
+
 
 
 
@@ -146,7 +228,7 @@ class CreateGames2v2EndpointTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response=$this->post('/games2v2', [
+        $response=$this->json('post','/games2v2', [
             "player2_username" => $player2->username,
             "player3_username" => $player3->username,
             "player4_username" => $player4->username,
