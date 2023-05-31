@@ -45,7 +45,10 @@ class Games2v2Controller extends Controller
 
     public static function delete($id)
     {
-        self::checkIfPlayedInGame($id);
+        if(self::checkIfPlayedInGame($id)==response("Not authorized", 401))
+            return response("Not authorized", 401);
+        if(self::checkIfPlayedInGame($id)==response('Not found', 404))
+            return response('Not found', 404);
         Game2v2::where('id', $id)->delete();
         return response('Game succesfully deleted', 200);
     }
@@ -92,6 +95,11 @@ class Games2v2Controller extends Controller
         $players[1] = User::where('username', $request->player2_username)->first();
         $players[2] = User::where('username', $request->player3_username)->first();
         $players[3] = User::where('username', $request->player4_username)->first();
+        $request->validate([
+            'team1_score' => 'required|integer|min:0|max:127',
+            'team2_score' => 'required|integer|min:0|max:127',
+            'side' => 'required|integer',
+        ]);
         if (in_array(null, $players, true)) {
             return response("Not found", 404);
         }
