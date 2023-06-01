@@ -21,7 +21,7 @@ class UpdateGames2v2EndpointTest extends TestCase
         $result = self::create2v2Game($players[0], $players[1], $players[2], $players[3], 10, 5, 1);
         $gameInDb = $result[1];
         $this->assertNotNull($gameInDb);
-        $this->updateGame($gameInDb, 12, 7, 1, $players[0]);
+        $this->updateGame($gameInDb, 12, 7, 1, $players[0])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),12,7);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
@@ -35,7 +35,7 @@ class UpdateGames2v2EndpointTest extends TestCase
         $gameInDb = $result[1];
         $this->assertNotNull($gameInDb);
 
-        $this->updateGame($gameInDb, 12, 7, 1, $players[1]);
+        $this->updateGame($gameInDb, 12, 7, 1, $players[1])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),12,7);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
@@ -43,14 +43,14 @@ class UpdateGames2v2EndpointTest extends TestCase
         //the side paramater changes to keep the game consistent
         //Because the team that first creates game on the first side for the game to stay the same
         //Team 2 requests that they be on side 2
-        $this->updateGame($gameInDb, 13, 8, 2, $players[2]);
+        $this->updateGame($gameInDb, 13, 8, 2, $players[2])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),8,13);   
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
         
         
         
-        $this->updateGame($gameInDb, 14, 9, 2, $players[3]);
+        $this->updateGame($gameInDb, 14, 9, 2, $players[3])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),9,14);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
@@ -63,24 +63,24 @@ class UpdateGames2v2EndpointTest extends TestCase
         $gameInDb=$result[1];
 
         //In this situation we're placing the first team on the second side
-        $this->updateGame($gameInDb, 10, 5, 2, $players[0]);
+        $this->updateGame($gameInDb, 10, 5, 2, $players[0])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[2],$players[3]),self::findTeam($players[0],$players[1]),5,10);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
 
         //In this situation we're placing the first team on the first side
-        $this->updateGame($gameInDb, 6, 11, 1, $players[1]);
+        $this->updateGame($gameInDb, 6, 11, 1, $players[1])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),6,11);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
 
         //In this situation we're placing the second team on the second side
-        $this->updateGame($gameInDb, 12, 7, 2, $players[2]);
+        $this->updateGame($gameInDb, 12, 7, 2, $players[2])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),7,12);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
 
-        $this->updateGame($gameInDb, 13, 8, 1, $players[3]);
+        $this->updateGame($gameInDb, 13, 8, 1, $players[3])->assertStatus(200);
         $gameInDb = Game2v2::find($gameInDb->id);
         $expectedGame=self::createExpectedGame(self::findTeam($players[2],$players[3]),self::findTeam($players[0],$players[1]),13,8);
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
@@ -136,6 +136,20 @@ class UpdateGames2v2EndpointTest extends TestCase
         ])->assertStatus(404);
     }
 
+    public function test_returns_appropiate_response_when_updating_with_invalid_values(){
+        $players=self::create_players(4);
+        $gameInDb=self::create2v2Game($players[0],$players[1],$players[2],$players[3],10,5,1)[1];
+        self::updateGame($gameInDb, 128, 7, 1, $players[0])->assertStatus(422);
+        self::updateGame($gameInDb, -1, 7, 1, $players[0])->assertStatus(422);
+        self::updateGame($gameInDb, NULL, 7, 1, $players[0])->assertStatus(422);
+        self::updateGame($gameInDb, 128, 7, NULL, $players[0])->assertStatus(422);
+        self::updateGame($gameInDb, 128, "f", 1, $players[0])->assertStatus(422);
+        self::updateGame($gameInDb, 128, 7, "f", $players[0])->assertStatus(422);
+    }
+
+
+
+
 
 
 
@@ -148,16 +162,17 @@ class UpdateGames2v2EndpointTest extends TestCase
 
 
     private function updateGame($game,$team1_score,$team2_score,$side,$player1){
-        $this->post('/login', [
+        $this->json('post','/login', [
             'email' => $player1->email,
             'password' => 'password',
         ]);
-        $this->put('/games2v2/' . $game->id, [
+        $response=$this->json('put','/games2v2/' . $game->id, [
             "team1_score" => $team1_score,
             "team2_score" => $team2_score,
             "side" => $side
-        ])->assertStatus(200);
+        ]);
         $this->post('/logout');
+        return $response;
 
     }
 

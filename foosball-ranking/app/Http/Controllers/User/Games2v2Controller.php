@@ -20,6 +20,11 @@ class Games2v2Controller extends Controller
             return response("Not authorized", 401);
         if ($game == response('Not found', 404))
             return response('Not found', 404);
+        $request->validate([
+            'team1_score' => 'required|integer|min:0|max:127',
+            'team2_score' => 'required|integer|min:0|max:127',
+            'side' => 'required|integer',
+        ]);
         if (in_array(Auth::id(), FoosballTeam::getIdsFromTeams($game->team1_id))) {
             $team1_id = $game->team1_id;
             $team2_id = $game->team2_id;
