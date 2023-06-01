@@ -31,6 +31,20 @@ const server = setupServer(
     rest.post('http://localhost:8000/reset-password', (req, res, ctx) => {
         return res(ctx.json('reset password'))
     }),
+    rest.post('http://localhost:8000/logout', (req, res, ctx) => {
+        return res(ctx.json('logged out'))
+    }),
+    rest.get('http://localhost:8000/user', (req, res, ctx) => {
+        let users = []
+        for (let i = 0; i < 10; i++) {
+            users.push({
+                id: i+1,
+                username: `${username}${(i+1).toString()}`,
+                elo: `${elo+i}`
+            })
+        }
+        return res(ctx.json(users))
+    }),
 )
 
 export default server
