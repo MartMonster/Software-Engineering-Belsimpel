@@ -24,7 +24,6 @@ test('logout button logs user out', async () => {
     fireEvent.click(screen.getByText(/Logout/i));
     const loginText = await screen.findByText(/Welcome to the foosball tracking website!/i);
     expect(loginText).not.toBeNull();
-    fireEvent.click(screen.getByText(/login/i));
 });
 
 test('logout logs user out even with errors', async () => {
@@ -57,7 +56,6 @@ test('user is logged out if user summary returns unauthenticated message', async
         }),
     );
     render(<App />);
-    console.log(window.sessionStorage.getItem('loggedIn'));
     // const loginText = await screen.findByText(/Welcome to the foosball tracking website!/i);
     // expect(loginText).not.toBeNull();
     /* 
