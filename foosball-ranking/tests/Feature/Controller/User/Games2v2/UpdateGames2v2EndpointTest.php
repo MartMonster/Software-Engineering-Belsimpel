@@ -86,8 +86,55 @@ class UpdateGames2v2EndpointTest extends TestCase
         $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
     }
     
+    public function test_users_cannot_update_2v2_game_they_are_not_part_of(){
+        $players = self::create_players(5);
+        $result=self::create2v2Game($players[0],$players[1],$players[2],$players[3],10,5,1);
+        $gameInDb=$result[1];
+        $this->assertNotNull($gameInDb);
+        $this->post('/login', [
+            'email' => $players[4]->email,
+            'password' => 'password',
+        ]);
+        $this->put('/games2v2/' . $gameInDb->id, [
+            "team1_score" => 12,
+            "team2_score" => 7,
+            "side" => 1
+        ])->assertStatus(401);
+        $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),10,5);
+        $gameInDb = Game2v2::find($gameInDb->id);
+        $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
+    }
 
 
+    public function test_cannot_update_2v2_game_when_not_logged_in(){
+        $players=self::create_players(4);
+        $result=self::create2v2Game($players[0],$players[1],$players[2],$players[3],10,5,1);
+        $gameInDb=$result[1];
+        $this->assertNotNull($gameInDb);
+        $this->post('/logout');
+        $this->assertGuest();
+        $this->json('put','/games2v2/' . $gameInDb->id, [
+            "team1_score" => 12,
+            "team2_score" => 7,
+            "side" => 1
+        ])->assertStatus(401);
+        $expectedGame=self::createExpectedGame(self::findTeam($players[0],$players[1]),self::findTeam($players[2],$players[3]),10,5);
+        $gameInDb = Game2v2::find($gameInDb->id);
+        $this->assertEquals($expectedGame,self::returnGameWithNoProtectedAttributes( $gameInDb));
+    }
+
+    public function test_returns_appropiate_response_when_updating_non_exisiting_game(){
+        $players=self::create_players(1);
+        $this->post('/login', [
+            'email' => $players[0]->email,
+            'password' => 'password',
+        ]);
+        $this->put('/games2v2/0', [
+            "team1_score" => 12,
+            "team2_score" => 7,
+            "side" => 1
+        ])->assertStatus(404);
+    }
 
 
 

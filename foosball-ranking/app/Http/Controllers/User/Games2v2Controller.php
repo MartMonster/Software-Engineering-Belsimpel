@@ -16,7 +16,10 @@ class Games2v2Controller extends Controller
     {
         //get the game we want to modify and see if it is valid
         $game = self::checkIfPlayedInGame($id);
-
+        if ($game == response("Not authorized", 401))
+            return response("Not authorized", 401);
+        if ($game == response('Not found', 404))
+            return response('Not found', 404);
         if (in_array(Auth::id(), FoosballTeam::getIdsFromTeams($game->team1_id))) {
             $team1_id = $game->team1_id;
             $team2_id = $game->team2_id;
