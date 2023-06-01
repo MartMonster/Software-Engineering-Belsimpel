@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../components/endpoints/Login';
 
@@ -18,9 +18,9 @@ const PasswordReset = () => {
         }
     }, [errorMessage])
     
-    const navigateToDashboard = () => {
+    const navigateToDashboard = useCallback(() => {
         navigate("/");
-    }
+    }, [navigate])
 
     const sendResetCall = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -28,6 +28,12 @@ const PasswordReset = () => {
             navigateToDashboard();
         }
     }
+
+    useEffect(() => {
+        if (window.sessionStorage.getItem('loggedIn') === 'true') {
+            navigateToDashboard();
+        }
+    }, [navigateToDashboard]);
     
     return (
         <div className="App-header">

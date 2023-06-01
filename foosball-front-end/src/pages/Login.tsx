@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { registerRoute } from "./Register";
 import { login } from '../components/endpoints/Login';
@@ -10,9 +10,9 @@ export const Login = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
 
-    const navigateToDashboard = () => {
+    const navigateToDashboard = useCallback(() => {
         navigate("/");
-    }
+    }, [navigate])
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -27,6 +27,12 @@ export const Login = () => {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     },[errorMessage])
+
+    useEffect(() => {
+        if(window.sessionStorage.getItem('loggedIn') === 'true') {
+            navigateToDashboard();
+        }
+    }, [navigateToDashboard]);
     
     return (
         <div className="App-header">
