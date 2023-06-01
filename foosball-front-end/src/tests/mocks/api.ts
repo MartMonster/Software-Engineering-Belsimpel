@@ -10,7 +10,7 @@ const server = setupServer(
         return res(ctx.json(fakeUserResponse))
     }),
     rest.post('http://localhost:8000/login', (req, res, ctx) => {
-        return res(ctx.json(fakeUserResponse))
+        return res(ctx.json('logged in'))
     }),
     rest.get('http://localhost:8000/admin', (req, res, ctx) => {
         return res(ctx.json(1))

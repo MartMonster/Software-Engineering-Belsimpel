@@ -166,7 +166,6 @@ export async function resetPassword(email: string, password: string, password_co
     return b;
 }
 
-
 export async function getIsAdmin() {
     let b: boolean = false;
     await axios.get('/admin', {
@@ -176,15 +175,16 @@ export async function getIsAdmin() {
     }).then(response => {
         console.log(response.data);
         b = response.data === 1;
+        sessionStorage.setItem('isAdmin', b.toString());
     }).catch(error => {
         console.log(error);
         if (error.response.status === 401 &&
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
-            sessionStorage.removeItem('isAdmin');
+            console.log("removed loggedIn");
         }
+        sessionStorage.removeItem('isAdmin');
         b = false;
     });
-    sessionStorage.setItem('isAdmin', b.toString());
     return b;
 }
