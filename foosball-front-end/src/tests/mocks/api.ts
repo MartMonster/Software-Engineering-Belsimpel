@@ -13,7 +13,7 @@ const server = setupServer(
         return res(ctx.json('logged in'))
     }),
     rest.get('http://localhost:8000/admin', (req, res, ctx) => {
-        return res(ctx.json(1))
+        return res(ctx.status(200))
     }),
     rest.get('http://localhost:8000/user/summary', (req, res, ctx) => {
         return res(ctx.json({
@@ -21,7 +21,16 @@ const server = setupServer(
             position: position,
             elo : elo,
         }))
-    })
+    }),
+    rest.post('http://localhost:8000/register', (req, res, ctx) => {
+        return res(ctx.json('registered'))
+    }),
+    rest.post('http://localhost:8000/forgot-password', (req, res, ctx) => {
+        return res(ctx.json('sent email'))
+    }),
+    rest.post('http://localhost:8000/reset-password', (req, res, ctx) => {
+        return res(ctx.json('reset password'))
+    }),
 )
 
 export default server

@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 import server from './mocks/api';
@@ -5,22 +6,20 @@ import { rest } from 'msw';
 
 beforeAll(() => server.listen())
 afterEach(() => {
-    // server.resetHandlers();
     window.sessionStorage.removeItem('loggedIn');
     window.sessionStorage.removeItem('isAdmin');
-    console.log('cleared session storage')
 })
 afterAll(() => server.close())
 
 test('forwards to admin dashboard when user is admin', async () => {
+    server.use(
+        rest.get('http://localhost:8000/admin', (req, res, ctx) => {
+            return res.once(ctx.json(1))
+        }),
+    );
+
     render(<App />);
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'test1@gmail.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-        target: { value: '123456789' },
-    });
-    fireEvent.click(screen.getByText(/login/i));
+    login();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
     const userTopText = screen.queryByText(/you are in the top/i);
     expect(dashboardText[1]).not.toBeNull();
@@ -30,21 +29,8 @@ test('forwards to admin dashboard when user is admin', async () => {
 });
 
 test('forwards to user dashboard when user is not admin', async () => {
-    server.use(
-        rest.get('http://localhost:8000/admin', (req, res, ctx) => {
-            console.log('admin endpoint called')
-            return res.once(ctx.status(200))
-        }),
-    );
-
     render(<App />);
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'test1@gmail.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-        target: { value: '123456789' },
-    });
-    fireEvent.click(screen.getByText(/login/i));
+    login();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
     const userTopText = await screen.findByText(/you are in the top/i);
     expect(dashboardText[1]).not.toBeNull();
@@ -79,13 +65,7 @@ test('displays error message when login fails', async () => {
     );
 
     render(<App />);
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'test1@gmail.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-        target: { value: '123456789' },
-    });
-    fireEvent.click(screen.getByText(/login/i));
+    login();
     const dashboardText = screen.queryByText(/Dashboard/i);
     const userTopText = screen.queryByText(/you are in the top/i);
     const errorText = await screen.findByText(/These credentials do not match our records./i);
@@ -106,13 +86,7 @@ test('displays error message when session token has problems', async () => {
     );
 
     render(<App />);
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'test1@gmail.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-        target: { value: '123456789' },
-    });
-    fireEvent.click(screen.getByText(/login/i));
+    login();
     const dashboardText = screen.queryByText(/Dashboard/i);
     const userTopText = screen.queryByText(/you are in the top/i);
     const errorText = await screen.findByText(/CSRF token mismatch./i);
@@ -130,13 +104,7 @@ test('removes \'loggedIn\' session storage when admin endpoint fails', async () 
     );
     
     render(<App />);
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'test2@gmail.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-        target: { value: '1234567890' },
-    });
-    fireEvent.click(screen.getByText(/login/i));
+    login();
     const dashboardText = screen.queryByText(/Dashboard/i);
     const userTopText = screen.queryByText(/you are in the top/i);
     expect(dashboardText).toBeNull();
@@ -144,3 +112,13 @@ test('removes \'loggedIn\' session storage when admin endpoint fails', async () 
     expect(window.sessionStorage.getItem('loggedIn')).toBeNull();
     expect(window.sessionStorage.getItem('isAdmin')).toBeNull();
 });
+
+function login() {
+    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
+        target: { value: 'test1@gmail.com' },
+    });
+    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
+        target: { value: '123456789' },
+    });
+    fireEvent.click(screen.getByText(/login/i));
+}
