@@ -10,7 +10,7 @@ To see the changes you probably need to rebuild the docker containers, and refre
 To run the dockerized version of this project you need `docker` and `docker-compose`.
 
 ### How to run
-In both the root directory and in the `foosball-ranking` directory rename the `default.env` file to `.env`. If you want to change the database properties make sure to rename them in both files (and run `docker-compose down -v` if you have started the database before), otherwise it will not work.
+In **both** the root directory **and** in the `foosball-ranking` directory rename the `default.env` file to `.env`. If you want to change the database properties make sure to rename them in both files (and run `docker-compose down -v` if you have started the database before), otherwise it will not work.
 
 Then run `docker-compose up` in the root directory.
 To see changes after editing project (or `.env`) files, you need to either restart the application by running `docker-compose up --build` or following the `How to run` instructions in the `Dev` section.
