@@ -34,7 +34,7 @@ class AdminGames1v1Controller extends Controller
             'player1_username' => ['required','exists:' . User::class . ',username'],
             'player2_username' => ['required','exists:' . User::class . ',username'],
             'player1_score' => ['required','integer','min:0','max:127'],
-            'player2_score' => ['required,integer','min:0','max:127'],
+            'player2_score' => ['required','integer','min:0','max:127'],
             '$id' => 'required|exists:games1v1,id'
         ]);
         $player1 = User::where('username', $request->player1_username)->first();
