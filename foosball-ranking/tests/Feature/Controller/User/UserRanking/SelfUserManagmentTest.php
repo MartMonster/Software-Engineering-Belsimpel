@@ -11,9 +11,7 @@ class SelfUserManagmentTest extends TestCase
     use RefreshDatabase;
 
 
-    /**
-     * @group yes
-     */
+
     public function test_top_10_players_is_ordered_drecreasngly_by_elo(){
         $players = $this->create_players(10);
         for($i=0;$i<10;$i++){
@@ -29,9 +27,7 @@ class SelfUserManagmentTest extends TestCase
         }
     }
 
-    /**
-     * @group yes
-     */
+
     public function test_top_10_players_can_return_less_than10_when_there_are_less_than_10_players(){
         $players = $this->create_players(6);
         for($i=0;$i<6;$i++){
@@ -47,9 +43,7 @@ class SelfUserManagmentTest extends TestCase
         }
     }
 
-    /**
-     * @group yes
-     */
+
     public function test_top_10_players_does_not_return_more_than_10(){
         $players = $this->create_players(11);
         for($i=0;$i<11;$i++){
@@ -67,9 +61,7 @@ class SelfUserManagmentTest extends TestCase
     }
 
 
-    /**
-     * @group yes
-     */
+
     public function test_position_of_user_is_calculated_correctly(){
         $players = $this->create_players(5);
         for($i=1;$i<5;$i++){
@@ -83,9 +75,7 @@ class SelfUserManagmentTest extends TestCase
 
     }  
     
-    /**
-     * @group yes
-     */
+
     public function test_user_can_change_their_own_name(){
         $players = $this->create_players(1);
         $this->post('/login', [
@@ -96,9 +86,7 @@ class SelfUserManagmentTest extends TestCase
         $this->assertEquals("newName",User::find($players[0]->id)->username);
     }
 
-    /**
-     * @group yes
-     */
+
     public function test_user_gets_appropiate_response_when_updating_name_to_taken_name(){
         $players = $this->create_players(2);
         $this->post('/login', [
