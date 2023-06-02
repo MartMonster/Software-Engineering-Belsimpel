@@ -48,7 +48,7 @@ export const AdminAddGame2v2 = () => {
                         </label>
                         <label>
                             Points
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setRedScore(parseInt(e.target.value))} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" onChange={e => setRedScore(parseInt(e.target.value))} />
                         </label>
                     </div>
                     <div className="right">
@@ -63,7 +63,7 @@ export const AdminAddGame2v2 = () => {
                         </label>
                         <label>
                             Points
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setBlueScore(parseInt(e.target.value))} />
+                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" onChange={e => setBlueScore(parseInt(e.target.value))} />
                         </label>
                     </div>
                 </div>

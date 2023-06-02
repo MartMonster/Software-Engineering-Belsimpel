@@ -91,4 +91,6 @@ class FoosballTeam extends Model
         array_push($ids, $team->player1_id, $team->player2_id);
         return $ids;
     }
+
+//    public static function getIds
 }

@@ -9,6 +9,7 @@
   width: 100vw;
   padding-bottom: 100px;
   min-height: calc(100vh - 150px);
+  max-width: 700px;
 }
 
 .App-logo {
@@ -188,6 +189,11 @@ th {
   width: 33%;
   text-align: center;
   margin: 1em 1em .5em 0;
+}
+
+.swapButton {
+  margin: 0em .5em 0em 0em;
+  padding: 0em .5em 0em 0em
 }
 
 .editButton {
@@ -437,8 +443,9 @@ tr td {
 }
 
 .title {
+  width: 100vw;
+  text-align: center;
   margin: 0;
-  padding: 0;
   padding: .2em;
   margin-bottom: 1em;
   background-color: #009ddf;

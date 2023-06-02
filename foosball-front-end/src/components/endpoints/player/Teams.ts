@@ -168,3 +168,31 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
         });
     return b;
 }
+
+export async function getUsersFromTeam(team_name: string, setErrorMessage: (string: string) => void) {
+    let users: string[] = [];
+    await axios.get(`/teams/users/${team_name}`, {
+        headers: {
+            Accept: 'application/json'
+        }
+    })
+        .then(response => {
+            console.log(response);
+            users = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
+            }
+            if (error.response.status === 401 &&
+                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.removeItem('isAdmin');
+                window.location.reload();
+            }
+        });
+    return users;
+}

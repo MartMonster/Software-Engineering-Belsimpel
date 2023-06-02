@@ -54,11 +54,11 @@ export const AddGame2v2 = () => {
                 </label>
                 <label>
                     How many points did your team score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setMyScore(parseInt(e.target.value))}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" onChange={e => setMyScore(parseInt(e.target.value))}/>
                 </label>
                 <label>
                     How many points did your opponents score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" onChange={e => setOpponentScore(parseInt(e.target.value))}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" onChange={e => setOpponentScore(parseInt(e.target.value))}/>
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Enter game</button>

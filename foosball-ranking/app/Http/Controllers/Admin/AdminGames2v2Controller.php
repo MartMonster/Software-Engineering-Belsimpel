@@ -26,16 +26,21 @@ class AdminGames2v2Controller extends Controller
 
     public function edit2v2Game($id, Request $request)
     {
+        $request->validate([
+            'team1_score' => 'required|integer|min:0|max:10',
+            'team2_score' => 'required|integer|min:0|max:10',
+            'swap' => 'required|integer|min:0|max:1'
+        ]);
         $game = Game2v2::where('id', $id)->first();
         if ($game == null)
             return response('Not found', 404);
-        $ids = array();
-        $ids[0] = User::getIdFromUsername($request->player1_username);
-        $ids[1] = User::getIdFromUsername($request->player2_username);
-        $ids[2] = User::getIdFromUsername($request->player3_username);
-        $ids[3] = User::getIdFromUsername($request->player4_username);
-        $team1_id = FoosballTeam::getOrCreateTeamWithUsers($ids[0], $ids[1])->id;
-        $team2_id = FoosballTeam::getOrCreateTeamWithUsers($ids[2], $ids[3])->id;
+        if (!$request->swap) {
+            $team1_id = $game->team1_id;
+            $team2_id = $game->team2_id;
+        } else {
+            $team1_id = $game->team2_id;
+            $team2_id = $game->team1_id;
+        }
         Game2v2::updateGameIdScores($game, $team1_id, $team2_id, $request->team1_score, $request->team2_score, 1);
         return response('Game successfully updated', 200);
     }

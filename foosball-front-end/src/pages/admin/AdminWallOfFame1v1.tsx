@@ -82,7 +82,6 @@ export const AdminWallOfFame1v1 = () => {
         <div className="App">
             <h1>Wall of fame 1v1</h1>
             <p>Click on a user to edit or delete them.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -103,6 +102,7 @@ export const AdminWallOfFame1v1 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for user: {username}</h2>

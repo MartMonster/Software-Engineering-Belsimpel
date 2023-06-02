@@ -27,7 +27,6 @@ export const WallOfFame2v2 = () => {
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -55,6 +54,7 @@ export const WallOfFame2v2 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
         </div>
     );
 }

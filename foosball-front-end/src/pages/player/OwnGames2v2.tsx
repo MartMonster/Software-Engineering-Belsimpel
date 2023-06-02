@@ -18,10 +18,10 @@ export const OwnGames2v2 = () => {
     const [games, setGames] = useState<Game2v2[]>([]);
     const [optionsModalIsOpen, setOptionsModalIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
-    // const [team1Name, setTeam1Name] = useState("");
+    const [team1Name, setTeam1Name] = useState("");
     // const [team2Name, setTeam2Name] = useState("");
-    // const [team1Score, setTeam1Score] = useState(0);
-    // const [team2Score, setTeam2Score] = useState(0);
+    const [team1Score, setTeam1Score] = useState(0);
+    const [team2Score, setTeam2Score] = useState(0);
 
     const error = useCallback(() => {
         if (errorMessage !== "") {
@@ -75,10 +75,10 @@ export const OwnGames2v2 = () => {
     function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
         setGameId(id);
         setModalText(text);
-        // setTeam1Name(team1_name);
+        setTeam1Name(team1_name);
         // setTeam2Name(team2_name);
-        // setTeam1Score(team1_score);
-        // setTeam2Score(team2_score);
+        setTeam1Score(team1_score);
+        setTeam2Score(team2_score);
         setOptionsModalIsOpen(true);
     }
 
@@ -90,7 +90,6 @@ export const OwnGames2v2 = () => {
         <div className="App">
             <h1>Your last 10 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -120,6 +119,7 @@ export const OwnGames2v2 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for game: {modalText}</h2>
@@ -128,7 +128,7 @@ export const OwnGames2v2 = () => {
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`/${lastGames2v2Route}/${editGame2v2Route}/${gameId}`}> {/* could be 
+                        <Link to={`/${lastGames2v2Route}/${editGame2v2Route}/${gameId}?team1=${team1Name}&score1=${team1Score}&score2=${team2Score}`}> {/* could be 
                         `/${lastGames2v2Route}/${editGame2v2Route}/${gameId}?team1=${team1Name}&team2=${team2Name}&score1=${team1Score}&score2=${team2Score}`
                         but we don't have the required endpoint(s) for that */}
                             <button className='editButton'>Edit</button>
