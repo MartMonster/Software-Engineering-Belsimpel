@@ -79,6 +79,8 @@ class TeamsController extends Controller
     public function getUsersFromTeam(string $name)
     {
         $team = FoosballTeam::where('team_name', $name)->first();
+        if ($team == null)
+            return response('Not found', 404);
         return ([User::find($team->player1_id)->username, User::find($team->player2_id)->username]);
     }
 }
