@@ -42,7 +42,7 @@ const PasswordReset = () => {
                 <form onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
-                            <input required type="text" maxLength={255} value={email} disabled/>
+                            <input required type="email" maxLength={255} value={email} disabled/>
                         </label>
                         <label>New password
                             <input required type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />

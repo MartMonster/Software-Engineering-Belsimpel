@@ -31,7 +31,7 @@ const ForgotPassword = () => {
                 <form onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email
-                            <input required type="text" maxLength={255} placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                            <input required type="email" maxLength={255} placeholder="Email" onChange={e => setEmail(e.target.value)} />
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Send reset email</button>
