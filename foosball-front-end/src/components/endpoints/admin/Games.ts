@@ -142,20 +142,16 @@ export async function makeGame2v2(player1_username: string, player2_username: st
     return b;
 }
 
-export async function editGame2v2(id: number, player1_username: string, player2_username: string,
-    player3_username: string, player4_username: string, team1_score: number | undefined,
-    team2_score: number | undefined, setErrorMessage: (string: string) => void) {
+export async function editGame2v2(id: number, team1_score: number | undefined,
+    team2_score: number | undefined, swap: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.put(`admin/games2v2/${id}`, {
         headers: {
             Accept: 'application/json'
         },
-        player1_username,
-        player2_username,
-        player3_username,
-        player4_username,
         team1_score,
-        team2_score
+        team2_score,
+        swap
     })
         .then(response => {
             console.log(response);

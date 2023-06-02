@@ -191,6 +191,11 @@ th {
   margin: 1em 1em .5em 0;
 }
 
+.swapButton {
+  margin: 0em .5em 0em 0em;
+  padding: 0em .5em 0em 0em
+}
+
 .editButton {
   background-color: #f26522;
   border-color: #f26522;
