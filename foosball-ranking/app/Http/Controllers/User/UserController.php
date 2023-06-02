@@ -45,6 +45,9 @@ class UserController extends Controller
     {
         if (User::where('username', $request->username)->first() != null)
             return response('Username already taken', 400);
+        $request->validate([
+            'username' => 'required|string|max:255',
+        ]);
         Auth::user()->username = $request->username;
         Auth::user()->save();
         return response('Username changed', 200);
@@ -52,6 +55,6 @@ class UserController extends Controller
 
     public function getTop10()
     {
-        return User::orderBy('elo', 'desc')->take(10)->get();
+        return User::select('id','username','elo')->orderBy('elo', 'desc')->take(10)->get();
     }
 }
