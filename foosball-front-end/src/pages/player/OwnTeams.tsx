@@ -63,6 +63,7 @@ export const OwnTeams = () => {
 
     function closeModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id: number, name: string) {

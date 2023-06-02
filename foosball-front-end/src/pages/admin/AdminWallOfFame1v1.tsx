@@ -66,6 +66,7 @@ export const AdminWallOfFame1v1 = () => {
 
     function closeDeleteModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id: number, name: string) {
