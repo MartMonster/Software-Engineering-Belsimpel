@@ -42,7 +42,6 @@ export const LastGames1v1 = () => {
         <div className="App">
             <h1>Last 10 1v1 games</h1>
             <Link className="App-link" to={ownGames1v1Route}>See own games</Link>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -68,9 +67,10 @@ export const LastGames1v1 = () => {
                             </React.Fragment>
                         );
                     })
-                    }
+                }
                 </tbody>
             </table>
+            {error()}
             <div className="pagination-container">
                 <ul className="pagination">
                     {paginateButtons.map((button, index) => {

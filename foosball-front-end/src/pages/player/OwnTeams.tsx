@@ -79,7 +79,6 @@ export const OwnTeams = () => {
         <div className="App">
             <h1>Your teams</h1>
             <p>Click on a team to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -105,9 +104,10 @@ export const OwnTeams = () => {
                             </tr>
                         );
                     })
-                    }
+                }
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for team: {teamName}</h2>

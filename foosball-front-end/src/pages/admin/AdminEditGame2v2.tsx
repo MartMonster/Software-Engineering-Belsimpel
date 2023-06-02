@@ -83,10 +83,6 @@ export const AdminEditGame2v2 = () => {
                             Team name
                             <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={blueTeam} onChange={e => setBlueTeam(e.target.value)} />
                         </label>
-                        {/* <label>
-                            Username
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" defaultValue={bluePlayer2} onChange={e => setBluePlayer2(e.target.value)} />
-                        </label> */}
                         <label>
                             Points
                             <input required type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={blueScore} onChange={e => setBlueScore(parseInt(e.target.value))} />

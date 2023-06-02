@@ -90,7 +90,6 @@ export const OwnGames2v2 = () => {
         <div className="App">
             <h1>Your last 10 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -120,6 +119,7 @@ export const OwnGames2v2 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for game: {modalText}</h2>
