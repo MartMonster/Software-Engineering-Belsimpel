@@ -443,8 +443,9 @@ tr td {
 }
 
 .title {
+  width: 100vw;
+  text-align: center;
   margin: 0;
-  padding: 0;
   padding: .2em;
   margin-bottom: 1em;
   background-color: #009ddf;

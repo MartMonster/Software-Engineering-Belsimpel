@@ -37,8 +37,8 @@ const PasswordReset = () => {
     
     return (
         <div className="App-header">
+            <h1 className='title'>Reset password</h1>
             <div className='App'>
-                <h1 className='title'>Reset password</h1>
                 <form onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email

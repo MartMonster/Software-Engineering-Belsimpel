@@ -26,8 +26,8 @@ const ForgotPassword = () => {
     
     return (
         <div className="App-header">
+            <h1 className='title'>Forgot password</h1>
             <div className="App">
-                <h1 className='title'>Forgot password</h1>
                 <form onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email

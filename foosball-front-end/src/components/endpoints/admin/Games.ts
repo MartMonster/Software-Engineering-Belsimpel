@@ -36,17 +36,16 @@ export async function makeGame1v1(player1_username: string, player2_username: st
     return b;
 }
 
-export async function editGame1v1(id: number, player1_username: string, player2_username: string, player1_score: number | undefined,
-    player2_score: number | undefined, setErrorMessage: (string: string) => void) {
+export async function editGame1v1(id: number, player1_score: number | undefined,
+    player2_score: number | undefined, swap: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.put(`admin/games1v1/${id}`, {
         headers: {
             Accept: 'application/json'
         },
-        player1_username,
-        player2_username,
         player1_score,
-        player2_score
+        player2_score,
+        swap
     })
         .then(response => {
             console.log(response);

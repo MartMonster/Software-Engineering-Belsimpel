@@ -54,9 +54,6 @@ export const AdminEditGame2v2 = () => {
         let tempTeam = redTeam;
         setRedTeam(blueTeam);
         setBlueTeam(tempTeam);
-        let tempScore = redScore;
-        setRedScore(blueScore);
-        setBlueScore(tempScore);
         setSwap((swap + 1)%2);
     }
 
@@ -76,12 +73,14 @@ export const AdminEditGame2v2 = () => {
                             <input required type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={redScore} onChange={e => setRedScore(parseInt(e.target.value))} />
                         </label>
                     </div>
-                    <div><button className='swapButton' type='button' onClick={swapTeams}>Swap</button></div>
+                    <div>
+                        <button className='swapButton' type='button' onClick={swapTeams}>Swap</button>
+                    </div>
                     <div className="right">
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Team name
-                            <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={blueTeam} onChange={e => setBlueTeam(e.target.value)} />
+                            <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={blueTeam} />
                         </label>
                         <label>
                             Points

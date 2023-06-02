@@ -39,8 +39,8 @@ export const Register = () => {
 
     return (
         <div className="App-header">
+            <h1 className='title'>Welcome to the foosball tracking website!</h1>
             <div className="App">
-                <h1 className='title'>Welcome to the foosball tracking website!</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="login">
                         <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
