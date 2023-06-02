@@ -4,7 +4,6 @@ import { editGame2v2 } from '../../components/endpoints/player/Games';
 import { ownGames2v2Route } from './OwnGames2v2';
 import { lastGames2v2Route } from './LastGames2v2';
 import { getUsersFromTeam } from '../../components/endpoints/player/Teams';
-import { get } from 'http';
 
 export const editGame2v2Route: string = "edit"
 export const EditGame2v2 = () => {
