@@ -69,6 +69,7 @@ export const AdminLastGames2v2 = () => {
 
     function closeDeleteModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
