@@ -3,11 +3,14 @@ import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom"
 import { editGame2v2 } from '../../components/endpoints/player/Games';
 import { ownGames2v2Route } from './OwnGames2v2';
 import { lastGames2v2Route } from './LastGames2v2';
+import { getUsersFromTeam } from '../../components/endpoints/player/Teams';
+import { get } from 'http';
 
 export const editGame2v2Route: string = "edit"
 export const EditGame2v2 = () => {
     const idPar = useParams();
     const navigate = useNavigate();
+    const [team1, setTeam1] = useState("");
     const [myPoints, setMyPoints] = useState<number>();
     const [opponentPoints, setOpponentPoints] = useState<number>();
     const [side, setSide] = useState(1);
@@ -36,14 +39,28 @@ export const EditGame2v2 = () => {
         }
     }
 
-    useEffect(() => {
-        if (searchParams.get("score1") as string) {
-            setMyPoints(parseInt(searchParams.get("score1") as string));
+    const getUsers = useCallback(() => {
+        if (searchParams.get("team1") as string) {
+            setTeam1(searchParams.get("team1") as string);
         }
-        if (searchParams.get("score2") as string) {
-            setOpponentPoints(parseInt(searchParams.get("score2") as string));
+        if (team1 !== '') {
+            getUsersFromTeam(team1, setErrorMessage).then((data) => {
+                if (data.length !== 0) {
+                    if (data.includes(sessionStorage.getItem("username") as string)) {
+                        setSide(1);
+                        setMyPoints(parseInt(searchParams.get("score1") as string));
+                        setOpponentPoints(parseInt(searchParams.get("score2") as string));
+                    } else {
+                        setSide(2);
+                        setMyPoints(parseInt(searchParams.get("score2") as string));
+                        setOpponentPoints(parseInt(searchParams.get("score1") as string));
+                    }
+                }
+            });
         }
-    }, [searchParams])
+    }, [team1, searchParams])
+
+    useEffect(getUsers, [getUsers, searchParams])
     
     return (
         <div className="App">
@@ -51,18 +68,18 @@ export const EditGame2v2 = () => {
             <form autoComplete="off" onSubmit={saveGame}>
                 <label>
                     What side did you play on?
-                    <select onChange={e => setSide(parseInt(e.target.value))}>
+                    <select value={side.toString()} onChange={e => setSide(parseInt(e.target.value))}>
                         <option value="1">Red</option>
                         <option value="2">Blue</option>
                     </select>
                 </label>
                 <label>
                     How many points did your team score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={myPoints} onChange={e => setMyPoints(parseInt(e.target.value))} />
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={myPoints} onChange={e => setMyPoints(parseInt(e.target.value))} />
                 </label>
                 <label>
                     How many points did your opponents score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))} />
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))} />
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Save game</button>

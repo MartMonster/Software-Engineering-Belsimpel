@@ -75,4 +75,10 @@ class TeamsController extends Controller
 
         return FoosballTeam::deleteTeam($id);
     }
+
+    public function getUsersFromTeam(string $name)
+    {
+        $team = FoosballTeam::where('team_name', $name)->first();
+        return ([User::find($team->player1_id)->username, User::find($team->player2_id)->username]);
+    }
 }
