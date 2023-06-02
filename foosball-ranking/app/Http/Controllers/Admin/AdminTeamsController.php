@@ -24,25 +24,19 @@ class AdminTeamsController extends Controller
     public function createTeam(Request $request)
     {
         $request->validate([
-            'player1_username' => 'required',
-            'player2_username' => 'required',
-            'team_name' => 'required',
+            'player1_username' => ['required','exists:' . User::class . ',username'],
+            'player2_username' => ['required','exists:' . User::class . ',username'],
+            'team_name' => ['required','unique:' . FoosballTeam::class],
         ]);
         $player1 = User::where('username', $request->player1_username)->first();
         $player2 = User::where('username', $request->player2_username)->first();
-        if (is_null($player1)) {
-            return response('First user not found', 404);
-        }
-        if (is_null($player2)) {
-            return response('Second user not found', 404);
-        }
         return FoosballTeam::createTeam($player1, $player2, $request->team_name);
     }
 
     public function updateTeam($id, Request $request)
     {
         $request->validate([
-            'team_name' => 'required',
+            'team_name' => ['required','unique:' . FoosballTeam::class],
         ]);
         FoosballTeam::updateTeamName($request->team_name, $id);
         return response('Team successfully updated', 200);
