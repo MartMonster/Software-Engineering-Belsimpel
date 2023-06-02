@@ -12,7 +12,7 @@ class AdminGames1v1Controller extends Controller
     public function create1v1Game(Request $request)
     {
         $request->validate([
-            'player1_username' => ['required,exists:' . User::class . ',username'],
+            'player1_username' => ['required','exists:' . User::class . ',username'],
             'player2_username' => ['required','exists:' . User::class . ',username'],
             'player1_score' => ['required','integer','min:0','max:127'],
             'player2_score' => ['required','integer','min:0','max:127'],
