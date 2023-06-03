@@ -78,9 +78,7 @@ class AdminGetTeamsTest extends TestCase
     }
 
 
-    /**
-     * @group yes
-     */
+ 
 
     public function test_admin_get_top_10_teams_returns_empty_when_no_teams_exist(){
         $admin=User::factory()->create();

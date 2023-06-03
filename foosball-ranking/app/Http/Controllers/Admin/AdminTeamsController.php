@@ -46,6 +46,8 @@ class AdminTeamsController extends Controller
 
     public function deleteTeam($id)
     {
+        if(!FoosballTeam::find($id))
+            return response('Team not found', 404);
         FoosballTeam::deleteTeam($id);
     }
 }

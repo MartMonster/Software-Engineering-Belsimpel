@@ -12,9 +12,7 @@ class AdminUpdateTeamsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @group yes
-     */
+
 
     public function test_admin_can_update_teams(){
         $players = $this->create_players(3);
@@ -28,10 +26,6 @@ class AdminUpdateTeamsTest extends TestCase
         ]);
     }
 
-
-    /**
-     * @group yes
-     */
 
      public function test_admin_cant_update_teams_to_invalid_name(){
         $players = $this->create_players(3);
@@ -47,9 +41,7 @@ class AdminUpdateTeamsTest extends TestCase
         ]);
     }
 
-        /**
-     * @group yes
-     */
+
 
      public function test_admin_cant_update_inxestent_teams(){
         $players = $this->create_players(3);
@@ -64,9 +56,7 @@ class AdminUpdateTeamsTest extends TestCase
     }
 
 
-        /**
-     * @group yes
-     */
+
 
      public function test_admin_update_function_is_not_available_when_not_logged_in(){
         $players = $this->create_players(3);
@@ -82,9 +72,6 @@ class AdminUpdateTeamsTest extends TestCase
         ]);
     }
     
-    /**
-     * @group yes
-     */
 
      public function test_admin_update_function_is_not_available_to_non_admin_users(){
         $players = $this->create_players(4);
@@ -98,9 +85,7 @@ class AdminUpdateTeamsTest extends TestCase
         ]);
     }
 
-        /**
-     * @group yes
-     */
+
 
      public function test_admin_cant_update_team_name_to_already_taken_name(){
         $players = $this->create_players(4);
