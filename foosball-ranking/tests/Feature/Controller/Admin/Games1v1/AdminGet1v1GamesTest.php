@@ -26,8 +26,6 @@ class AdminGet1v1GamesTest extends TestCase
         ]);
         $gameReturned=$this->get('/games1v1')->getData()->data;
         unset($gameReturned[0]->id);
-        fwrite(STDERR, print_r($gameReturned[0], TRUE));
-        fwrite(STDERR, print_r($expectedGame, TRUE));   
         $this->assertEquals($expectedGame,$gameReturned[0]);
     }
 
