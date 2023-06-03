@@ -21,7 +21,7 @@ test('forwards to admin dashboard when user is admin', async () => {
     render(<App />);
     login();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
-    const userTopText = screen.queryByText(/you are in the top/i);
+    const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
     expect(dashboardText[1]).not.toBeNull();
     expect(userTopText).toBeNull();
     expect(window.sessionStorage.getItem('loggedIn')).toEqual('true');
@@ -32,7 +32,7 @@ test('forwards to user dashboard when user is not admin', async () => {
     render(<App />);
     login();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
-    const userTopText = await screen.findByText(/you are in the top/i);
+    const userTopText = await screen.findByText(/on the leaderboard, and you have/i);
     expect(dashboardText[1]).not.toBeNull();
     expect(userTopText).not.toBeNull();
     expect(window.sessionStorage.getItem('loggedIn')).toEqual('true');
@@ -67,7 +67,7 @@ test('displays error message when login fails', async () => {
     render(<App />);
     login();
     const dashboardText = screen.queryByText(/Dashboard/i);
-    const userTopText = screen.queryByText(/you are in the top/i);
+    const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
     const errorText = await screen.findByText(/These credentials do not match our records./i);
     expect(dashboardText).toBeNull();
     expect(userTopText).toBeNull();
@@ -88,7 +88,7 @@ test('displays error message when session token has problems', async () => {
     render(<App />);
     login();
     const dashboardText = screen.queryByText(/Dashboard/i);
-    const userTopText = screen.queryByText(/you are in the top/i);
+    const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
     const errorText = await screen.findByText(/CSRF token mismatch./i);
     expect(dashboardText).toBeNull();
     expect(userTopText).toBeNull();
@@ -106,7 +106,7 @@ test('removes \'loggedIn\' session storage when admin endpoint fails', async () 
     render(<App />);
     login();
     const dashboardText = screen.queryByText(/Dashboard/i);
-    const userTopText = screen.queryByText(/you are in the top/i);
+    const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
     expect(dashboardText).toBeNull();
     expect(userTopText).toBeNull();
     expect(window.sessionStorage.getItem('loggedIn')).toBeNull();

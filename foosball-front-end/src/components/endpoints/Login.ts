@@ -93,10 +93,8 @@ export async function logout() {
         }
     })
         .then(response => {
-            console.log(response);
         })
         .catch(error => {
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -116,12 +114,10 @@ export async function forgotPassword(email: string, setErrorMessage: (string: st
     })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                console.log(response);
                 b = true;
             }
         })
         .catch(error => {
-            console.log(error);
             if (error.response.data.message) {
                 setErrorMessage(error.response.data.message);
             } else {

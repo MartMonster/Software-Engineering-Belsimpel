@@ -17,7 +17,6 @@ export async function getTop10Teams(setErrorMessage: (string: string) => void) {
         }
     })
         .then(response => {
-            console.log(response);
             teams = response.data;
             setErrorMessage("");
         })
@@ -27,7 +26,6 @@ export async function getTop10Teams(setErrorMessage: (string: string) => void) {
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');

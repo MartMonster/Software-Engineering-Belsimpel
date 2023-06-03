@@ -48,7 +48,7 @@ export const AdminWallOfFame2v2 = () => {
             }
             console.log(data);
         });
-    }, [setTeams, searchParams, setSearchParams]);
+    }, [searchParams, setSearchParams]);
 
     useEffect(getTeams, [getTeams]);
 

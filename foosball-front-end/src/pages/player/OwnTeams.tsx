@@ -43,9 +43,12 @@ export const OwnTeams = () => {
                 setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
+            if (data.teams.length === 0) {
+                setErrorMessage("No games found.");
+            }
             console.log(data);
         });
-    }, [searchParams, setSearchParams])
+    },[searchParams, setSearchParams])
     
     useEffect(getTeams, [getTeams]);
 
