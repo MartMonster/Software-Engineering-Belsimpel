@@ -44,7 +44,7 @@ export const OwnTeams = () => {
             }
             setPaginateButtons(paginationButtons(data.pagination));
             if (data.teams.length === 0) {
-                setErrorMessage("No games found.");
+                setErrorMessage("No teams found.");
             }
             console.log(data);
         });
