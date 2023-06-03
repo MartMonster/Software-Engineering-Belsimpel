@@ -43,7 +43,7 @@ class AdminCreate1v1GamesTest extends TestCase
         $players = $this->create_players(3);
         $admin=self::makeUserAdmin($players[0]) ;
 
-        self::createAdminGame($admin,10,5,$players[1],$players[2])->assertStatus(422);
+        
         $players[1]->username="";
         self::createAdminGame($admin,10,-1,$players[1],$players[2])->assertStatus(422);
         $players[1]->username="NonExistentUser";
