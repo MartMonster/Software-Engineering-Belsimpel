@@ -14,7 +14,7 @@ afterAll(() => server.close());
 test('renders the wall of fame', async () => {
     render(<App />);
     fireEvent.click(screen.getByText(/Wall of fame 1v1/i));
-    const wallOfFameText = await screen.findByText(/Wall of fame/i);
+    const wallOfFameText = await screen.findByText(/Wall of fame 1v1/i);
     expect(wallOfFameText).not.toBeNull();
     const player1Text = await screen.findByText(`${username}1`);
     expect(player1Text).not.toBeNull();
@@ -27,7 +27,7 @@ test('shows error message if there are no users', async () => {
         }),
     );
     render(<App />);
-    const wallOfFameText = await screen.findByText(/Wall of fame/i);
+    const wallOfFameText = await screen.findByText(/Wall of fame 1v1/i);
     expect(wallOfFameText).not.toBeNull();
     const errorText = await screen.findByText(/No players found./i);
     expect(errorText).not.toBeNull();
@@ -40,7 +40,7 @@ test('shows error when not logged in', async () => {
         }),
     );
     render(<App />);
-    const wallOfFameText = await screen.findByText(/Wall of fame/i);
+    const wallOfFameText = await screen.findByText(/Wall of fame 1v1/i);
     expect(wallOfFameText).not.toBeNull();
     const errorText = await screen.findByText(/No players found./i);
     expect(errorText).not.toBeNull();
@@ -53,7 +53,7 @@ test('shows error when fetching fails', async () => {
         }),
     );
     render(<App />);
-    const wallOfFameText = await screen.findByText(/Wall of fame/i);
+    const wallOfFameText = await screen.findByText(/Wall of fame 1v1/i);
     expect(wallOfFameText).not.toBeNull();
     const errorText = await screen.findByText(/No players found./i);
     expect(errorText).not.toBeNull();

@@ -20,7 +20,7 @@ export const WallOfFame1v1 = () => {
                 setErrorMessage("No players found.");
             }
         });
-    },[setUsers]);
+    },[]);
 
     useEffect(getUsers, [getUsers]);
 

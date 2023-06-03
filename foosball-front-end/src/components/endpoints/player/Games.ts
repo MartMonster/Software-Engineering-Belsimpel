@@ -20,7 +20,6 @@ export async function getLast10Games1v1(page: number = 1, setErrorMessage: (stri
         }
     })
         .then(response => {
-            console.log(response);
             games = response.data.data;
             currentPage = response.data.current_page;
             lastPage = response.data.last_page;
@@ -32,7 +31,6 @@ export async function getLast10Games1v1(page: number = 1, setErrorMessage: (stri
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -55,7 +53,6 @@ export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string:
         }
     })
         .then(response => {
-            console.log(response);
             games = response.data.data;
             currentPage = response.data.current_page;
             lastPage = response.data.last_page;
@@ -67,7 +64,6 @@ export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string:
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -93,7 +89,6 @@ export async function makeGame1v1(player2_username: string, player1_score: numbe
         player1_side
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -105,7 +100,6 @@ export async function makeGame1v1(player2_username: string, player1_score: numbe
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -129,7 +123,6 @@ export async function editGame1v1(id: number, player1_score: number | undefined,
         player1_side
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -141,7 +134,6 @@ export async function editGame1v1(id: number, player1_score: number | undefined,
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -160,7 +152,6 @@ export async function deleteGame1v1(id: number, setErrorMessage: (string: string
         }
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -172,7 +163,6 @@ export async function deleteGame1v1(id: number, setErrorMessage: (string: string
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -276,7 +266,6 @@ export async function makeGame2v2(player2_username: string, player3_username: st
         side
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -288,7 +277,6 @@ export async function makeGame2v2(player2_username: string, player3_username: st
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');

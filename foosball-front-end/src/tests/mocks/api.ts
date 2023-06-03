@@ -5,6 +5,7 @@ const fakeUserResponse = { token: 'fake_user_token' }
 export const username = "Username"
 export const position = 15
 export const elo = 1010
+export const teamName = "Team"
 const server = setupServer(
     rest.get('http://localhost:8000/sanctum/csrf-cookie', (req, res, ctx) => {
         return res(ctx.json(fakeUserResponse))
@@ -44,6 +45,61 @@ const server = setupServer(
             })
         }
         return res(ctx.json(users))
+    }),
+    rest.get('http://localhost:8000/teams', (req, res, ctx) => {
+        let teams = []
+        for (let i = 0; i < 10; i++) {
+            teams.push({
+                id: i+1,
+                team_name: `${teamName}${(i+1).toString()}`,
+                player1_username: `${username}${(i*2+1).toString()}`,
+                player2_username: `${username}${(i+2).toString()}`,
+                elo: `${elo+i}`
+            })
+        }
+        return res(ctx.json(teams))
+    }),
+    rest.post('http://localhost:8000/games1v1', (req, res, ctx) => {
+        return res(ctx.json('game created'))
+    }),
+    rest.post('http://localhost:8000/games2v2', (req, res, ctx) => {
+        return res(ctx.json('game created'))
+    }),
+    rest.get('http://localhost:8000/games1v1', (req, res, ctx) => {
+        let page = req.url.searchParams.get('page')
+        console.log(page)
+        let games = []
+        for (let i = 0; i < 10; i++) {
+            games.push({
+                id: i+1,
+                player1_username: `${username}${(i*2+1).toString()}`,
+                player2_username: `${username}${(i*2+2).toString()}`,
+                player1_score: i,
+                player2_score: i+1
+            })
+        }
+        return res(ctx.json({data: games, current_page: page, last_page: 10}))
+    }),
+    rest.get('http://localhost:8000/games1v1/self', (req, res, ctx) => {
+        let page = req.url.searchParams.get('page')
+        console.log(page)
+        let games = []
+        for (let i = 0; i < 10; i++) {
+            games.push({
+                id: i + 1,
+                player1_username: `${username}${(i * 2 + 1).toString()}`,
+                player2_username: `${username}${(i * 2 + 2).toString()}`,
+                player1_score: i,
+                player2_score: i + 1
+            })
+        }
+        return res(ctx.json({ data: games, current_page: 9, last_page: 10 }))
+    }),
+    rest.delete('http://localhost:8000/games1v1/:id', (req, res, ctx) => {
+        return res(ctx.json('game deleted'))
+    }),
+    rest.put('http://localhost:8000/games1v1/:id', (req, res, ctx) => {
+        return res(ctx.json('game updated'))
     }),
 )
 

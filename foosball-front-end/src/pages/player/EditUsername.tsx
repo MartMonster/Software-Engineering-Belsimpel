@@ -26,7 +26,7 @@ export const EditUsername = () => {
                 navigateToDashboard();
             }
         } else {
-            setErrorMessage("You already have this username");
+            setErrorMessage("You already have this username.");
         }
     }
 

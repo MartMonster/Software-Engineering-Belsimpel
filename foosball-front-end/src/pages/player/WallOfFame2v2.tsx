@@ -20,7 +20,7 @@ export const WallOfFame2v2 = () => {
                 setErrorMessage("No teams found.");
             }
         });
-    },[setTeams]);
+    },[]);
 
     useEffect(getTeams, [getTeams]);
 
