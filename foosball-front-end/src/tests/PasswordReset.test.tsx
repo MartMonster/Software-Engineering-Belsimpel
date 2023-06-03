@@ -64,3 +64,12 @@ test('displays error message when resetting password fails', async () => {
     const errorMessage = await screen.findByText(/error/i);
     expect(errorMessage).not.toBeNull();
 });
+
+test('navigates to dashboard if logged in', async () => {
+    window.sessionStorage.setItem('loggedIn', 'true');
+    renderPasswordResetPage();
+    const headerText = await screen.findByText(/Welcome to the foosball tracking website!/i);
+    const registerText = await screen.findByText(/Don't have an account yet?/i);
+    expect(headerText).not.toBeNull();
+    expect(registerText).not.toBeNull();
+});
