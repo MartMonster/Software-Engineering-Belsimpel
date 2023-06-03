@@ -40,7 +40,7 @@ export const LastGames1v1 = () => {
 
     return (
         <div className="App">
-            <h1>Last 10 1v1 games</h1>
+            <h1>Last 1v1 games</h1>
             <Link className="App-link" to={ownGames1v1Route}>See own games</Link>
             <table>
                 <thead>

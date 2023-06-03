@@ -89,7 +89,7 @@ export const OwnGames2v2 = () => {
     
     return (
         <div className="App">
-            <h1>Your last 10 2v2 games</h1>
+            <h1>Your last 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
             <table>
                 <thead>

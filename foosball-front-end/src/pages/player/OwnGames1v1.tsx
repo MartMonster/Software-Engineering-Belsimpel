@@ -87,7 +87,7 @@ export const OwnGames1v1 = () => {
     
     return (
         <div className="App">
-            <h1>Your last 10 1v1 games</h1>
+            <h1>Your last 1v1 games</h1>
             <p>Click on a game to edit or delete it.</p>
             <table>
                 <thead>

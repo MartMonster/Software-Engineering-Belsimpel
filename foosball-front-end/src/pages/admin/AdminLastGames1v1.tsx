@@ -88,7 +88,7 @@ export const AdminLastGames1v1 = () => {
 
     return (
         <div className="App">
-            <h1>Last 10 1v1 games</h1>
+            <h1>Last 1v1 games</h1>
             <p>Click on a game to edit or delete it.</p>
             <table>
                 <thead>
