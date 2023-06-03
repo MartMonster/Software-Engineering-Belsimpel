@@ -30,7 +30,7 @@ class AdminTeamsController extends Controller
         ]);
         $player1 = User::where('username', $request->player1_username)->first();
         $player2 = User::where('username', $request->player2_username)->first();
-        return FoosballTeam::createTeam($player1, $player2, $request->team_name);
+        return FoosballTeam::createTeam($player1->id, $player2->id, $request->team_name);
     }
 
     public function updateTeam($id, Request $request)
