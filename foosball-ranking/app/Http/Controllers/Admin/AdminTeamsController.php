@@ -38,6 +38,8 @@ class AdminTeamsController extends Controller
         $request->validate([
             'team_name' => ['required','unique:' . FoosballTeam::class],
         ]);
+        if(!FoosballTeam::find($id))
+            return response('Team not found', 404);
         FoosballTeam::updateTeamName($request->team_name, $id);
         return response('Team successfully updated', 200);
     }
