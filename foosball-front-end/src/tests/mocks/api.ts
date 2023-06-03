@@ -164,6 +164,9 @@ const server = setupServer(
     rest.put('http://localhost:8000/teams/:id', (req, res, ctx) => {
         return res(ctx.json('team updated'))
     }),
+    rest.put('http://localhost:8000/user/username', (req, res, ctx) => {
+        return res(ctx.json('username updated'))
+    }),
 )
 
 export default server

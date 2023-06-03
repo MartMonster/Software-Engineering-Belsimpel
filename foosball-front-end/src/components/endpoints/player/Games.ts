@@ -192,7 +192,6 @@ export async function getLast10Games2v2(page: number = 1, setErrorMessage: (stri
         }
     })
         .then(response => {
-            console.log(response);
             games = response.data.data;
             currentPage = response.data.current_page;
             lastPage = response.data.last_page;
@@ -204,7 +203,6 @@ export async function getLast10Games2v2(page: number = 1, setErrorMessage: (stri
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -227,7 +225,6 @@ export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string:
         }
     })
         .then(response => {
-            console.log(response);
             games = response.data.data;
             currentPage = response.data.current_page;
             lastPage = response.data.last_page;
@@ -239,7 +236,6 @@ export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string:
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -300,7 +296,6 @@ export async function editGame2v2(id: number, team1_score: number | undefined,
         side
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -312,7 +307,6 @@ export async function editGame2v2(id: number, team1_score: number | undefined,
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -331,7 +325,6 @@ export async function deleteGame2v2(id: number, setErrorMessage: (string: string
         }
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -343,7 +336,6 @@ export async function deleteGame2v2(id: number, setErrorMessage: (string: string
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
