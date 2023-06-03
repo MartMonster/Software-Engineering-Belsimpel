@@ -77,7 +77,6 @@ export async function editUsername(username: string, setErrorMessage: (string: s
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
                 b = true;
-                console.log(response);
                 setErrorMessage("");
             }
         })
@@ -87,7 +86,6 @@ export async function editUsername(username: string, setErrorMessage: (string: s
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');

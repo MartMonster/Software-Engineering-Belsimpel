@@ -47,7 +47,6 @@ export async function getOwnTeams(page: number = 1, setErrorMessage: (string: st
         }
     })
         .then(response => {
-            console.log(response);
             teams = response.data.data;
             currentPage = response.data.current_page;
             lastPage = response.data.last_page;
@@ -59,7 +58,6 @@ export async function getOwnTeams(page: number = 1, setErrorMessage: (string: st
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -81,7 +79,6 @@ export async function makeTeam(team_name: string, player2_username: string, setE
         player2_username
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -93,7 +90,6 @@ export async function makeTeam(team_name: string, player2_username: string, setE
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -113,7 +109,6 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
         team_name
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -125,7 +120,6 @@ export async function editTeam(id: number, team_name: string, setErrorMessage: (
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -144,7 +138,6 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
         }
     })
         .then(response => {
-            console.log(response);
             if (response.status >= 200 && response.status < 300) {
                 b = true;
                 setErrorMessage("");
@@ -156,7 +149,6 @@ export async function deleteTeam(id: number, setErrorMessage: (string: string) =
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -175,11 +167,9 @@ export async function getUsersFromTeam(team_name: string, setErrorMessage: (stri
         }
     })
         .then(response => {
-            console.log(response);
             users = response.data;
         })
         .catch(error => {
-            console.log(error);
             if (error.response.data.message) {
                 setErrorMessage(error.response.data.message);
             } else {

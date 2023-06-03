@@ -63,3 +63,16 @@ test('can show error message', async () => {
     const errorText = await screen.findByText(/Unauthenticated./i);
     expect(errorText).not.toBeNull();
 });
+
+test('can show error message, but from getUsersFromTeam endpoint', async () => {
+    server.use(
+        rest.get('http://localhost:8000/teams/users/:teamName', (req, res, ctx) => {
+            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+        }),
+    );
+    render(<App />);
+    const editGameText = await screen.findByText(/Edit your 2v2 game/i);
+    expect(editGameText).not.toBeNull();
+    const errorText = await screen.findByText(/Unauthenticated./i);
+    expect(errorText).not.toBeNull();
+});

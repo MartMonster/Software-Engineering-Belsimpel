@@ -7,7 +7,6 @@ async function cookie(setErrorMessage: (string: string) => void) {
     let token;
     await axios.get('/sanctum/csrf-cookie')
         .then(response => {
-            console.log(response.config.headers.get('X-XSRF-TOKEN'));
             token = response.config.headers.get('X-XSRF-TOKEN');
             setErrorMessage("");
         })
