@@ -61,7 +61,11 @@ class AdminDelete1v1GamesTest extends TestCase
     public function test_returns_appropiate_response_when_admin_deletes_non_existent_1v1_games(){
         $players = $this->create_players(3);
         $admin=self::makeUserAdmin($players[0]);
-        $this->json('delete','admin/games1v1/1')->assertStatus(401);
+        $this->post('login', [
+            'email' => $admin->email,
+            'password' => 'password',
+        ]);
+        $this->json('delete','admin/games1v1/1')->assertStatus(404);
 
     }
 

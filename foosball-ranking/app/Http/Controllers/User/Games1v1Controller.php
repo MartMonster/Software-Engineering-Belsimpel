@@ -38,8 +38,8 @@ class Games1v1Controller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'player1_score' => 'required|integer',
-            'player2_score' => 'required|integer',
+            'player1_score' => 'required|integer|min:0|max:10',
+            'player2_score' => 'required|integer|min:0|max:10',
             'player1_side' => 'required|integer',
             'player2_username' => 'required|string|exists:users,username'
         ]);
@@ -62,6 +62,11 @@ class Games1v1Controller extends Controller
 
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'player1_score' => 'required|integer|min:0|max:10',
+            'player2_score' => 'required|integer|min:0|max:10',
+            'player1_side' => 'required|integer'
+        ]);
         $game = Game1v1::where('id', $id)->first();
         if ($game == null)
             return response('Not found', 404);

@@ -17,15 +17,16 @@ class AdminUserController extends Controller
 
     public function getTop10Users()
     {
-        return User::orderBy('elo', 'desc')->paginate(10);
+        return User::select('id','username','elo')->orderBy('elo', 'desc')->paginate(10);
     }
 
     public function editPlayer(string $id, Request $request)
     {
+        $request->validate([
+            'username' => 'required|string|max:255',
+        ]);
         $player = User::find($id);
-        if ($player == null)
-            return response('Not found', 404);
-        if ($player->role_id == Role::where('role_name', 'Admin')->first()->id && !Auth::id() == $id)
+        if (($player->role_id == Role::where('role_name', 'Admin')->first()->id) && !(Auth::id() == $id))
             return response('Forbidden: user is an admin', 403);
         if (User::where('username', $request->username)->first() != null)
             return response('Username already taken', 400);

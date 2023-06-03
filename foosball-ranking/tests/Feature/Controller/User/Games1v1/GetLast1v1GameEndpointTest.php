@@ -136,7 +136,7 @@ class GetLast1v1GameEndpointTest extends TestCase
         for ($i = 0; $i < 5; $i++) {
             $this->post('/games1v1', [
                 'player2_username' => $player2->username,
-                'player2_score' => 12,
+                'player2_score' => 9,
                 'player1_score' => 5,
                 'player1_side' => 1,
             ]);
@@ -147,7 +147,7 @@ class GetLast1v1GameEndpointTest extends TestCase
         $game->player2_username = $player2->username;
 
         $game->player1_score = 5;
-        $game->player2_score = 12;
+        $game->player2_score = 9;
 
         for ($i = 0; $i < 5; $i++) {
             $game1 = $response->getData()->data[$i];

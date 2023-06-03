@@ -13,9 +13,7 @@ class AdminUpdates2v2GamesTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @group yes
-     */
+
 
     public function test_admin_can_update_2v2_games(){
         $players = $this->create_players(5);
@@ -31,9 +29,7 @@ class AdminUpdates2v2GamesTest extends TestCase
         ]);
     }
 
-    /**
-     * @group yes
-     */
+
 
      public function test_admin_can_swap_teams_in_2v2_games(){
         $players = $this->create_players(5);
@@ -49,9 +45,6 @@ class AdminUpdates2v2GamesTest extends TestCase
         ]);
     }
 
-    /**
-     * @group yes
-     */
 
     public function test_admin_cant_update_2v2_games_to_invalid_values(){
         $players = $this->create_players(5);
@@ -70,20 +63,13 @@ class AdminUpdates2v2GamesTest extends TestCase
     }
 
 
-    /**
-     * @group yes
-     */
-
-     public function test_admin_cant_update_inxestent_2v2_game(){
+     public function test_admin_cant_update_inexistent_2v2_game(){
         $players = $this->create_players(5);
         $admin = self::makeUserAdmin($players[0]);
         $results=$this->adminCreate2v2Game($admin,$players[1],$players[2],$players[3],$players[4],10,8,1);
-        $this->adminUpdateGame2v2("1",$admin,0,-3,8)->assertStatus(422);
+        $this->adminUpdateGame2v2("1",$admin,0,2,8)->assertStatus(404);
     }
 
-    /**
-     * @group yes
-     */
 
     public function test_admin_update_2v2_game_function_is_not_available_when_not_logged_in(){
         $players = $this->create_players(5);
@@ -97,10 +83,6 @@ class AdminUpdates2v2GamesTest extends TestCase
 
     }
     
-
-    /**
-    * @group yes
-    */
 
      public function test_admin_update_2v2_game_function_is_not_available_to_non_admin_users(){;
         $players = $this->create_players(6);

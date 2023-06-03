@@ -149,6 +149,81 @@ class UpdateGames1v1EndpointTest extends TestCase
 
     }
 
+
+    public function test_cannot_update_game_to_invalid_scored(){
+        $player1 = User::factory()->create();
+
+        $player2 = User::factory()->create();
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->post('/games1v1', [
+            'player2_username' => $player2->username,
+            'player2_score' => 10,
+            'player1_score' => 7,
+            'player1_side' => 1,
+        ])->assertStatus(201);
+
+        $game=Game1v1::where('player2_id', $player2->id)
+            ->where('player1_id', $player1->id)
+            ->where('player2_score', 10)
+            ->where('player1_score', 7)->first();
+        $this->assertNotNull($game);
+
+        $this->json('put','/games1v1/' . $game->id, [
+            "player1_score" => 11,
+            "player2_score" => 3,
+            "player1_side" => 2
+        ])->assertStatus(422);
+
+        $this->json('put','/games1v1/' . $game->id, [
+            "player1_score" => 3,
+            "player2_score" => -2,
+            "player1_side" => 2
+        ])->assertStatus(422);
+
+
+    }
+  
+
+    public function test_cannot_update_game_to_invalid_sides(){
+        $player1 = User::factory()->create();
+
+        $player2 = User::factory()->create();
+        $this->post('/login', [
+            'email' => $player1->email,
+            'password' => 'password',
+        ]);
+
+        $response = $this->post('/games1v1', [
+            'player2_username' => $player2->username,
+            'player2_score' => 10,
+            'player1_score' => 7,
+            'player1_side' => 1,
+        ])->assertStatus(201);
+
+        $game=Game1v1::where('player2_id', $player2->id)
+            ->where('player1_id', $player1->id)
+            ->where('player2_score', 10)
+            ->where('player1_score', 7)->first();
+        $this->assertNotNull($game);
+
+        $this->json('put','/games1v1/' . $game->id, [
+            "player1_score" => 10,
+            "player2_score" => 3,
+            "player1_side" => "f"
+        ])->assertStatus(422);
+
+        $this->json('put','/games1v1/' . $game->id, [
+            "player1_score" => 3,
+            "player2_score" => 10,
+            "player1_side" => null
+        ])->assertStatus(422);
+
+
+    }
     public function test_returns_proper_response_code_when_not_authenticated_updating_1v1game_(): void
     {
         //First create the two players
