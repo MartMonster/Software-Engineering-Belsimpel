@@ -68,3 +68,10 @@ test('displays error message when registering fails', async () => {
     expect(errorMessage).not.toBeNull();
     expect(window.sessionStorage.getItem('loggedIn')).toEqual('false');
 });
+
+test('forwards to dashboard when logged in', () => {
+    window.sessionStorage.setItem('loggedIn', 'true');
+    render(<App />);
+    const dashboardText = screen.getAllByText(/Dashboard/i);
+    expect(dashboardText[1]).not.toBeNull();
+});

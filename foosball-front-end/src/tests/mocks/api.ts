@@ -101,6 +101,45 @@ const server = setupServer(
     rest.put('http://localhost:8000/games1v1/:id', (req, res, ctx) => {
         return res(ctx.json('game updated'))
     }),
+    rest.get('http://localhost:8000/games2v2', (req, res, ctx) => {
+        let page = req.url.searchParams.get('page')
+        console.log(page)
+        let games = []
+        for (let i = 0; i < 10; i++) {
+            games.push({
+                id: i + 1,
+                team1_name: `${teamName}${(i * 2 + 1).toString()}`,
+                team2_name: `${teamName}${(i * 2 + 2).toString()}`,
+                team1_score: i,
+                team2_score: i + 1
+            })
+        }
+        return res(ctx.json({ data: games, current_page: page, last_page: 10 }))
+    }),
+    rest.get('http://localhost:8000/games2v2/self', (req, res, ctx) => {
+        let page = req.url.searchParams.get('page')
+        console.log(page)
+        let games = []
+        for (let i = 0; i < 10; i++) {
+            games.push({
+                id: i + 1,
+                team1_name: `${teamName}${(i * 2 + 1).toString()}`,
+                team2_name: `${teamName}${(i * 2 + 2).toString()}`,
+                team1_score: i,
+                team2_score: i + 1
+            })
+        }
+        return res(ctx.json({ data: games, current_page: page, last_page: 10 }))
+    }),
+    rest.delete('http://localhost:8000/games2v2/:id', (req, res, ctx) => {
+        return res(ctx.json('game deleted'))
+    }),
+    rest.put('http://localhost:8000/games2v2/:id', (req, res, ctx) => {
+        return res(ctx.json('game updated'))
+    }),
+    rest.get('http://localhost:8000/teams/users/:teamName', (req, res, ctx) => {
+        return res(ctx.json([`${username}1`, `${username}2`]))
+    }),
 )
 
 export default server
