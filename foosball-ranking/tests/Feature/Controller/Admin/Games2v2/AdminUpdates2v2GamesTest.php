@@ -66,7 +66,6 @@ class AdminUpdates2v2GamesTest extends TestCase
      public function test_admin_cant_update_inexistent_2v2_game(){
         $players = $this->create_players(5);
         $admin = self::makeUserAdmin($players[0]);
-        $results=$this->adminCreate2v2Game($admin,$players[1],$players[2],$players[3],$players[4],10,8,1);
         $this->adminUpdateGame2v2("1",$admin,0,2,8)->assertStatus(404);
     }
 

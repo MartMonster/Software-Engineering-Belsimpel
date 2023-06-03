@@ -200,7 +200,7 @@ class AdminManagementFunctionalitiesTest extends TestCase
             'email' => $admin->email,
             'password' => 'password',
         ]);
-        $this->json('delete','/admin/user/1')->assertStatus(404);
+        $this->json('delete','/admin/user/10')->assertStatus(404);
     } 
 
     public function test_admin_delete_player_also_deletes_teams_and_games(){
