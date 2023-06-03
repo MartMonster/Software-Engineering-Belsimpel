@@ -36,17 +36,18 @@ class AdminCreate1v1GamesTest extends TestCase
         
         self::createAdminGame($admin,"f",5,$players[1],$players[2])->assertStatus(422);
         self::createAdminGame($admin,10,-1,$players[1],$players[2])->assertStatus(422);
+        self::createAdminGame($admin,11,-1,$players[1],$players[2])->assertStatus(422);
     }
 
     public function test_admin_cant_create_1v1_games_when_the_names_are_invalid(){
         $players = $this->create_players(3);
         $admin=self::makeUserAdmin($players[0]) ;
 
-        self::createAdminGame($admin,11,5,$players[1],$players[2])->assertStatus(422);
+        self::createAdminGame($admin,10,5,$players[1],$players[2])->assertStatus(422);
         $players[1]->username="";
         self::createAdminGame($admin,10,-1,$players[1],$players[2])->assertStatus(422);
         $players[1]->username="NonExistentUser";
-        self::createAdminGame($admin,11,5,$players[1],$players[2])->assertStatus(422);
+        self::createAdminGame($admin,10,5,$players[1],$players[2])->assertStatus(422);
     }
 
 

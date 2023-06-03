@@ -26,8 +26,7 @@ class FoosballTeam extends Model
 
         if ($team->player1_id == $team->player2_id)
             return response("Not all players are unique", 400);
-        $team->team_name = $team_name;
-
+        $team->team_name = $team_name;        
         $team->save();
         return response("Ok", 201);
 
