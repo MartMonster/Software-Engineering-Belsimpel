@@ -14,12 +14,14 @@ class AdminGames1v1Controller extends Controller
         $request->validate([
             'player1_username' => ['required','exists:' . User::class . ',username'],
             'player2_username' => ['required','exists:' . User::class . ',username'],
-            'player1_score' => ['required','integer','min:0','max:127'],
-            'player2_score' => ['required','integer','min:0','max:127'],
+            'player1_score' => ['required','integer','min:0','max:10'],
+            'player2_score' => ['required','integer','min:0','max:10'],
         ]);
 
         $player1 = User::where('username', $request->player1_username)->first();
         $player2 = User::where('username', $request->player2_username)->first();
+        if($player1->id == $player2->id)
+            return response('Players must be different', 400);
         return Game1v1::store(
             $player1,
             $player2,
