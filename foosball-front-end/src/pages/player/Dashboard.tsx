@@ -40,7 +40,7 @@ const Dashboard = () => {
     return (
         <div className="App">
             <h1>Dashboard</h1>
-            <p>Hello {username}, you are in the top {position} players, and you have {Math.round(elo)} elo.</p>
+            <p>Hello {username}, you are #{position} on the leaderboard, and you have {Math.round(elo)} elo.</p>
             {error()}
             <div className="dashboardButtons">
                 <Link className="dashboardLink" to={wallOfFame1v1Route}>

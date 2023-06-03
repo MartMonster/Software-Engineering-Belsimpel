@@ -14,7 +14,7 @@ afterAll(() => server.close());
 test('loads into dashboard when user is logged in', async () => {
     render(<App />);
     const dashboardText = await screen.findAllByText(/Dashboard/i);
-    const userTopText = await screen.findByText(/you are in the top/i);
+    const userTopText = await screen.findByText(/on the leaderboard, and you have/i);
     expect(dashboardText[1]).not.toBeNull();
     expect(userTopText).not.toBeNull();
 });
