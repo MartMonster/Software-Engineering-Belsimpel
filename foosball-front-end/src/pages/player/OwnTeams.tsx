@@ -43,9 +43,11 @@ export const OwnTeams = () => {
                 setSearchParams();
             }
             setPaginateButtons(paginationButtons(data.pagination));
-            console.log(data);
+            if (data.teams.length === 0) {
+                setErrorMessage("No teams found.");
+            }
         });
-    }, [searchParams, setSearchParams])
+    },[searchParams, setSearchParams])
     
     useEffect(getTeams, [getTeams]);
 
@@ -63,6 +65,7 @@ export const OwnTeams = () => {
 
     function closeModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id: number, name: string) {
@@ -79,7 +82,6 @@ export const OwnTeams = () => {
         <div className="App">
             <h1>Your teams</h1>
             <p>Click on a team to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -105,9 +107,10 @@ export const OwnTeams = () => {
                             </tr>
                         );
                     })
-                    }
+                }
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for team: {teamName}</h2>

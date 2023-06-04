@@ -32,7 +32,6 @@ export const LastGames1v1 = () => {
             if (data.games.length === 0) {
                 setErrorMessage("No games found.");
             }
-            console.log(data);
         });
     }, [searchParams, setSearchParams]);
 
@@ -40,9 +39,8 @@ export const LastGames1v1 = () => {
 
     return (
         <div className="App">
-            <h1>Last 10 1v1 games</h1>
+            <h1>Last 1v1 games</h1>
             <Link className="App-link" to={ownGames1v1Route}>See own games</Link>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -68,9 +66,10 @@ export const LastGames1v1 = () => {
                             </React.Fragment>
                         );
                     })
-                    }
+                }
                 </tbody>
             </table>
+            {error()}
             <div className="pagination-container">
                 <ul className="pagination">
                     {paginateButtons.map((button, index) => {

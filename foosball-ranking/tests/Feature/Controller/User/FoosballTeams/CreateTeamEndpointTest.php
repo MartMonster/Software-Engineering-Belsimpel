@@ -37,7 +37,7 @@ class CreateTeamEndpointTest extends TestCase
             ->where('team_name', $teamName)->first();
     }
 
-    public function test_users_canot_create_teams_with_the_same_players(): void
+    public function test_users_canot_create_teams_when_team_already_exists(): void
     {
         $player1 = User::factory()->create();
 

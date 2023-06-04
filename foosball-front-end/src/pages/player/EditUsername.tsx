@@ -21,8 +21,12 @@ export const EditUsername = () => {
 
     const submitUsername = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (await editUsername(username, setErrorMessage)) {
-            navigateToDashboard();
+        if (username !== sessionStorage.getItem("username") as string) {
+            if (await editUsername(username, setErrorMessage)) {
+                navigateToDashboard();
+            }
+        } else {
+            setErrorMessage("You already have this username.");
         }
     }
 

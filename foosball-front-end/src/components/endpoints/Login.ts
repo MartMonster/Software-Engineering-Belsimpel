@@ -7,7 +7,6 @@ async function cookie(setErrorMessage: (string: string) => void) {
     let token;
     await axios.get('/sanctum/csrf-cookie')
         .then(response => {
-            console.log(response.config.headers.get('X-XSRF-TOKEN'));
             token = response.config.headers.get('X-XSRF-TOKEN');
             setErrorMessage("");
         })
@@ -17,7 +16,6 @@ async function cookie(setErrorMessage: (string: string) => void) {
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
         });
     return token;
 }
@@ -34,7 +32,6 @@ export async function login(email: string, password: string, setErrorMessage: (s
     })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                console.log(response);
                 b = true;
                 setErrorMessage("");
             }
@@ -45,7 +42,6 @@ export async function login(email: string, password: string, setErrorMessage: (s
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             b = false;
         });
     sessionStorage.setItem('loggedIn', b.toString());
@@ -70,7 +66,6 @@ export async function register(email: string, username: string, name: string, la
     })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                console.log(response);
                 b = true;
                 setErrorMessage("");
             }
@@ -81,7 +76,6 @@ export async function register(email: string, username: string, name: string, la
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             b = false;
         });
     sessionStorage.setItem('loggedIn', b.toString());
@@ -98,10 +92,8 @@ export async function logout() {
         }
     })
         .then(response => {
-            console.log(response);
         })
         .catch(error => {
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -121,16 +113,14 @@ export async function forgotPassword(email: string, setErrorMessage: (string: st
     })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                console.log(response);
                 b = true;
             }
         })
         .catch(error => {
-            console.log(error);
-            if (error.response.status === 401 &&
-                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
-                sessionStorage.removeItem('loggedIn');
-                sessionStorage.removeItem('isAdmin');
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
             }
         });
     return b;
@@ -151,21 +141,18 @@ export async function resetPassword(email: string, password: string, password_co
     })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                console.log(response);
                 b = true;
             }
         })
         .catch(error => {
-            console.log(error);
-            if (error.response.status === 401 &&
-                (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
-                sessionStorage.removeItem('loggedIn');
-                sessionStorage.removeItem('isAdmin');
+            if (error.response.data.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage(error.response.data);
             }
         });
     return b;
 }
-
 
 export async function getIsAdmin() {
     let b: boolean = false;
@@ -174,17 +161,15 @@ export async function getIsAdmin() {
             Accept: 'application/json'
         }
     }).then(response => {
-        console.log(response.data);
         b = response.data === 1;
+        sessionStorage.setItem('isAdmin', b.toString());
     }).catch(error => {
-        console.log(error);
         if (error.response.status === 401 &&
             (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
             sessionStorage.removeItem('loggedIn');
-            sessionStorage.removeItem('isAdmin');
         }
+        sessionStorage.removeItem('isAdmin');
         b = false;
     });
-    sessionStorage.setItem('isAdmin', b.toString());
     return b;
 }

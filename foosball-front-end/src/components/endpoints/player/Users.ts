@@ -14,7 +14,6 @@ export async function getUserSummary(setErrorMessage: (string: string) => void) 
         }
     })
         .then(response => {
-            console.log(response.data);
             data = response.data;
             setErrorMessage("");
         })
@@ -24,7 +23,6 @@ export async function getUserSummary(setErrorMessage: (string: string) => void) 
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -49,7 +47,6 @@ export async function getTop10Users(setErrorMessage: (string: string) => void) {
         }
     })
         .then(response => {
-            console.log(response);
             users = response.data;
             setErrorMessage("");
         })
@@ -59,7 +56,6 @@ export async function getTop10Users(setErrorMessage: (string: string) => void) {
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');
@@ -81,7 +77,6 @@ export async function editUsername(username: string, setErrorMessage: (string: s
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
                 b = true;
-                console.log(response);
                 setErrorMessage("");
             }
         })
@@ -91,7 +86,6 @@ export async function editUsername(username: string, setErrorMessage: (string: s
             } else {
                 setErrorMessage(error.response.data);
             }
-            console.log(error);
             if (error.response.status === 401 &&
                 (error.response.data.message === "Unauthenticated." || error.response.data === "Unauthenticated.")) {
                 sessionStorage.removeItem('loggedIn');

@@ -15,19 +15,18 @@ class FoosballTeam extends Model
         $team->player1_id = $player1_id;
         $team->player2_id = $player2_id;
 
-        if (is_null($team_name) || $team_name == "")
-            return response("Invalid Team Name", 400);
+        //if (is_null($team_name) || $team_name == "")
+            //return response("Invalid Team Name", 400);
 
         if (self::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
             return response("Team with these users already exists", 400);
 
-        if (FoosballTeam::where('team_name', $team_name)->first() != null)
-            return response("Team name already taken", 400);
+        //if (FoosballTeam::where('team_name', $team_name)->first() != null)
+            //return response("Team name already taken", 400);
 
         if ($team->player1_id == $team->player2_id)
             return response("Not all players are unique", 400);
-        $team->team_name = $team_name;
-
+        $team->team_name = $team_name;        
         $team->save();
         return response("Ok", 201);
 
@@ -45,11 +44,11 @@ class FoosballTeam extends Model
 
     public static function updateTeamName($team_name, string $id)
     {
-        if (is_null($team_name) || $team_name == "")
-            return response("Invalid Team Name", 400);
+        /*if (is_null($team_name) || $team_name == "")
+            return response("Invalid Team Name", 400);*/
         $team = FoosballTeam::find($id);
-        if ($team == null)
-            return response('Not found', 404);
+        /*if ($team == null)
+            return response('Not found', 404);*/
         $team->team_name = $team_name;
         $team->save();
         return FoosballTeam::find($id);
@@ -58,8 +57,8 @@ class FoosballTeam extends Model
     public static function deleteTeam(string $id)
     {
         $team = FoosballTeam::find($id);
-        if ($team == null)
-            return response('Not found', 404);
+        /*if ($team == null)
+            return response('Not found', 404);*/
         $team->delete();
         return response('Team deleted', 200);
     }
@@ -86,9 +85,11 @@ class FoosballTeam extends Model
     {
         $team = FoosballTeam::find($team_id);
         $ids = array();
-        if ($team == null)
-            return array();
+        //if ($team == null)
+            //return array();
         array_push($ids, $team->player1_id, $team->player2_id);
         return $ids;
     }
+
+//    public static function getIds
 }

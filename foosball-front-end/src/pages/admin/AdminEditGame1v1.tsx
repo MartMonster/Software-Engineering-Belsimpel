@@ -9,6 +9,7 @@ export const AdminEditGame1v1 = () => {
     const [searchParams] = useSearchParams();
     const [playerRed, setPlayerRed] = useState("");
     const [playerBlue, setPlayerBlue] = useState("");
+    const [swap, setSwap] = useState<number>(0); // [0, 1]
     const [redPoints, setRedPoints] = useState<number>();
     const [bluePoints, setBluePoints] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
@@ -30,7 +31,7 @@ export const AdminEditGame1v1 = () => {
 
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if (await editGame1v1(id, playerRed, playerBlue, redPoints, bluePoints, setErrorMessage)) {
+        if (await editGame1v1(id, redPoints, bluePoints, swap, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -50,6 +51,13 @@ export const AdminEditGame1v1 = () => {
         }
     }, [searchParams])
 
+    const swapPlayers = () => {
+        let tempTeam = playerRed;
+        setPlayerRed(playerBlue);
+        setPlayerBlue(tempTeam);
+        setSwap((swap + 1) % 2);
+    }
+
     return (
         <div className="App">
             <h1>Edit a 1v1 game</h1>
@@ -59,22 +67,25 @@ export const AdminEditGame1v1 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" defaultValue={playerRed} onChange={e => setPlayerRed(e.target.value)} />
+                            <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={playerRed} />
                         </label>
                         <label>
                             Score
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={redPoints} onChange={e => setRedPoints(parseInt(e.target.value))} />
+                            <input required type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={redPoints} onChange={e => setRedPoints(parseInt(e.target.value))} />
                         </label>
+                    </div>
+                    <div>
+                        <button className='swapButton' type='button' onClick={swapPlayers}>Swap</button>
                     </div>
                     <div className="right">
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" defaultValue={playerBlue} onChange={e => setPlayerBlue(e.target.value)} />
+                            <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={playerBlue} />
                         </label>
                         <label>
                             Score
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="127" min="0" step="1" placeholder="Points" defaultValue={bluePoints} onChange={e => setBluePoints(parseInt(e.target.value))} />
+                            <input required type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={bluePoints} onChange={e => setBluePoints(parseInt(e.target.value))} />
                         </label>
                     </div>
                 </div>

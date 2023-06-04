@@ -27,6 +27,10 @@ export const AdminEditUser = () => {
 
     const submitUsername = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+        if (searchParams.get("username") as string === username) {
+            setErrorMessage('Player already has this username.');
+            return;
+        }
         if (await editPlayer(id, username, setErrorMessage)) {
             navigateToWoF1v1();
         }

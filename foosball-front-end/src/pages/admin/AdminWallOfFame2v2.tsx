@@ -46,9 +46,8 @@ export const AdminWallOfFame2v2 = () => {
             if (data.teams.length === 0) {
                 setErrorMessage("No teams found.");
             }
-            console.log(data);
         });
-    }, [setTeams, searchParams, setSearchParams]);
+    }, [searchParams, setSearchParams]);
 
     useEffect(getTeams, [getTeams]);
 
@@ -66,6 +65,7 @@ export const AdminWallOfFame2v2 = () => {
 
     function closeDeleteModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id:number, name:string) {
@@ -82,7 +82,6 @@ export const AdminWallOfFame2v2 = () => {
         <div className="App">
             <h1>Wall of fame 2v2</h1>
             <p>Click on a team to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -110,6 +109,7 @@ export const AdminWallOfFame2v2 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for team: {teamName}</h2>

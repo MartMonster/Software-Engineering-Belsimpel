@@ -49,7 +49,6 @@ export const OwnGames1v1 = () => {
             if (data.games.length === 0) {
                 setErrorMessage("No games found.");
             }
-            console.log(data);
         });
     }, [searchParams, setSearchParams])
 
@@ -69,6 +68,7 @@ export const OwnGames1v1 = () => {
 
     function closeDeleteModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id: number, text: string, player1: string, score1: number, score2: number) {
@@ -86,9 +86,8 @@ export const OwnGames1v1 = () => {
     
     return (
         <div className="App">
-            <h1>Your last 10 1v1 games</h1>
+            <h1>Your last 1v1 games</h1>
             <p>Click on a game to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -118,6 +117,7 @@ export const OwnGames1v1 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for game: {modalText}</h2>

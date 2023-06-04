@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../components/endpoints/Login';
 
@@ -18,9 +18,9 @@ const PasswordReset = () => {
         }
     }, [errorMessage])
     
-    const navigateToDashboard = () => {
+    const navigateToDashboard = useCallback(() => {
         navigate("/");
-    }
+    }, [navigate])
 
     const sendResetCall = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -28,21 +28,27 @@ const PasswordReset = () => {
             navigateToDashboard();
         }
     }
+
+    useEffect(() => {
+        if (window.sessionStorage.getItem('loggedIn') === 'true') {
+            navigateToDashboard();
+        }
+    }, [navigateToDashboard]);
     
     return (
         <div className="App-header">
+            <h1 className='title'>Reset password</h1>
             <div className='App'>
-                <h1 className='title'>Reset password</h1>
-                <form autoComplete="off" onSubmit={sendResetCall}>
+                <form onSubmit={sendResetCall}>
                     <div className="login">
                         <label>Email
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} value={email} disabled/>
+                            <input required type="email" maxLength={255} value={email} disabled/>
                         </label>
                         <label>New password
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
+                            <input required type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
                         </label>
                         <label>Confirm password
-                            <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                            <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Reset password</button>

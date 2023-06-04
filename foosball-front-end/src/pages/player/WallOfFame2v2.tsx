@@ -15,19 +15,17 @@ export const WallOfFame2v2 = () => {
     const getTeams = useCallback(() => {
         getTop10Teams(setErrorMessage).then((data) => {
             setTeams(data);
-            console.log(data);
             if (data.length === 0) {
                 setErrorMessage("No teams found.");
             }
         });
-    },[setTeams]);
+    },[]);
 
     useEffect(getTeams, [getTeams]);
 
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -55,6 +53,7 @@ export const WallOfFame2v2 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
         </div>
     );
 }

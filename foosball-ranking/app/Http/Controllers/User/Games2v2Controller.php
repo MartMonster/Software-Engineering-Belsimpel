@@ -7,7 +7,9 @@ use App\Models\FoosballTeam;
 use App\Models\Game2v2;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class Games2v2Controller extends Controller
 {
@@ -16,7 +18,13 @@ class Games2v2Controller extends Controller
     {
         //get the game we want to modify and see if it is valid
         $game = self::checkIfPlayedInGame($id);
-
+        if ($game instanceof Response || $game instanceof ResponseFactory)
+            return $game;
+        $request->validate([
+            'team1_score' => 'required|integer|min:0|max:127',
+            'team2_score' => 'required|integer|min:0|max:127',
+            'side' => 'required|integer',
+        ]);
         if (in_array(Auth::id(), FoosballTeam::getIdsFromTeams($game->team1_id))) {
             $team1_id = $game->team1_id;
             $team2_id = $game->team2_id;

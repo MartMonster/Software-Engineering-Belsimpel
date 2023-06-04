@@ -76,6 +76,8 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{id}', 'updateTeam');
 
             Route::delete('/{id}', 'deleteTeam');
+
+            Route::get('/users/{name}', 'getUsersFromTeam');
         });
     });
 

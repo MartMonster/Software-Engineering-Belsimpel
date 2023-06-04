@@ -15,19 +15,17 @@ export const WallOfFame1v1 = () => {
     const getUsers = useCallback(() => {
         getTop10Users(setErrorMessage).then((data) => {
             setUsers(data);
-            console.log(data);
             if (data.length === 0) {
                 setErrorMessage("No players found.");
             }
         });
-    },[setUsers]);
+    },[]);
 
     useEffect(getUsers, [getUsers]);
 
     return (
         <div className="App">
             <h1>Wall of fame 1v1</h1>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -48,6 +46,7 @@ export const WallOfFame1v1 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
         </div>
     );
 }

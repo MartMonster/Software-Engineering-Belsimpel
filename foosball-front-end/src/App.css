@@ -6,9 +6,12 @@
 .App {
   text-align: center;
   margin: 0em;
-  width: 100vw;
+  margin-left: .5em;
+  margin-right: .5em;
+  width: calc(100vw - 1em);
   padding-bottom: 100px;
   min-height: calc(100vh - 150px);
+  max-width: 700px;
 }
 
 .App-logo {
@@ -31,6 +34,17 @@
   /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: #000;
+  margin-left: .5em;
+  margin-right: .5em;
+  max-width: 100vw;
+}
+
+.App-header .title {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 100vw;
 }
 
 .App-link {
@@ -74,6 +88,7 @@
 }
 
 button {
+  cursor: pointer;
   height: 3em;
   font-size: 1em;
   border-radius: 0.5em;
@@ -151,6 +166,7 @@ th {
 .row {
   display: flex;
   width: 100vw;
+  max-width: 700px;
   justify-content: center;
   align-items: center;
 }
@@ -187,6 +203,11 @@ th {
   width: 33%;
   text-align: center;
   margin: 1em 1em .5em 0;
+}
+
+.swapButton {
+  margin: 0em .5em 0em 0em;
+  padding: 0em .5em 0em 0em
 }
 
 .editButton {
@@ -436,8 +457,9 @@ tr td {
 }
 
 .title {
+  width: 100vw;
+  text-align: center;
   margin: 0;
-  padding: 0;
   padding: .2em;
   margin-bottom: 1em;
   background-color: #009ddf;

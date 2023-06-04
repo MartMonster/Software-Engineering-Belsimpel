@@ -49,7 +49,6 @@ export const AdminLastGames2v2 = () => {
             if (data.games.length === 0) {
                 setErrorMessage("No games found.");
             }
-            console.log(data);
         });
     }, [searchParams, setSearchParams]);
 
@@ -69,6 +68,7 @@ export const AdminLastGames2v2 = () => {
 
     function closeDeleteModal() {
         setDeleteModalIsOpen(false);
+        setDeleteErrorMessage("");
     }
 
     function openOptionsModal(id: number, text: string, team1_name: string, team2_name: string, team1_score: number, team2_score: number) {
@@ -87,9 +87,8 @@ export const AdminLastGames2v2 = () => {
     
     return (
         <div className="App">
-            <h1>Last 10 2v2 games</h1>
+            <h1>Last 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
-            {error()}
             <table>
                 <thead>
                     <tr>
@@ -119,6 +118,7 @@ export const AdminLastGames2v2 = () => {
                     })}
                 </tbody>
             </table>
+            {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
                 onRequestClose={closeOptionsModal}>
                 <h2>Options for game: {modalText}</h2>
