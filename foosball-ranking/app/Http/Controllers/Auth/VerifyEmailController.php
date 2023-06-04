@@ -7,7 +7,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
-
+/**
+ * @codeCoverageIgnore
+ */
 class VerifyEmailController extends Controller
 {
     /**

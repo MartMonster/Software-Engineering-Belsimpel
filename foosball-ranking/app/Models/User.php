@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Model implements AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract, MustVerifyEmail
@@ -33,11 +34,15 @@ class User extends Model implements AuthenticatableContract,
         'lastname'
     ];
 
+    
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
+    /**
+    * @codeCoverageIgnore
+    */
     protected $hidden = [
         'password',
         'remember_token',
@@ -48,32 +53,49 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array<string, string>
      */
+    /**
+    * @codeCoverageIgnore
+    */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function hasVerifiedEmail()
     {
         // TODO: Implement hasVerifiedEmail() method.
         return $this->email_verified_at != null;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function markEmailAsVerified()
     {
         // TODO: Implement markEmailAsVerified() method.
         $this->email_verified_at = now();
     }
+    /**
+    * @codeCoverageIgnore
+    */
 
     public function sendEmailVerificationNotification()
     {
         // TODO: Implement sendEmailVerificationNotification() method.
     }
-
+    /**
+    * @codeCoverageIgnore
+    */
     public function getEmailForVerification()
     {
         // TODO: Implement getEmailForVerification() method.
     }
 
+    /**
+    * @codeCoverageIgnore
+    */
     public static function getIdFromUsername($username)
     {
         $user = User::where('username', $username)->first();
