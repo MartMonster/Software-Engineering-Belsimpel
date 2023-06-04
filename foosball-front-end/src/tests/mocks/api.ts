@@ -217,6 +217,15 @@ const server = setupServer(
     rest.put('http://localhost:8000/admin/games1v1/:id', (req, res, ctx) => {
             return res(ctx.json('game updated'))
     }),
+    rest.post('http://localhost:8000/admin/games2v2', (req, res, ctx) => {
+            return res(ctx.json('game created'))
+    }),
+    rest.delete('http://localhost:8000/admin/games2v2/:id', (req, res, ctx) => {
+            return res(ctx.json('game deleted'))
+    }),
+    rest.put('http://localhost:8000/admin/games2v2/:id', (req, res, ctx) => {
+            return res(ctx.json('game updated'))
+    }),
 )
 
 export default server

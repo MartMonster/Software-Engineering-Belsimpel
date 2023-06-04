@@ -59,7 +59,7 @@ export const AdminEditGame2v2 = () => {
 
     return (
         <div className="App">
-            <h1>Edit your 2v2 game</h1>
+            <h1>Edit a 2v2 game</h1>
             <form autoComplete="off" onSubmit={saveGame}>
                 <div className="row">
                     <div className="left">
