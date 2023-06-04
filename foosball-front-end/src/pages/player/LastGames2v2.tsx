@@ -50,7 +50,7 @@ export const LastGames2v2 = () => {
                     </tr>
                 </thead>
                 <tbody className='editDeleteGame'>
-                    {games.map((game: Game2v2, index) => {
+                    {games.map((game: Game2v2) => {
                         return (
                             <React.Fragment key={game.id}>
                                 <tr className='redRow'>

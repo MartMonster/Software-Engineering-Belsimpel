@@ -1,11 +1,13 @@
 <?php
 
-namespace Tests\Feature\UserRanking;
+namespace Controller\User\UserRanking;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use ReflectionClass;
+use stdClass;
+use Tests\TestCase;
+
 class SelfUserManagmentTest extends TestCase
 {
     use RefreshDatabase;
@@ -73,8 +75,8 @@ class SelfUserManagmentTest extends TestCase
         ]);
         $this->assertEquals(5,$this->get('user/summary')["position"]);
 
-    }  
-    
+    }
+
 
     public function test_user_can_change_their_own_name(){
         $players = $this->create_players(1);
@@ -94,7 +96,7 @@ class SelfUserManagmentTest extends TestCase
             'password' => 'password',
         ]);
         $this->json('put','user/username',["username"=>$players[1]->username])->assertStatus(400);
-    
+
     }
     public function test_user_gets_appropiate_response_when_updating_name_to_invalid_name(){
         $players = $this->create_players(2);
@@ -105,19 +107,19 @@ class SelfUserManagmentTest extends TestCase
         $this->json('put','user/username')->assertStatus(422);
         $this->json('put','user/username',["username"=>""])->assertStatus(422);
         $this->json('put','user/username',["username"=>"  "])->assertStatus(422);
-    
+
     }
 
 
 
 
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     private function create_players($x)
     {
         $players = array();
@@ -136,13 +138,13 @@ class SelfUserManagmentTest extends TestCase
     private function selectPropertiesOfPlayer($player)
     {
         $playerUnProtected = (object)self::getProperty($player, 'attributes');
-        $actualPlayerToBeReturned=new \stdClass();
+        $actualPlayerToBeReturned=new stdClass();
         $actualPlayerToBeReturned->elo=$playerUnProtected->elo;
         $actualPlayerToBeReturned->username=$playerUnProtected->username;
         $actualPlayerToBeReturned->id=$playerUnProtected->id;
         return $actualPlayerToBeReturned;
     }
-    
+
     private function getProperty($object, $propertyName)
     {
         $reflection = new ReflectionClass($object);

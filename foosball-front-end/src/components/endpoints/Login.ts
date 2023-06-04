@@ -91,7 +91,7 @@ export async function logout() {
             Accept: 'application/json'
         }
     })
-        .then(response => {
+        .then(() => {
         })
         .catch(error => {
             if (error.response.status === 401 &&

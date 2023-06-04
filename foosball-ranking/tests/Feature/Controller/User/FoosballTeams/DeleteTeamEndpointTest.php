@@ -5,6 +5,7 @@ namespace Tests\Feature\Controller\User\FoosballTeams;
 use App\Models\FoosballTeam;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use stdClass;
 use Tests\TestCase;
 use App\Models\Game2v2;
 
@@ -198,11 +199,11 @@ class DeleteTeamEndpointTest extends TestCase
 
         //To avoid php complaining we force create the id property
         if(is_null($team1)){
-            $team1= new \stdClass();
+            $team1= new stdClass();
             $team1->id=null;
-        } 
+        }
         if(is_null($team2)){
-            $team2= new \stdClass();
+            $team2= new stdClass();
             $team2->id=null;
         }
         $game = Game2v2::where('team1_id', $team1->id)

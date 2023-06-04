@@ -1,13 +1,10 @@
 * {
-  background-color: #282c34;
   background-color: #fff;
 }
 
 .App {
   text-align: center;
-  margin: 0em;
-  margin-left: .5em;
-  margin-right: .5em;
+  margin: 0 .5em;
   width: calc(100vw - 1em);
   padding-bottom: 100px;
   min-height: calc(100vh - 150px);
@@ -206,8 +203,8 @@ th {
 }
 
 .swapButton {
-  margin: 0em .5em 0em 0em;
-  padding: 0em .5em 0em 0em
+  margin: 0 .5em 0 0;
+  padding: 0 .5em 0 0
 }
 
 .editButton {
@@ -459,9 +456,8 @@ tr td {
 .title {
   width: 100vw;
   text-align: center;
-  margin: 0;
   padding: .2em;
-  margin-bottom: 1em;
+  margin: 0 0 1em;
   background-color: #009ddf;
   color: white;
 }

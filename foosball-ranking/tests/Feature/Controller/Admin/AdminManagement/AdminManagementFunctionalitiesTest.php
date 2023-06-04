@@ -359,7 +359,7 @@ class AdminManagementFunctionalitiesTest extends TestCase
     private function selectPropertiesOfPlayer($player)
     {
         $playerUnProtected = (object)self::getProperty($player, 'attributes');
-        $actualPlayerToBeReturned = new \stdClass();
+        $actualPlayerToBeReturned = new stdClass();
         $actualPlayerToBeReturned->elo = $playerUnProtected->elo;
         $actualPlayerToBeReturned->username = $playerUnProtected->username;
         $actualPlayerToBeReturned->id = $playerUnProtected->id;

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controller\Admin\FoosballTeams;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use stdClass;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\FoosballTeam;
@@ -155,7 +156,7 @@ class AdminGetTeamsTest extends TestCase
                 $teamInDB->elo = $elo;
                 $teamInDB->save();
 
-                $team = new \stdClass();
+                $team = new stdClass();
                 $team->player1_username = $player1->username;
                 $team->player2_username = $players[$i]->username;
                 $team->team_name = "TestTeam" . $i;

@@ -100,7 +100,7 @@ class AdminCreates2v2GamesTest extends TestCase
 
 
     public function test_admin_create_2v2_game_function_is_not_available_when_not_logged_in(){
-        $players = $this->create_players(5);;
+        $players = $this->create_players(5);
         $this->json('post', '/admin/games2v2', [
             'player1_username' => $players[1]->username,
             'player2_username' => $players[2]->username,
@@ -113,9 +113,9 @@ class AdminCreates2v2GamesTest extends TestCase
     }
 
 
-     public function test_admin_create_2v2_game_function_is_not_available_to_non_admin_users(){;
-        $players = $this->create_players(5);;
-        $results=$this->adminCreate2v2Game($players[0],$players[1],$players[2],$players[3],$players[4],10,8,1);
+     public function test_admin_create_2v2_game_function_is_not_available_to_non_admin_users(){
+         $players = $this->create_players(5);
+         $results=$this->adminCreate2v2Game($players[0],$players[1],$players[2],$players[3],$players[4],10,8,1);
         $results[0]->assertStatus(401);
         $this->assertNull($results[1]);
         $this->assertNull(self::findTeam($players[1],$players[2]));

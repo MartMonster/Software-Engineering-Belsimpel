@@ -83,8 +83,8 @@ class AdminUpdates2v2GamesTest extends TestCase
     }
 
 
-     public function test_admin_update_2v2_game_function_is_not_available_to_non_admin_users(){;
-        $players = $this->create_players(6);
+     public function test_admin_update_2v2_game_function_is_not_available_to_non_admin_users(){
+         $players = $this->create_players(6);
         $admin = self::makeUserAdmin($players[0]);
         $results=$this->adminCreate2v2Game($players[0],$players[1],$players[2],$players[3],$players[4],10,8,1);
         $this->adminUpdateGame2v2($results[1]->id,$players[5],0,7,9)->assertStatus(401);
