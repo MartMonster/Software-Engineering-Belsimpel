@@ -241,7 +241,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
             'password' => 'password',
         ]);
         $value = $this->get('/admin')->assertStatus(200);
-        error_log($value->content());
         assertEquals(1, $value->content());
     }
 
