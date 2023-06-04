@@ -185,6 +185,29 @@ const server = setupServer(
     rest.put('http://localhost:8000/admin/user/:id', (req, res, ctx) => {
         return res(ctx.json('user updated'))
     }),
+    rest.get('http://localhost:8000/admin/teams', (req, res, ctx) => {
+        let page = req.url.searchParams.get('page')
+        let teams = []
+        for (let i = 0; i < 10; i++) {
+            teams.push({
+                id: i+1,
+                team_name: `${teamName}${(i+1).toString()}`,
+                player1_username: `${username}${(i*2+1).toString()}`,
+                player2_username: `${username}${(i+2).toString()}`,
+                elo: `${elo+i}`
+            })
+        }
+        return res(ctx.json({ data: teams, current_page: page, last_page: 10 }))
+    }),
+    rest.delete('http://localhost:8000/admin/teams/:id', (req, res, ctx) => {
+            return res(ctx.json('team deleted'))
+    }),
+    rest.put('http://localhost:8000/admin/teams/:id', (req, res, ctx) => {
+            return res(ctx.json('team updated'))
+    }),
+    rest.post('http://localhost:8000/admin/teams', (req, res, ctx) => {
+            return res(ctx.json('team created'))
+    }),
 )
 
 export default server

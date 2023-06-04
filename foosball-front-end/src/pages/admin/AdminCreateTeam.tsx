@@ -17,14 +17,14 @@ export const AdminCreateTeam = () => {
         }
     }, [errorMessage])
 
-    const navigateToOwnTeams = () => {
-        navigate(ownTeamsRoute);
+    const navigateToDashboard = () => {
+        navigate('/admin');
     }
     
     const makeTeamLocal = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         if(await makeTeam(teamName, player1, player2, setErrorMessage)) {
-            navigateToOwnTeams()
+            navigateToDashboard()
         }
     }
     

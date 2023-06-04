@@ -27,6 +27,10 @@ export const AdminEditTeam = () => {
 
     const submitTeamName = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+        if (searchParams.get("team") as string === teamName) {
+            setErrorMessage('Team already has this name.');
+            return;
+        }
         if (await editTeam(id, teamName, setErrorMessage)) {
             navigateToWoF2v2();
         }
