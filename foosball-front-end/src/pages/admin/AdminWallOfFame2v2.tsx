@@ -46,7 +46,6 @@ export const AdminWallOfFame2v2 = () => {
             if (data.teams.length === 0) {
                 setErrorMessage("No teams found.");
             }
-            console.log(data);
         });
     }, [searchParams, setSearchParams]);
 

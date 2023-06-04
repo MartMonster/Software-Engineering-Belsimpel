@@ -19,7 +19,6 @@ export const Login = () => {
         if (await login(email, password, setErrorMessage)) {
             navigateToDashboard();
         }
-        console.log(errorMessage);
     }
 
     const error = useCallback(() => {

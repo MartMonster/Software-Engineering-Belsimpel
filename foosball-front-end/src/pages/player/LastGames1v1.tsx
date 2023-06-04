@@ -32,7 +32,6 @@ export const LastGames1v1 = () => {
             if (data.games.length === 0) {
                 setErrorMessage("No games found.");
             }
-            console.log(data);
         });
     }, [searchParams, setSearchParams]);
 

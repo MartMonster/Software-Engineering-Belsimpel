@@ -67,8 +67,7 @@ const server = setupServer(
     }),
     rest.get('http://localhost:8000/games1v1', (req, res, ctx) => {
         let page = req.url.searchParams.get('page')
-        console.log(page)
-        let games = []
+                let games = []
         for (let i = 0; i < 10; i++) {
             games.push({
                 id: i+1,
@@ -82,8 +81,7 @@ const server = setupServer(
     }),
     rest.get('http://localhost:8000/games1v1/self', (req, res, ctx) => {
         let page = req.url.searchParams.get('page')
-        console.log(page)
-        let games = []
+                let games = []
         for (let i = 0; i < 10; i++) {
             games.push({
                 id: i + 1,
@@ -103,8 +101,7 @@ const server = setupServer(
     }),
     rest.get('http://localhost:8000/games2v2', (req, res, ctx) => {
         let page = req.url.searchParams.get('page')
-        console.log(page)
-        let games = []
+                let games = []
         for (let i = 0; i < 10; i++) {
             games.push({
                 id: i + 1,
@@ -118,8 +115,7 @@ const server = setupServer(
     }),
     rest.get('http://localhost:8000/games2v2/self', (req, res, ctx) => {
         let page = req.url.searchParams.get('page')
-        console.log(page)
-        let games = []
+                let games = []
         for (let i = 0; i < 10; i++) {
             games.push({
                 id: i + 1,
@@ -145,8 +141,7 @@ const server = setupServer(
     }),
     rest.get('http://localhost:8000/teams/self', (req, res, ctx) => {
         let page = req.url.searchParams.get('page')
-        console.log(page)
-        let games = []
+                let games = []
         for (let i = 0; i < 10; i++) {
             games.push({
                 team_name: `${teamName}${(i + 1).toString()}`,

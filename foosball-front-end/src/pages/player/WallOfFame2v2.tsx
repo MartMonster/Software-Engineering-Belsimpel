@@ -15,7 +15,6 @@ export const WallOfFame2v2 = () => {
     const getTeams = useCallback(() => {
         getTop10Teams(setErrorMessage).then((data) => {
             setTeams(data);
-            console.log(data);
             if (data.length === 0) {
                 setErrorMessage("No teams found.");
             }

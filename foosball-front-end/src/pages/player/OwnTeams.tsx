@@ -46,7 +46,6 @@ export const OwnTeams = () => {
             if (data.teams.length === 0) {
                 setErrorMessage("No teams found.");
             }
-            console.log(data);
         });
     },[searchParams, setSearchParams])
     

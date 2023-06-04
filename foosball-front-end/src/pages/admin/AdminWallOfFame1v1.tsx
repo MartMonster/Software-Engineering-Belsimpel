@@ -46,7 +46,6 @@ export const AdminWallOfFame1v1 = () => {
             if (data.users.length === 0) {
                 setErrorMessage("No players found.");
             }
-            console.log(data);
         });
     }, [searchParams, setSearchParams]);
     
