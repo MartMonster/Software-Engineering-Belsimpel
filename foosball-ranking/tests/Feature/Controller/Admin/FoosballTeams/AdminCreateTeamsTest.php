@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\FoosballTeams;
+namespace Tests\Feature\Controller\Admin\FoosballTeams;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -12,7 +12,7 @@ class AdminCreateTeamsTest extends TestCase
 {
     use RefreshDatabase;
 
-    
+
 
     public function test_admin_can_create_teams(){
         $players = $this->create_players(3);
@@ -25,22 +25,22 @@ class AdminCreateTeamsTest extends TestCase
         ]);
     }
 
-    
+
 
     public function test_admin_cant_create_teams_when_the_players_are_identical(){
         $players = $this->create_players(2);
         $admin = self::makeUserAdmin($players[0]);
         $this->createTeamAdmin($players[1],$players[1],'team1',$admin)->assertStatus(400);
- 
+
     }
-    
+
 
     public function test_admin_cant_create_teams_when_the_one_of_the_players_doesnt_exist(){
         $players = $this->create_players(3);
         $admin = self::makeUserAdmin($players[0]);
         $players[1]->username="IncorrectUsername";
         $this->createTeamAdmin($players[1],$players[2],'team1',$admin)->assertStatus(422);
- 
+
     }
 
     public function test_admin_cant_create_team_when_team_already_exists(){
@@ -53,7 +53,7 @@ class AdminCreateTeamsTest extends TestCase
             'team_name' => 'team1',
         ]);
         $this->createTeamAdmin($players[1],$players[2],'team2',$admin)->assertStatus(400);
- 
+
     }
 
 
@@ -62,9 +62,9 @@ class AdminCreateTeamsTest extends TestCase
         $admin = self::makeUserAdmin($players[0]);
         $this->createTeamAdmin($players[1],$players[2],'team1',$admin)->assertStatus(201);
         $this->createTeamAdmin($players[3],$players[2],'team1',$admin)->assertStatus(422);
- 
+
     }
-    
+
 
     public function test_admin_cant_create_teams_with_invalid_names(){
         $players = $this->create_players(4);
@@ -72,7 +72,7 @@ class AdminCreateTeamsTest extends TestCase
         $this->createTeamAdmin($players[1],$players[2],'',$admin)->assertStatus(422);
         $this->createTeamAdmin($players[1],$players[2],null,$admin)->assertStatus(422);
         $this->createTeamAdmin($players[1],$players[2],'  ',$admin)->assertStatus(422);
- 
+
     }
 
 
@@ -81,9 +81,9 @@ class AdminCreateTeamsTest extends TestCase
         $admin = self::makeUserAdmin($players[0]);
         $players[1]->username=null;
         $this->createTeamAdmin($players[1],$players[2],'team1',$admin)->assertStatus(422);
- 
+
     }
-    
+
 
     public function test_admin_create_teams_function_must_be_logged_in(){
         $players = $this->create_players(3);
@@ -98,7 +98,7 @@ class AdminCreateTeamsTest extends TestCase
             'player2_id' => $players[2]->id,
             'team_name' => 'team1',
         ]);
- 
+
     }
 
     public function test_user_cant_access_admin_create_teams(){
@@ -117,7 +117,7 @@ class AdminCreateTeamsTest extends TestCase
             'player2_id' => $players[2]->id,
             'team_name' => 'team1',
         ]);
- 
+
     }
 
 
@@ -161,7 +161,7 @@ class AdminCreateTeamsTest extends TestCase
         return $response;
     }
 
-   
 
-   
+
+
 }

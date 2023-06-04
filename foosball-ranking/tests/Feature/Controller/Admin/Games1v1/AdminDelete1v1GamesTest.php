@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\Games1v1;
+namespace Tests\Feature\Controller\Admin\Games1v1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -25,7 +25,7 @@ class AdminDelete1v1GamesTest extends TestCase
             'player2_score' => 0,
         ]);
     }
-   
+
 
     public function test_users_cant_use_admin_delete_1v1_function(){
         $players = $this->create_players(4);
@@ -56,7 +56,7 @@ class AdminDelete1v1GamesTest extends TestCase
         ]);
     }
 
-    
+
 
     public function test_returns_appropiate_response_when_admin_deletes_non_existent_1v1_games(){
         $players = $this->create_players(3);
@@ -130,5 +130,5 @@ class AdminDelete1v1GamesTest extends TestCase
     }
 
 
-   
+
 }

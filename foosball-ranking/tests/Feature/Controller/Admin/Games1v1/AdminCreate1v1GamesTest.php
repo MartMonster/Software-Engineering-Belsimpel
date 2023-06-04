@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\Games1v1;
+namespace Tests\Feature\Controller\Admin\Games1v1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -33,7 +33,7 @@ class AdminCreate1v1GamesTest extends TestCase
         $players = $this->create_players(3);
         $admin=self::makeUserAdmin($players[0]);
 
-        
+
         self::createAdminGame($admin,"f",5,$players[1],$players[2])->assertStatus(422);
         self::createAdminGame($admin,10,-1,$players[1],$players[2])->assertStatus(422);
         self::createAdminGame($admin,11,-1,$players[1],$players[2])->assertStatus(422);
@@ -43,7 +43,7 @@ class AdminCreate1v1GamesTest extends TestCase
         $players = $this->create_players(3);
         $admin=self::makeUserAdmin($players[0]) ;
 
-        
+
         $players[1]->username="";
         self::createAdminGame($admin,10,-1,$players[1],$players[2])->assertStatus(422);
         $players[1]->username="NonExistentUser";
@@ -67,7 +67,7 @@ class AdminCreate1v1GamesTest extends TestCase
             'player1_score' => 10,
             'player2_score' => 5,
         ]);
-        
+
     }
 
 
@@ -90,7 +90,7 @@ class AdminCreate1v1GamesTest extends TestCase
         $players = $this->create_players(2);
         $admin=self::makeUserAdmin($players[0]);
         self::createAdminGame($admin,10,5,$players[1],$players[1])->assertStatus(400);
-        
+
     }
 
 
@@ -148,5 +148,5 @@ class AdminCreate1v1GamesTest extends TestCase
     }
 
 
-   
+
 }

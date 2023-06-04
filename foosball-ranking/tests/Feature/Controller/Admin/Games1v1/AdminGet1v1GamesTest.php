@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\Games1v1;
+namespace Tests\Feature\Controller\Admin\Games1v1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -12,7 +12,7 @@ class AdminGet1v1GamesTest extends TestCase
     use RefreshDatabase;
 
 
-    //Because there is no specific implementation anything more than just 
+    //Because there is no specific implementation anything more than just
     //checking if the admin can use the function would lead to duplicate code
 
     public function test_admin_can_use_the_1v1_games_get_function(){
@@ -85,5 +85,5 @@ class AdminGet1v1GamesTest extends TestCase
     }
 
 
-   
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\FoosballTeams;
+namespace Tests\Feature\Controller\Admin\FoosballTeams;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -12,7 +12,7 @@ class AdminGetTeamsTest extends TestCase
 {
     use RefreshDatabase;
 
-    
+
 
     public function test_admin_top_10_teams_are_ordered_decreseangly_by_elo()
     {
@@ -78,7 +78,7 @@ class AdminGetTeamsTest extends TestCase
     }
 
 
- 
+
 
     public function test_admin_get_top_10_teams_returns_empty_when_no_teams_exist(){
         $admin=User::factory()->create();
@@ -91,10 +91,10 @@ class AdminGetTeamsTest extends TestCase
         $this->assertEquals($response->getData()->data,[]);
 
     }
-    
 
 
-   
+
+
 
 
 
@@ -176,7 +176,7 @@ class AdminGetTeamsTest extends TestCase
             ->where('team_name', $teamName)->first();
     }
 
-   
 
-   
+
+
 }

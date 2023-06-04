@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\FoosballTeams;
+namespace Tests\Feature\Controller\Admin\FoosballTeams;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -71,7 +71,7 @@ class AdminUpdateTeamsTest extends TestCase
             'player2_id' => $players[2]->id,
         ]);
     }
-    
+
 
      public function test_admin_update_function_is_not_available_to_non_admin_users(){
         $players = $this->create_players(4);
@@ -93,14 +93,14 @@ class AdminUpdateTeamsTest extends TestCase
         $this->createTeamAdmin($players[1],$players[2],'team1',$admin)->assertStatus(201);
         $this->createTeamAdmin($players[2],$players[3],'team2',$admin)->assertStatus(201);
         $this->updateTeamAdmin('team2',$players[0],$players[1],$players[2])->assertStatus(422);
-  
+
     }
-    
 
-  
-    
 
-   
+
+
+
+
 
 
 
@@ -159,7 +159,7 @@ class AdminUpdateTeamsTest extends TestCase
             ->where('player2_id', $player2->id)->first();
     }
 
-   
 
-   
+
+
 }

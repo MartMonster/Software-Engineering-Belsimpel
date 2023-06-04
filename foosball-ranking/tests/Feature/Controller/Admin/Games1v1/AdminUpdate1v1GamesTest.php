@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\Games1v1;
+namespace Tests\Feature\Controller\Admin\Games1v1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -38,7 +38,7 @@ class AdminUpdate1v1GamesTest extends TestCase
 
 
 
-    
+
     public function test_admin_cannot_update_1v1_games_with_invalid_scores(){
         $players = $this->create_players(3);
         $admin=self::makeUserAdmin($players[0]);
@@ -66,7 +66,7 @@ class AdminUpdate1v1GamesTest extends TestCase
         ])->assertStatus(404);
     }
 
-        
+
     public function test_users_cannot_use_admin_update_function(){
         $players = $this->create_players(4);
         $admin=self::makeUserAdmin($players[0]);
@@ -76,7 +76,7 @@ class AdminUpdate1v1GamesTest extends TestCase
         self::adminUpdateGame($players[3],$game,10,9,$players[1],$players[2],0)->assertStatus(401);
 
     }
-    
+
 
     public function test_admin_update_not_available_when_not_logged_in(){
         $players = $this->create_players(3);
@@ -91,7 +91,6 @@ class AdminUpdate1v1GamesTest extends TestCase
         ])->assertStatus(401);
 
     }
-  
 
 
 
@@ -106,9 +105,10 @@ class AdminUpdate1v1GamesTest extends TestCase
 
 
 
-    
-    
-    
+
+
+
+
     private function adminUpdateGame($admin,$game,$score1,$score2,$player1,$player2,$swap){
         $this->post('login', [
             'email' => $admin->email,
@@ -122,7 +122,7 @@ class AdminUpdate1v1GamesTest extends TestCase
         $this->post('logout');
         return $response;
     }
-    
+
     private function check_if_game_exists($player1,$player2,$score1,$score2){
         $this->assertDatabaseHas('games1v1', [
             'player1_id' => $player1->id,
@@ -173,5 +173,5 @@ class AdminUpdate1v1GamesTest extends TestCase
     }
 
 
-   
+
 }

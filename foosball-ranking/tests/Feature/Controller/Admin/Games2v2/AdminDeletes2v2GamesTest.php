@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\Games2v2;
+namespace Tests\Feature\Controller\Admin\Games2v2;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -39,9 +39,9 @@ class AdminDeletes2v2GamesTest  extends TestCase
         $results=$this->adminCreate2v2Game($admin,$players[1],$players[2],$players[3],$players[4],10,8,1);
         $this->json('delete','/admin/games2v2/'.$results[1]->id)->assertStatus(401);
     }
-    
 
-     
+
+
 
      public function test_admin_delete_2v2_game_function_is_not_available_to_non_admin_users(){;
         $players = $this->create_players(6);
@@ -117,7 +117,7 @@ class AdminDeletes2v2GamesTest  extends TestCase
         if(is_null($team1)){
             $team1= new stdClass();
             $team1->id=null;
-        } 
+        }
         if(is_null($team2)){
             $team2= new stdClass();
             $team2->id=null;
@@ -147,7 +147,7 @@ class AdminDeletes2v2GamesTest  extends TestCase
         $this->post('/logout');
         return array($response,self::find2v2Game($player1,$player2,$player3,$player4,$score1,$score2,$side));
     }
-    
+
 
     private static function create_players($x)
     {
@@ -160,7 +160,7 @@ class AdminDeletes2v2GamesTest  extends TestCase
 
 
 
-   
 
-   
+
+
 }

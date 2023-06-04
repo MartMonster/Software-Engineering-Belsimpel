@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controller\Admin\FoosballTeams;
+namespace Tests\Feature\Controller\Admin\FoosballTeams;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -104,9 +104,9 @@ class AdminDeleteTeamsTest extends TestCase
     }
 
 
-    
 
-   
+
+
 
 
 
@@ -165,7 +165,7 @@ class AdminDeleteTeamsTest extends TestCase
         return $response;
     }
 
-   
 
-   
+
+
 }
