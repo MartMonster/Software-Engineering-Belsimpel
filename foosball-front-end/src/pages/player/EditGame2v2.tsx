@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { editGame2v2 } from '../../components/endpoints/player/Games';
-import { ownGames2v2Route } from './OwnGames2v2';
-import { lastGames2v2Route } from './LastGames2v2';
-import { getUsersFromTeam } from '../../components/endpoints/player/Teams';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {editGame2v2} from '../../components/endpoints/player/Games';
+import {ownGames2v2Route} from './OwnGames2v2';
+import {lastGames2v2Route} from './LastGames2v2';
+import {getUsersFromTeam} from '../../components/endpoints/player/Teams';
 
 export const editGame2v2Route: string = "edit"
 export const EditGame2v2 = () => {
@@ -20,11 +20,11 @@ export const EditGame2v2 = () => {
     if (idPar) {
         id = idPar.id as unknown as number;
     }
-    
+
     const navigateToOwnGames = () => {
         navigate('/' + lastGames2v2Route + '/' + ownGames2v2Route);
     }
-    
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -60,7 +60,7 @@ export const EditGame2v2 = () => {
     }, [team1, searchParams])
 
     useEffect(getUsers, [getUsers, searchParams])
-    
+
     return (
         <div className="App">
             <h1>Edit your 2v2 game</h1>
@@ -74,11 +74,15 @@ export const EditGame2v2 = () => {
                 </label>
                 <label>
                     How many points did your team score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={myPoints} onChange={e => setMyPoints(parseInt(e.target.value))} />
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                           type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={myPoints}
+                           onChange={e => setMyPoints(parseInt(e.target.value))}/>
                 </label>
                 <label>
                     How many points did your opponents score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))} />
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                           type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={opponentPoints}
+                           onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Save game</button>

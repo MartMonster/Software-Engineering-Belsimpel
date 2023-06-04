@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../../App';
-import server, { username } from '../mocks/api';
-import { rest } from 'msw';
+import server, {username} from '../mocks/api';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen());
 beforeEach(() => {
@@ -12,7 +12,7 @@ beforeEach(() => {
 afterAll(() => server.close());
 
 test('renders the edit teams page', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Wall of fame 2v2/i));
     fireEvent.click(await screen.findByText(`${username}1`));
     fireEvent.click((await screen.findAllByText(/Edit/i))[1]);
@@ -21,7 +21,7 @@ test('renders the edit teams page', async () => {
 });
 
 test('shows error when team name has not changed', async () => {
-    render(<App />);
+    render(<App/>);
     const editUserText = await screen.findByText(/Edit a team/i);
     expect(editUserText).not.toBeNull();
     fireEvent.click(screen.getByText(/Edit team/i));
@@ -32,23 +32,23 @@ test('shows error when team name has not changed', async () => {
 test('can show error message', async () => {
     server.use(
         rest.put('http://localhost:8000/admin/teams/:id', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const editUserText = await screen.findByText(/Edit a team/i);
     expect(editUserText).not.toBeNull();
-    fireEvent.change(screen.getByPlaceholderText(/Team name/i), { target: { value: 'test' } });
+    fireEvent.change(screen.getByPlaceholderText(/Team name/i), {target: {value: 'test'}});
     fireEvent.click(screen.getByText(/Edit team/i));
     const errorText = await screen.findByText(/Unauthenticated./i);
     expect(errorText).not.toBeNull();
 });
 
 test('can edit a team', async () => {
-    render(<App />);
+    render(<App/>);
     const editUserText = await screen.findByText(/Edit a team/i);
     expect(editUserText).not.toBeNull();
-    fireEvent.change(screen.getByPlaceholderText(/Team name/i), { target: { value: 'test' } });
+    fireEvent.change(screen.getByPlaceholderText(/Team name/i), {target: {value: 'test'}});
     fireEvent.click(screen.getByText(/Edit team/i));
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();

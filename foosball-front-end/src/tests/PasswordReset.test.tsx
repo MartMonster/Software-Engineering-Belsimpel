@@ -1,25 +1,25 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import server from './mocks/api';
-import { rest } from 'msw';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import {rest} from 'msw';
+import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import PasswordReset from '../pages/PasswordReset';
-import { Login } from '../pages/Login';
+import {Login} from '../pages/Login';
 
 beforeAll(() => server.listen());
 afterEach(() => {
-    window.sessionStorage.removeItem('loggedIn');
-    window.sessionStorage.removeItem('isAdmin');
-}
+        window.sessionStorage.removeItem('loggedIn');
+        window.sessionStorage.removeItem('isAdmin');
+    }
 );
 afterAll(() => server.close());
 
 function resetPassword() {
     fireEvent.change(screen.getByPlaceholderText(/New password/i), {
-        target: { value: 'password' },
+        target: {value: 'password'},
     });
     fireEvent.change(screen.getByPlaceholderText(/Confirm password/i), {
-        target: { value: 'password' },
+        target: {value: 'password'},
     });
     fireEvent.click(screen.getAllByText(/Reset/i)[1]);
 }
@@ -28,8 +28,8 @@ function renderPasswordResetPage() {
     render(
         <MemoryRouter initialEntries={['/password-reset/hash?email=email@belsimpel.nl']}>
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/password-reset/:hash" element={<PasswordReset />} />
+                <Route path="/" element={<Login/>}/>
+                <Route path="/password-reset/:hash" element={<PasswordReset/>}/>
             </Routes>
         </MemoryRouter>
     );
@@ -55,10 +55,10 @@ test('forwards to login page after resetting password', async () => {
 test('displays error message when resetting password fails', async () => {
     server.use(
         rest.post('http://localhost:8000/reset-password', (req, res, ctx) => {
-            return res.once(ctx.status(400), ctx.json({ message: 'error' }));
+            return res.once(ctx.status(400), ctx.json({message: 'error'}));
         }),
     );
-    
+
     renderPasswordResetPage();
     resetPassword();
     const errorMessage = await screen.findByText(/error/i);

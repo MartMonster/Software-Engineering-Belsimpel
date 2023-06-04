@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, Link } from "react-router-dom";
-import { loginRoute } from "./Login";
-import { register } from '../components/endpoints/Login';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
+import {loginRoute} from "./Login";
+import {register} from '../components/endpoints/Login';
 
 export const registerRoute: string = '/register';
 export const Register = () => {
@@ -13,7 +13,7 @@ export const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
-    
+
     const navigateToDashboard = useCallback(() => {
         navigate("/");
     }, [navigate])
@@ -43,12 +43,20 @@ export const Register = () => {
             <div className="App">
                 <form onSubmit={handleSubmit}>
                     <div className="login">
-                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                        <input required autoComplete='off' pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" onChange={e => setUsername(e.target.value)} />
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="First name" onChange={e => setFirstName(e.target.value)} />
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Last name" onChange={e => setLastName(e.target.value)} />
-                        <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-                        <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                        <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+                        <input required autoComplete='off' pattern="\S(.*\S)?"
+                               title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255}
+                               placeholder="Username" onChange={e => setUsername(e.target.value)}/>
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                               type="text" maxLength={255} placeholder="First name"
+                               onChange={e => setFirstName(e.target.value)}/>
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                               type="text" maxLength={255} placeholder="Last name"
+                               onChange={e => setLastName(e.target.value)}/>
+                        <input required type="password" placeholder="Password"
+                               onChange={e => setPassword(e.target.value)}/>
+                        <input required type="password" placeholder="Confirm password"
+                               onChange={e => setConfirmPassword(e.target.value)}/>
                         {error()}
                         <button type="submit" className='submitButton'>Register</button>
                     </div>

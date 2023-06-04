@@ -7,9 +7,9 @@ use App\Models\FoosballTeam;
 use App\Models\Game2v2;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
 
 class Games2v2Controller extends Controller
 {
@@ -53,9 +53,9 @@ class Games2v2Controller extends Controller
 
     public static function delete($id)
     {
-        if(self::checkIfPlayedInGame($id)==response("Not authorized", 401))
+        if (self::checkIfPlayedInGame($id) == response("Not authorized", 401))
             return response("Not authorized", 401);
-        if(self::checkIfPlayedInGame($id)==response('Not found', 404))
+        if (self::checkIfPlayedInGame($id) == response('Not found', 404))
             return response('Not found', 404);
         Game2v2::where('id', $id)->delete();
         return response('Game succesfully deleted', 200);

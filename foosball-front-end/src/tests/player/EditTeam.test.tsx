@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../../App';
-import server, { teamName, username } from '../mocks/api';
-import { rest } from 'msw';
+import server, {teamName, username} from '../mocks/api';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen());
 beforeEach(() => {
@@ -12,12 +12,12 @@ beforeEach(() => {
 afterAll(() => server.close());
 
 function editGame() {
-    fireEvent.change(screen.getByPlaceholderText(/Team name/i), { target: { value: `${teamName}2` } });
+    fireEvent.change(screen.getByPlaceholderText(/Team name/i), {target: {value: `${teamName}2`}});
     fireEvent.click(screen.getByText(/Save team/i));
 }
 
 test('renders the edit team page', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Own teams/i));
     const createTeamText = await screen.findByText(/Your teams/i);
     expect(createTeamText).not.toBeNull();
@@ -32,10 +32,10 @@ test('renders the edit team page', async () => {
 test('can show error message', async () => {
     server.use(
         rest.put('http://localhost:8000/teams/1', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const editGameText = await screen.findByText(/Edit your team/i);
     expect(editGameText).not.toBeNull();
     editGame();
@@ -44,7 +44,7 @@ test('can show error message', async () => {
 });
 
 test('can edit a team', async () => {
-    render(<App />);
+    render(<App/>);
     const editGameText = await screen.findByText(/Edit your team/i);
     expect(editGameText).not.toBeNull();
     editGame();

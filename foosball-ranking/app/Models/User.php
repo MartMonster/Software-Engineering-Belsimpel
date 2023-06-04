@@ -52,6 +52,15 @@ class User extends Model implements AuthenticatableContract,
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getIdFromUsername($username)
+    {
+        $user = User::where('username', $username)->first();
+        if (is_null($user)) {
+            return null;
+        }
+        return $user->id;
+    }
+
     public function hasVerifiedEmail()
     {
         // TODO: Implement hasVerifiedEmail() method.
@@ -72,14 +81,5 @@ class User extends Model implements AuthenticatableContract,
     public function getEmailForVerification()
     {
         // TODO: Implement getEmailForVerification() method.
-    }
-
-    public static function getIdFromUsername($username)
-    {
-        $user = User::where('username', $username)->first();
-        if (is_null($user)) {
-            return null;
-        }
-        return $user->id;
     }
 }

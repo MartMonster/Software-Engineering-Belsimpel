@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { lastGames1v1Route } from "./LastGames1v1";
-import { ownGames1v1Route } from "./OwnGames1v1";
-import { editGame1v1 } from '../../components/endpoints/player/Games';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {lastGames1v1Route} from "./LastGames1v1";
+import {ownGames1v1Route} from "./OwnGames1v1";
+import {editGame1v1} from '../../components/endpoints/player/Games';
 
-export const editGame1v1Route:string = "edit"
+export const editGame1v1Route: string = "edit"
 export const EditGame1v1 = () => {
     const idPar = useParams();
     const navigate = useNavigate();
@@ -18,9 +18,9 @@ export const EditGame1v1 = () => {
     if (idPar) {
         id = idPar.id as unknown as number;
     }
-    
+
     const navigateToOwnGames = () => {
-        navigate('/' + lastGames1v1Route +'/'+ ownGames1v1Route);
+        navigate('/' + lastGames1v1Route + '/' + ownGames1v1Route);
     }
 
     const error = useCallback(() => {
@@ -31,7 +31,7 @@ export const EditGame1v1 = () => {
 
     const saveGame = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        if(await editGame1v1(id, myPoints, opponentPoints, side, setErrorMessage)) {
+        if (await editGame1v1(id, myPoints, opponentPoints, side, setErrorMessage)) {
             navigateToOwnGames()
         }
     }
@@ -47,7 +47,7 @@ export const EditGame1v1 = () => {
             setOpponentPoints(parseInt(searchParams.get("score1") as string));
         }
     }, [searchParams])
-    
+
     return (
         <div className="App">
             <h1>Edit your 1v1 game</h1>
@@ -61,16 +61,20 @@ export const EditGame1v1 = () => {
                 </label>
                 <label>
                     How many points did you score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={myPoints} onChange={e => setMyPoints(parseInt(e.target.value))}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                           type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={myPoints}
+                           onChange={e => setMyPoints(parseInt(e.target.value))}/>
                 </label>
                 <label>
                     How many points did your opponent score?
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={opponentPoints} onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                           type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={opponentPoints}
+                           onChange={e => setOpponentPoints(parseInt(e.target.value))}/>
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Save game</button>
             </form>
-            <Link to={'/' + lastGames1v1Route +'/'+ ownGames1v1Route}>
+            <Link to={'/' + lastGames1v1Route + '/' + ownGames1v1Route}>
                 <button>Cancel</button>
             </Link>
         </div>

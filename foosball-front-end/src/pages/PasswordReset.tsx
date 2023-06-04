@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../components/endpoints/Login';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
+import {resetPassword} from '../components/endpoints/Login';
 
 const PasswordReset = () => {
     const params = useParams();
@@ -17,7 +17,7 @@ const PasswordReset = () => {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    
+
     const navigateToDashboard = useCallback(() => {
         navigate("/");
     }, [navigate])
@@ -34,7 +34,7 @@ const PasswordReset = () => {
             navigateToDashboard();
         }
     }, [navigateToDashboard]);
-    
+
     return (
         <div className="App-header">
             <h1 className='title'>Reset password</h1>
@@ -45,10 +45,12 @@ const PasswordReset = () => {
                             <input required type="email" maxLength={255} value={email} disabled/>
                         </label>
                         <label>New password
-                            <input required type="password" placeholder="New password" onChange={e => setPassword(e.target.value)} />
+                            <input required type="password" placeholder="New password"
+                                   onChange={e => setPassword(e.target.value)}/>
                         </label>
                         <label>Confirm password
-                            <input required type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)} />
+                            <input required type="password" placeholder="Confirm password"
+                                   onChange={e => setConfirmPassword(e.target.value)}/>
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Reset password</button>

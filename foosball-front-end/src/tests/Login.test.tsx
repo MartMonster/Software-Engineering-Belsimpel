@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../App';
 import server from './mocks/api';
-import { rest } from 'msw';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen())
 afterEach(() => {
@@ -18,7 +18,7 @@ test('forwards to admin dashboard when user is admin', async () => {
         }),
     );
 
-    render(<App />);
+    render(<App/>);
     login();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
     const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
@@ -29,7 +29,7 @@ test('forwards to admin dashboard when user is admin', async () => {
 });
 
 test('forwards to user dashboard when user is not admin', async () => {
-    render(<App />);
+    render(<App/>);
     login();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
     const userTopText = await screen.findByText(/on the leaderboard, and you have/i);
@@ -40,7 +40,7 @@ test('forwards to user dashboard when user is not admin', async () => {
 });
 
 test('forgot password link works', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Click here!/i));
     const forgotPasswordText = await screen.findByText(/Forgot password/i);
     expect(forgotPasswordText).not.toBeNull();
@@ -49,7 +49,7 @@ test('forgot password link works', async () => {
 });
 
 test('register link works', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Register/i));
     const registerButton = await screen.findByText(/Register/i);
     expect(registerButton).not.toBeNull();
@@ -60,11 +60,11 @@ test('register link works', async () => {
 test('displays error message when login fails', async () => {
     server.use(
         rest.post('http://localhost:8000/login', (req, res, ctx) => {
-            return res.once(ctx.status(422), ctx.json({ message: 'These credentials do not match our records.' }));
+            return res.once(ctx.status(422), ctx.json({message: 'These credentials do not match our records.'}));
         })
     );
 
-    render(<App />);
+    render(<App/>);
     login();
     const dashboardText = screen.queryByText(/Dashboard/i);
     const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
@@ -78,14 +78,14 @@ test('displays error message when login fails', async () => {
 test('displays error message when session token has problems', async () => {
     server.use(
         rest.get('http://localhost:8000/sanctum/csrf-cookie', (req, res, ctx) => {
-            return res.once(ctx.status(422), ctx.json({ message: 'CSRF token mismatch.' }))
+            return res.once(ctx.status(422), ctx.json({message: 'CSRF token mismatch.'}))
         }),
         rest.post('http://localhost:8000/login', (req, res, ctx) => {
-            return res.once(ctx.status(422), ctx.json({ message: 'CSRF token mismatch.' }))
+            return res.once(ctx.status(422), ctx.json({message: 'CSRF token mismatch.'}))
         }),
     );
 
-    render(<App />);
+    render(<App/>);
     login();
     const dashboardText = screen.queryByText(/Dashboard/i);
     const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
@@ -99,11 +99,11 @@ test('displays error message when session token has problems', async () => {
 test('removes \'loggedIn\' session storage when admin endpoint fails', async () => {
     server.use(
         rest.get('http://localhost:8000/admin', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }))
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}))
         })
     );
-    
-    render(<App />);
+
+    render(<App/>);
     login();
     const dashboardText = screen.queryByText(/Dashboard/i);
     const userTopText = screen.queryByText(/on the leaderboard, and you have/i);
@@ -115,10 +115,10 @@ test('removes \'loggedIn\' session storage when admin endpoint fails', async () 
 
 function login() {
     fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'test1@gmail.com' },
+        target: {value: 'test1@gmail.com'},
     });
     fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-        target: { value: '123456789' },
+        target: {value: '123456789'},
     });
     fireEvent.click(screen.getByText(/login/i));
 }

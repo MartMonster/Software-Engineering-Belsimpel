@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../../App';
-import server, { username } from '../mocks/api';
-import { rest } from 'msw';
+import server, {username} from '../mocks/api';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen());
 beforeEach(() => {
@@ -12,7 +12,7 @@ beforeEach(() => {
 afterAll(() => server.close());
 
 test('renders the WoF 2v2 page', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Wall of fame 2v2/i));
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();
@@ -25,10 +25,10 @@ test('renders the WoF 2v2 page', async () => {
 test('shows error message if there are no teams', async () => {
     server.use(
         rest.get('http://localhost:8000/admin/teams', (req, res, ctx) => {
-            return res.once(ctx.json({ data: [], current_page: 1, last_page: -10 }));
+            return res.once(ctx.json({data: [], current_page: 1, last_page: -10}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();
     const errorText = await screen.findByText(/No teams found./i);
@@ -38,10 +38,10 @@ test('shows error message if there are no teams', async () => {
 test('shows error when not logged in', async () => {
     server.use(
         rest.get('http://localhost:8000/admin/teams', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();
     const errorText = await screen.findByText(/No teams found./i);
@@ -49,7 +49,7 @@ test('shows error when not logged in', async () => {
 });
 
 test('can delete a player', async () => {
-    render(<App />);
+    render(<App/>);
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${username}1`));
@@ -60,10 +60,10 @@ test('can delete a player', async () => {
 test('delete modal can show error message', async () => {
     server.use(
         rest.delete('http://localhost:8000/admin/teams/:id', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${username}2`));
@@ -74,7 +74,7 @@ test('delete modal can show error message', async () => {
 });
 
 test('can close options modal', async () => {
-    render(<App />);
+    render(<App/>);
     const wofText = await screen.findByText(/Wall of fame 2v2/i);
     expect(wofText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${username}1`));

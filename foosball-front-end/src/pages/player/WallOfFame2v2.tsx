@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { getTop10Teams, Team } from '../../components/endpoints/player/Teams';
+import React, {useCallback, useEffect, useState} from 'react';
+import {getTop10Teams, Team} from '../../components/endpoints/player/Teams';
 
 export const wallOfFame2v2Route: string = "WallOfFame2v2"
 export const WallOfFame2v2 = () => {
@@ -19,7 +19,7 @@ export const WallOfFame2v2 = () => {
                 setErrorMessage("No teams found.");
             }
         });
-    },[]);
+    }, []);
 
     useEffect(getTeams, [getTeams]);
 
@@ -28,29 +28,29 @@ export const WallOfFame2v2 = () => {
             <h1>Wall of fame 2v2</h1>
             <table>
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Team name</th>
-                        <th>Players</th>
-                        <th>Elo</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Team name</th>
+                    <th>Players</th>
+                    <th>Elo</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {teams.map((team: Team, index) => {
-                        return (
-                            <tr key={team.id}>
-                                <td>{index+1}</td>
-                                <td className='teamName'>{team.team_name}</td>
-                                <td>
-                                    <div className="tableCol">
-                                        <p className='WoF2v2'>{team.player1_username}</p>
-                                        <p className='WoF2v2'>{team.player2_username}</p>
-                                    </div>
-                                </td>
-                                <td>{Math.round(team.elo)}</td>
-                            </tr>
-                        )
-                    })}
+                {teams.map((team: Team, index) => {
+                    return (
+                        <tr key={team.id}>
+                            <td>{index + 1}</td>
+                            <td className='teamName'>{team.team_name}</td>
+                            <td>
+                                <div className="tableCol">
+                                    <p className='WoF2v2'>{team.player1_username}</p>
+                                    <p className='WoF2v2'>{team.player2_username}</p>
+                                </div>
+                            </td>
+                            <td>{Math.round(team.elo)}</td>
+                        </tr>
+                    )
+                })}
                 </tbody>
             </table>
             {error()}

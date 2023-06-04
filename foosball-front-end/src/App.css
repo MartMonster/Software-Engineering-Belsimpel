@@ -1,467 +1,467 @@
 * {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .App {
-  text-align: center;
-  margin: 0 .5em;
-  width: calc(100vw - 1em);
-  padding-bottom: 100px;
-  min-height: calc(100vh - 150px);
-  max-width: 700px;
+    text-align: center;
+    margin: 0 .5em;
+    width: calc(100vw - 1em);
+    padding-bottom: 100px;
+    min-height: calc(100vh - 150px);
+    max-width: 700px;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #fff;
-  /* min-height: 100vh; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
-  font-size: calc(10px + 2vmin);
-  color: #000;
-  margin-left: .5em;
-  margin-right: .5em;
-  max-width: 100vw;
+    background-color: #fff;
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    font-size: calc(10px + 2vmin);
+    color: #000;
+    margin-left: .5em;
+    margin-right: .5em;
+    max-width: 100vw;
 }
 
 .App-header .title {
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 0;
-  padding-right: 0;
-  max-width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100vw;
 }
 
 .App-link {
-  color: #009ddf;
-  align-items: center;
+    color: #009ddf;
+    align-items: center;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .dashboardButtons {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 100vw;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100vw;
 }
 
 .login {
-  /* flex-grow: 1; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  display: inline;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 85vw;
+    /* flex-grow: 1; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    display: inline;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 85vw;
 }
 
 .dashboardButtons button {
-  width: 100%;
-  margin: 0;
+    width: 100%;
+    margin: 0;
 }
 
 button {
-  cursor: pointer;
-  height: 3em;
-  font-size: 1em;
-  border-radius: 0.5em;
-  color: white;
-  background-color: #009ddf;
-  border-color: #009ddf;
-  border-style: outset;
-  width: 75%;
-  margin: 0.5vh;
+    cursor: pointer;
+    height: 3em;
+    font-size: 1em;
+    border-radius: 0.5em;
+    color: white;
+    background-color: #009ddf;
+    border-color: #009ddf;
+    border-style: outset;
+    width: 75%;
+    margin: 0.5vh;
 }
 
 input {
-  /* margin: 0.5vh; */
-  width: 75%;
-  height: 3em;
-  font-size: 1em;
-  border-radius: 0.5em;
-  color: black;
-  /* background-color: #009ddf; */
-  margin: 0.5vh;
+    /* margin: 0.5vh; */
+    width: 75%;
+    height: 3em;
+    font-size: 1em;
+    border-radius: 0.5em;
+    color: black;
+    /* background-color: #009ddf; */
+    margin: 0.5vh;
 }
 
 hr {
-  display: block;
-  border-radius: 0.5em;
-  margin: 0.5em auto;
-  width: 90%;
-  border: 2px solid gray;
+    display: block;
+    border-radius: 0.5em;
+    margin: 0.5em auto;
+    width: 90%;
+    border: 2px solid gray;
 }
 
 .dashboardLink {
-  width: 75%;
-  margin: 0.3em;
+    width: 75%;
+    margin: 0.3em;
 }
 
 p {
-  padding: 0.3em;
-  max-width: 95vw;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    padding: 0.3em;
+    max-width: 95vw;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 label {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 select {
-  width: 75%;
-  height: 3em;
-  font-size: 1em;
-  border-radius: 0.5em;
-  color: white;
-  background-color: #009ddf;
-  margin: 0.5vh;
+    width: 75%;
+    height: 3em;
+    font-size: 1em;
+    border-radius: 0.5em;
+    color: white;
+    background-color: #009ddf;
+    margin: 0.5vh;
 }
 
 table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 1em;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1em;
 }
 
 td,
 th {
-  border: 1px solid #666;
-  text-align: center;
-  padding: 0.4em;
+    border: 1px solid #666;
+    text-align: center;
+    padding: 0.4em;
 }
 
 .row {
-  display: flex;
-  width: 100vw;
-  max-width: 700px;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    width: 100vw;
+    max-width: 700px;
+    justify-content: center;
+    align-items: center;
 }
 
 .left {
-  width: 50%;
-  text-align: left;
-  align-items: center;
-  justify-content: center;
-  margin: 1em .5em .5em .5em;
+    width: 50%;
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    margin: 1em .5em .5em .5em;
 }
 
 .right {
-  width: 50%;
-  text-align: right;
-  align-items: center;
-  justify-content: center;
-  margin: 1em 1em .5em 0;
+    width: 50%;
+    text-align: right;
+    align-items: center;
+    justify-content: center;
+    margin: 1em 1em .5em 0;
 }
 
 .left-3 {
-  width: 33%;
-  text-align: center;
-  margin: 1em 1em .5em 0;
+    width: 33%;
+    text-align: center;
+    margin: 1em 1em .5em 0;
 }
 
 .right-3 {
-  width: 33%;
-  text-align: center;
-  margin: 1em 1em .5em 0;
+    width: 33%;
+    text-align: center;
+    margin: 1em 1em .5em 0;
 }
 
 .middle-3 {
-  width: 33%;
-  text-align: center;
-  margin: 1em 1em .5em 0;
+    width: 33%;
+    text-align: center;
+    margin: 1em 1em .5em 0;
 }
 
 .swapButton {
-  margin: 0 .5em 0 0;
-  padding: 0 .5em 0 0
+    margin: 0 .5em 0 0;
+    padding: 0 .5em 0 0
 }
 
 .editButton {
-  background-color: #f26522;
-  border-color: #f26522;
-  /* background-color: orange; */
-  color: white;
-  /* height: auto; */
-  width: auto;
+    background-color: #f26522;
+    border-color: #f26522;
+    /* background-color: orange; */
+    color: white;
+    /* height: auto; */
+    width: auto;
 }
 
 .deleteButton {
-  background-color: #ff0002;
-  border-color: #ff0002;
-  /* background-color: red; */
-  color: white;
-  /* height: 4em; */
-  width: auto;
+    background-color: #ff0002;
+    border-color: #ff0002;
+    /* background-color: red; */
+    color: white;
+    /* height: 4em; */
+    width: auto;
 }
 
 .submitButton {
-  background-color: #5fb500;
-  border-color: #5fb500;
-  color: white;
+    background-color: #5fb500;
+    border-color: #5fb500;
+    color: white;
 }
 
 .tableCol {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
 }
 
 .tableCol p {
-  margin: 0;
+    margin: 0;
 }
 
 .outerTable th {
-  padding: .3em;
+    padding: .3em;
 }
 
 .Modal {
-  position: absolute;
-  left: 10%;
-  top: 50%;
-  right: 10%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  justify-content: center;
-  align-items: center;
-  color: black;
-  align-self: center;
-  justify-self: center;
-  text-align: center;
-  border-radius: 0.5em;
-  background-color: #fff;
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    right: 10%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    justify-content: center;
+    align-items: center;
+    color: black;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    border-radius: 0.5em;
+    background-color: #fff;
 }
 
 .Modal button {
-  margin: .3em;
-  width: 100%;
+    margin: .3em;
+    width: 100%;
 }
 
 .Modal .row {
-  width: 100%;
-  border-radius: 0.5em;
+    width: 100%;
+    border-radius: 0.5em;
 }
 
 .Modal .left {
-  padding: .1em;
+    padding: .1em;
 }
 
 .Modal .right {
-  padding: .1em;
+    padding: .1em;
 }
 
 .Modal .left-3 {
-  padding-left: .5em;
-  padding-right: .05em;
+    padding-left: .5em;
+    padding-right: .05em;
 }
 
 .Modal .right-3 {
-  padding-left: .05em;
+    padding-left: .05em;
 }
 
 .Modal .middle-3 {
-  padding-left: .05em;
-  padding-right: .05em;
+    padding-left: .05em;
+    padding-right: .05em;
 }
 
 .Modal h2 {
-  padding-left: .5em;
-  padding-right: .5em;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    padding-left: .5em;
+    padding-right: .5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .Overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #00000085;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00000085;
 }
 
 .editDeleteGame tr:nth-child(even) {
-  border-bottom: 1px solid #666;
+    border-bottom: 1px solid #666;
 }
 
 .editDeleteGame tr:nth-child(odd) {
-  border-top: 1px solid #666;
+    border-top: 1px solid #666;
 }
 
 .editDeleteGame td {
-  border: 0;
-  border-left: 1px solid #666;
-  border-right: 1px solid #666;
+    border: 0;
+    border-left: 1px solid #666;
+    border-right: 1px solid #666;
 }
 
 .redRow td:first-child {
-  background-color: #e43239;
+    background-color: #e43239;
 }
 
 .blueRow td:first-child {
-  background-color: #1bbbff;
+    background-color: #1bbbff;
 }
 
 thead tr * {
-  background-color: #009ddf;
-  color: white;
+    background-color: #009ddf;
+    color: white;
 }
 
 tr:nth-child(even) * {
-  background-color: #ccc;
+    background-color: #ccc;
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2em;
-  gap: 0.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    gap: 0.3em;
 }
 
 .pagination .page-button .App-link {
-  font-size: 1em;
-  font-weight: 600;
-  color: #009ddf;
-  background: #fff;
-  padding: .2em .5em;
-  border-radius: .3em;
-  cursor: pointer;
-  transition: all 0.5s ease;
+    font-size: 1em;
+    font-weight: 600;
+    color: #009ddf;
+    background: #fff;
+    padding: .2em .5em;
+    border-radius: .3em;
+    cursor: pointer;
+    transition: all 0.5s ease;
 }
 
 .pagination-container ul {
-  list-style: none;
-  padding: 0;
+    list-style: none;
+    padding: 0;
 }
 
 .pagination .page-button .App-link:hover {
-  color: #fff;
-  background: #009ddf;
+    color: #fff;
+    background: #009ddf;
 }
 
 .pagination .page-button-active .App-link {
-  font-size: 1em;
-  font-weight: 600;
-  color: #fff;
-  background: #009ddf;
-  padding: .2em .5em;
-  border-radius: .3em;
-  cursor: pointer;
-  transition: all 0.5s ease;
+    font-size: 1em;
+    font-weight: 600;
+    color: #fff;
+    background: #009ddf;
+    padding: .2em .5em;
+    border-radius: .3em;
+    cursor: pointer;
+    transition: all 0.5s ease;
 }
 
 .pagination .App-link {
-  color: black;
-  background-color: inherit;
-  text-decoration: none;
+    color: black;
+    background-color: inherit;
+    text-decoration: none;
 }
 
 .App table {
-  display: inline-table;
-  max-width: 90vw;
+    display: inline-table;
+    max-width: 90vw;
 }
 
 tr td {
-  display: table-cell;
-  /* max-width: 55vw; */
-  overflow: hidden;
-  text-overflow: ellipsis;
+    display: table-cell;
+    /* max-width: 55vw; */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .WoF1v1 {
-  max-width: 60vw;
+    max-width: 60vw;
 }
 
 .WoF2v2 {
-  max-width: 30vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    max-width: 30vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .teamName {
-  max-width: 25vw;
+    max-width: 25vw;
 }
 
 .lastGames {
-  max-width: 50vw;
+    max-width: 50vw;
 }
 
 .errorMessage {
-  color: red;
-  font-size: 0.8em;
-  font-weight: 600;
-  text-align: center;
-  margin: 0;
-  transition: all 0.5s ease;
+    color: red;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    transition: all 0.5s ease;
 }
 
 .rowNav {
-  background-color: #009ddf;
-  display: flex;
-  width: 100vw;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
+    background-color: #009ddf;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
 }
 
 .rowNav * {
-  font-weight: 500;
-  color: white;
-  background-color: inherit;
-  padding: 0;
-  margin: 0;
+    font-weight: 500;
+    color: white;
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
 }
 
 .rowNav .left {
-  margin-left: .5em;
+    margin-left: .5em;
 }
 
 .rowNav .right {
-  margin-right: .5em;
+    margin-right: .5em;
 }
 
 .title {
-  width: 100vw;
-  text-align: center;
-  padding: .2em;
-  margin: 0 0 1em;
-  background-color: #009ddf;
-  color: white;
+    width: 100vw;
+    text-align: center;
+    padding: .2em;
+    margin: 0 0 1em;
+    background-color: #009ddf;
+    color: white;
 }
 
 select option {
-  color: black;
+    color: black;
 }
