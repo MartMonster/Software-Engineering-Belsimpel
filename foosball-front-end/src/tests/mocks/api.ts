@@ -167,6 +167,24 @@ const server = setupServer(
     rest.put('http://localhost:8000/user/username', (req, res, ctx) => {
         return res(ctx.json('username updated'))
     }),
+    rest.get('http://localhost:8000/admin/user', (req, res, ctx) => {
+        let page = req.url.searchParams.get('page')
+        let users = []
+        for (let i = 0; i < 10; i++) {
+            users.push({
+                id: i+1,
+                username: `${username}${(i+1).toString()}`,
+                elo: `${elo+i}`
+            })
+        }
+        return res(ctx.json({ data: users, current_page: page, last_page: 10 }))
+    }),
+    rest.delete('http://localhost:8000/admin/user/:id', (req, res, ctx) => {
+        return res(ctx.json('user deleted'))
+    }),
+    rest.put('http://localhost:8000/admin/user/:id', (req, res, ctx) => {
+        return res(ctx.json('user updated'))
+    }),
 )
 
 export default server
