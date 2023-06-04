@@ -18,7 +18,7 @@ class AdminDeleteTeamsTest extends TestCase
         $players = $this->create_players(3);
         $admin = self::makeUserAdmin($players[0]);
         $this->createTeamAdmin($players[1], $players[2], 'team1', $admin)->assertStatus(201);
-        $this->deleteTeamAdmin($admin, $players[1], $players[2])->assertStatus(200);
+        $this->deleteTeamAdmin($admin, $players[1], $players[2])->assertStatus(204);
         $this->assertDatabaseMissing('foosball_teams', [
             'player1_id' => $players[1]->id,
             'player2_id' => $players[2]->id,
@@ -139,7 +139,7 @@ class AdminDeleteTeamsTest extends TestCase
         ]);
         $team1 = $this->findTeam($players[1], $players[2]);
         $team2 = $this->findTeam($players[3], $players[4]);
-        $this->deleteTeamAdmin($admin, $players[1], $players[2])->assertStatus(200);
+        $this->deleteTeamAdmin($admin, $players[1], $players[2])->assertStatus(204);
         $this->assertDatabaseMissing('games2v2', [
             'team1_id' => $team1->id,
             'team2_id' => $team2->id,
