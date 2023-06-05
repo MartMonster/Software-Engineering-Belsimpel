@@ -74,8 +74,7 @@ class FoosballTeam extends Model
             $team = new FoosballTeam;
             $team->player1_id = $id1;
             $team->player2_id = $id2;
-            $team->save();
-            $team->team_name = $team->fresh()->id;
+            $team->team_name = fake()->unique()->sentence(2);
             $team->save();
         }
         return $team->fresh();
