@@ -27,6 +27,16 @@ class SelfUserManagmentTest extends TestCase
             $this->assertEquals((object)$ranking[9 - $i], self::selectPropertiesOfPlayer($players[$i]));
         }
     }
+    
+    public function test_get_id_from_username_gets_appropiate_username()
+    {
+        $player = $this->create_players(1);
+        $this->assertEquals($player[0]->id, User::getIdFromUsername($player[0]->username));
+    }
+    public function test_get_id_from_username_returns_null_if_player_doesnt_exist()
+    {
+        $this->assertNull(User::getIdFromUsername("nonexistentusername"));
+    }
 
     private function create_players($x)
     {
