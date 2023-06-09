@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
-
+/**
+ * @codeCoverageIgnore
+ */
 class Authenticate extends Middleware
 {
     /**
