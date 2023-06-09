@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PaginateInfo } from '../../paginate';
+import {PaginateInfo} from '../../paginate';
 
 export interface Team {
     id: number,
@@ -65,8 +65,8 @@ export async function getOwnTeams(page: number = 1, setErrorMessage: (string: st
                 window.location.reload();
             }
         });
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { teams, pagination };
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {teams, pagination};
 }
 
 export async function makeTeam(team_name: string, player2_username: string, setErrorMessage: (string: string) => void) {

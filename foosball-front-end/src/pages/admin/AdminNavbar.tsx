@@ -1,11 +1,11 @@
 import React from 'react';
-import { Outlet, Link, Navigate } from "react-router-dom";
-import { loginRoute } from "../Login";
-import { logout } from '../../components/endpoints/Login';
+import {Link, Navigate, Outlet} from "react-router-dom";
+import {loginRoute} from "../Login";
+import {logout} from '../../components/endpoints/Login';
 
-const DEBUG:boolean = false;
+const DEBUG: boolean = false;
 
-export const navbarRoute:string = "/"
+export const navbarRoute: string = "/"
 export const AdminNavbar = () => {
     let loggedIn = sessionStorage.getItem("loggedIn") === "true";
     let isAdmin = sessionStorage.getItem("isAdmin") === "true";
@@ -13,9 +13,9 @@ export const AdminNavbar = () => {
         return <Navigate to="/login"/>;
     }
     if (!isAdmin) {
-        return <Navigate to="/" />;
+        return <Navigate to="/"/>;
     }
-    
+
     return (
         <div className="App-header">
             <nav>
@@ -28,7 +28,7 @@ export const AdminNavbar = () => {
                     </div>
                 </div>
             </nav>
-            <Outlet />
+            <Outlet/>
         </div>
     );
 };

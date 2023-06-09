@@ -24,16 +24,6 @@ class GetUsernamesFromTeamTest extends TestCase
         $this->assertEquals($users[1]->username, $u[1]);
     }
 
-    public function test_cannot_get_from_unexisting_team(): void
-    {
-        $users = self::create_players(2);
-        $this->post('/login', [
-            'email' => $users[0]->email,
-            'password' => 'password',
-        ]);
-        $this->get('/teams/users/UnexistingTeam')->assertStatus(404);
-    }
-
     private static function create_players($x): array
     {
         $players = array();
@@ -62,5 +52,15 @@ class GetUsernamesFromTeamTest extends TestCase
         return FoosballTeam::where('player1_id', $player1->id)
             ->where('player2_id', $player2->id)
             ->where('team_name', $teamName)->first();
+    }
+
+    public function test_cannot_get_from_unexisting_team(): void
+    {
+        $users = self::create_players(2);
+        $this->post('/login', [
+            'email' => $users[0]->email,
+            'password' => 'password',
+        ]);
+        $this->get('/teams/users/UnexistingTeam')->assertStatus(404);
     }
 }

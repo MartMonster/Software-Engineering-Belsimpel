@@ -1,4 +1,6 @@
 # Software-Engineering-Belsimpel
+## HTML coverage reports
+The coverage report for the front end can be found [here](https://github.com/MartMonster/Software-Engineering-Belsimpel/tree/Refactoring/foosball-front-end/coverage/lcov-report), and the coverage report for the back end can be found [here](https://github.com/MartMonster/Software-Engineering-Belsimpel/tree/Refactoring/foosball-ranking/coverage)
 ## Hosting on an ip/domain
 To host this application on an ip address, or domain, change the `APP_URL` and `FRONTEND_URL` in the `.env` file in the `foosball-ranking` directory to reflect on where you want to host it (for example `APP_URL=http://foosball.belsimpel.nl:8000` and `FRONTEND_URL=http://foosball.belsimpel.nl`).
 

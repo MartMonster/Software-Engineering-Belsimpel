@@ -16,17 +16,17 @@ class FoosballTeam extends Model
         $team->player2_id = $player2_id;
 
         //if (is_null($team_name) || $team_name == "")
-            //return response("Invalid Team Name", 400);
+        //return response("Invalid Team Name", 400);
 
         if (self::getTeamWithUsers($team->player1_id, $team->player2_id) != null)
             return response("Team with these users already exists", 400);
 
         //if (FoosballTeam::where('team_name', $team_name)->first() != null)
-            //return response("Team name already taken", 400);
+        //return response("Team name already taken", 400);
 
         if ($team->player1_id == $team->player2_id)
             return response("Not all players are unique", 400);
-        $team->team_name = $team_name;        
+        $team->team_name = $team_name;
         $team->save();
         return response("Ok", 201);
 
@@ -74,8 +74,7 @@ class FoosballTeam extends Model
             $team = new FoosballTeam;
             $team->player1_id = $id1;
             $team->player2_id = $id2;
-            $team->save();
-            $team->team_name = $team->fresh()->id;
+            $team->team_name = fake()->unique()->sentence(2);
             $team->save();
         }
         return $team->fresh();
@@ -86,7 +85,7 @@ class FoosballTeam extends Model
         $team = FoosballTeam::find($team_id);
         $ids = array();
         //if ($team == null)
-            //return array();
+        //return array();
         array_push($ids, $team->player1_id, $team->player2_id);
         return $ids;
     }

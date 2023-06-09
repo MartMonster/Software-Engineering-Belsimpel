@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { User } from '../../components/endpoints/player/Users';
-import { Link, useSearchParams } from 'react-router-dom';
+import React, {useCallback, useEffect, useState} from 'react';
+import {User} from '../../components/endpoints/player/Users';
+import {Link, useSearchParams} from 'react-router-dom';
 import Modal from 'react-modal';
-import { deleteUser, getTop10Users } from '../../components/endpoints/admin/Users';
+import {deleteUser, getTop10Users} from '../../components/endpoints/admin/Users';
 import paginationButtons from '../../components/paginate';
 
 export const wallOfFame1v1Route: string = "WallOfFame1v1"
@@ -23,13 +23,13 @@ export const AdminWallOfFame1v1 = () => {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    
+
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
         }
     }, [deleteErrorMessage])
-    
+
     const getUsers = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
@@ -48,7 +48,7 @@ export const AdminWallOfFame1v1 = () => {
             }
         });
     }, [searchParams, setSearchParams]);
-    
+
     useEffect(getUsers, [getUsers]);
 
     async function removeUser() {
@@ -84,27 +84,27 @@ export const AdminWallOfFame1v1 = () => {
             <p>Click on a user to edit or delete them.</p>
             <table>
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Username</th>
-                        <th>Elo</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Elo</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {users.map((user: User, index) => {
-                        return (
-                            <tr key={user.id} onClick={() => openOptionsModal(user.id, user.username)}>
-                                <td>{(index + 1)*pageNumber}</td>
-                                <td className='WoF1v1'>{user.username}</td>
-                                <td>{Math.round(user.elo)}</td>
-                            </tr>
-                        );
-                    })}
+                {users.map((user: User, index) => {
+                    return (
+                        <tr key={user.id} onClick={() => openOptionsModal(user.id, user.username)}>
+                            <td>{(index + 1) * pageNumber}</td>
+                            <td className='WoF1v1'>{user.username}</td>
+                            <td>{Math.round(user.elo)}</td>
+                        </tr>
+                    );
+                })}
                 </tbody>
             </table>
             {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeOptionsModal}>
+                   onRequestClose={closeOptionsModal}>
                 <h2>Options for user: {username}</h2>
                 <div className="row">
                     <div className='left-3'>
@@ -121,8 +121,8 @@ export const AdminWallOfFame1v1 = () => {
                 </div>
             </Modal>
             <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeDeleteModal}
-                contentLabel="Example Modal">
+                   onRequestClose={closeDeleteModal}
+                   contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this user?</h2>
                 {deleteError()}
                 <div className="row">
@@ -143,13 +143,15 @@ export const AdminWallOfFame1v1 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={"/admin/" + wallOfFame1v1Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/admin/" + wallOfFame1v1Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={"/admin/" + wallOfFame1v1Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/admin/" + wallOfFame1v1Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }

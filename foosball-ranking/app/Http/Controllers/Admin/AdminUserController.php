@@ -17,7 +17,7 @@ class AdminUserController extends Controller
 
     public function getTop10Users()
     {
-        return User::select('id','username','elo')->orderBy('elo', 'desc')->paginate(10);
+        return User::select('id', 'username', 'elo')->orderBy('elo', 'desc')->paginate(10);
     }
 
     public function editPlayer(string $id, Request $request)

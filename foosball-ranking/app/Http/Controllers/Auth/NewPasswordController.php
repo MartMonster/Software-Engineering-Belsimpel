@@ -12,6 +12,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @codeCoverageIgnore
+ */
 class NewPasswordController extends Controller
 {
     /**

@@ -5,11 +5,18 @@ namespace App\Util;
 class EloCalculator
 {
 
-    private static function Probability($rating1, $rating2): float
+    public static function calculateElo($elo1, $elo2, $score1, $score2)
     {
-        return (
-            (1.0) / (1 + 1.0 * pow(10, (1.0 * ($rating1 - $rating2)) / 400))
-        );
+        if ($score1 != $score2)
+            $updatedElo = self::calculate($elo1, $elo2, 30,
+                $score1 > $score2);
+        else if ($elo1 != $elo2)
+            $updatedElo = EloCalculator::calculate($elo1, $elo2, 15, $elo1 < $elo2);
+        else
+            $updatedElo = [$elo1, $elo2];
+
+        return $updatedElo;
+
     }
 
     /**
@@ -40,17 +47,10 @@ class EloCalculator
         );
     }
 
-    public static function calculateElo($elo1, $elo2, $score1, $score2)
+    private static function Probability($rating1, $rating2): float
     {
-        if ($score1 != $score2)
-            $updatedElo = self::calculate($elo1, $elo2, 30,
-                $score1 > $score2);
-        else if ($elo1 != $elo2)
-            $updatedElo = EloCalculator::calculate($elo1, $elo2, 15, $elo1 < $elo2);
-        else
-            $updatedElo = [$elo1, $elo2];
-
-        return $updatedElo;
-
+        return (
+            (1.0) / (1 + 1.0 * pow(10, (1.0 * ($rating1 - $rating2)) / 400))
+        );
     }
 }

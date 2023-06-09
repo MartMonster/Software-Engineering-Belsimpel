@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { forgotPassword } from '../components/endpoints/Login';
-import { Link, useNavigate } from 'react-router-dom';
-import { loginRoute } from './Login';
+import React, {useCallback, useState} from 'react';
+import {forgotPassword} from '../components/endpoints/Login';
+import {Link, useNavigate} from 'react-router-dom';
+import {loginRoute} from './Login';
+
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const ForgotPassword = () => {
     const navigateToDashboard = () => {
         navigate("/");
     }
-    
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -23,7 +24,7 @@ const ForgotPassword = () => {
             navigateToDashboard();
         }
     }
-    
+
     return (
         <div className="App-header">
             <h1 className='title'>Forgot password</h1>
@@ -31,7 +32,8 @@ const ForgotPassword = () => {
                 <form onSubmit={sendResetEmail}>
                     <div className="login">
                         <label>Email
-                            <input required type="email" maxLength={255} placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                            <input required type="email" maxLength={255} placeholder="Email"
+                                   onChange={e => setEmail(e.target.value)}/>
                         </label>
                         {error()}
                         <button type="submit" className='submitButton'>Send reset email</button>

@@ -58,7 +58,9 @@ class CreateGames1v1EndpointTest extends TestCase
             ->where('player2_score', 7)
             ->where('player1_score', 10)->first());
     }
-    public function test_cannot_create_1v1_game_with_out_of_bounds_score(){
+
+    public function test_cannot_create_1v1_game_with_out_of_bounds_score()
+    {
         $player1 = User::factory()->create();
 
         $player2 = User::factory()->create();
@@ -66,13 +68,13 @@ class CreateGames1v1EndpointTest extends TestCase
             'email' => $player1->email,
             'password' => 'password',
         ]);
-        $response = $this->json('post','/games1v1', [
+        $response = $this->json('post', '/games1v1', [
             'player2_username' => $player2->username,
             'player2_score' => 11,
             'player1_score' => 7,
             'player1_side' => 1,
         ])->assertStatus(422);
-        $response = $this->json('post','/games1v1', [
+        $response = $this->json('post', '/games1v1', [
             'player2_username' => $player2->username,
             'player2_score' => 10,
             'player1_score' => -1,
@@ -80,7 +82,8 @@ class CreateGames1v1EndpointTest extends TestCase
         ])->assertStatus(422);
     }
 
-    public function test_cannot_create_1v1_game_with_invalid_side(){
+    public function test_cannot_create_1v1_game_with_invalid_side()
+    {
         $player1 = User::factory()->create();
 
         $player2 = User::factory()->create();
@@ -88,19 +91,20 @@ class CreateGames1v1EndpointTest extends TestCase
             'email' => $player1->email,
             'password' => 'password',
         ]);
-        $response = $this->json('post','/games1v1', [
+        $response = $this->json('post', '/games1v1', [
             'player2_username' => $player2->username,
             'player2_score' => 11,
             'player1_score' => 7,
             'player1_side' => null,
         ])->assertStatus(422);
-        $response = $this->json('post','/games1v1', [
+        $response = $this->json('post', '/games1v1', [
             'player2_username' => $player2->username,
             'player2_score' => 10,
             'player1_score' => -1,
             'player1_side' => "f",
         ])->assertStatus(422);
     }
+
     public function test_returns_appropiate_response_if_second_player_doesnt_exist(): void
     {
         $player1 = User::factory()->create();

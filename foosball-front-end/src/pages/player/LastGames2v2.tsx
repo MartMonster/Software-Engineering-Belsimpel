@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useSearchParams } from "react-router-dom";
-import { ownGames2v2Route } from "./OwnGames2v2";
-import { getLast10Games2v2, Game2v2 } from '../../components/endpoints/player/Games';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useSearchParams} from "react-router-dom";
+import {ownGames2v2Route} from "./OwnGames2v2";
+import {Game2v2, getLast10Games2v2} from '../../components/endpoints/player/Games';
 import paginationButtons from '../../components/paginate';
 
 export const lastGames2v2Route: string = "LastGames2v2"
@@ -10,7 +10,7 @@ export const LastGames2v2 = () => {
     const [paginateButtons, setPaginateButtons] = useState<(string | number)[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const [errorMessage, setErrorMessage] = useState("")
-    
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -43,29 +43,29 @@ export const LastGames2v2 = () => {
             <Link className="App-link" to={ownGames2v2Route}>See own games</Link>
             <table>
                 <thead>
-                    <tr>
-                        <th>Side</th>
-                        <th>Teams</th>
-                        <th>Scores</th>
-                    </tr>
+                <tr>
+                    <th>Side</th>
+                    <th>Teams</th>
+                    <th>Scores</th>
+                </tr>
                 </thead>
                 <tbody className='editDeleteGame'>
-                    {games.map((game: Game2v2, index) => {
-                        return (
-                            <React.Fragment key={game.id}>
-                                <tr className='redRow'>
-                                    <td>Red</td>
-                                    <td className='lastGames'>{game.team1_name}</td>
-                                    <td>{game.team1_score}</td>
-                                </tr>
-                                <tr className='blueRow'>
-                                    <td>Blue</td>
-                                    <td className='lastGames'>{game.team2_name}</td>
-                                    <td>{game.team2_score}</td>
-                                </tr>
-                            </React.Fragment>
-                        );
-                    })
+                {games.map((game: Game2v2) => {
+                    return (
+                        <React.Fragment key={game.id}>
+                            <tr className='redRow'>
+                                <td>Red</td>
+                                <td className='lastGames'>{game.team1_name}</td>
+                                <td>{game.team1_score}</td>
+                            </tr>
+                            <tr className='blueRow'>
+                                <td>Blue</td>
+                                <td className='lastGames'>{game.team2_name}</td>
+                                <td>{game.team2_score}</td>
+                            </tr>
+                        </React.Fragment>
+                    );
+                })
                 }
                 </tbody>
             </table>
@@ -79,13 +79,15 @@ export const LastGames2v2 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={"/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={"/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }

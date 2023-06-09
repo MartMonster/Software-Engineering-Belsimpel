@@ -1,12 +1,12 @@
 import React from 'react';
-import { Outlet, Link, Navigate } from "react-router-dom";
-import { loginRoute } from "../Login";
-import { logout } from '../../components/endpoints/Login';
+import {Link, Navigate, Outlet} from "react-router-dom";
+import {loginRoute} from "../Login";
+import {logout} from '../../components/endpoints/Login';
 
 // TODO: change this back to false
-const DEBUG:boolean = false;
+const DEBUG: boolean = false;
 
-export const navbarRoute:string = "/"
+export const navbarRoute: string = "/"
 export const Navbar = () => {
     let loggedIn = sessionStorage.getItem("loggedIn") === "true";
     let isAdmin = sessionStorage.getItem("isAdmin") === "true";
@@ -16,7 +16,7 @@ export const Navbar = () => {
     if (isAdmin) {
         return <Navigate to="/admin"/>;
     }
-    
+
     return (
         <div className="App-header">
             <nav>
@@ -29,7 +29,7 @@ export const Navbar = () => {
                     </div>
                 </div>
             </nav>
-            <Outlet />
+            <Outlet/>
         </div>
     );
 };
