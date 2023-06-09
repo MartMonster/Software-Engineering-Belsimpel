@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PaginateInfo } from '../../paginate';
+import {PaginateInfo} from '../../paginate';
 
 export interface Game1v1 {
     id: number,
@@ -38,8 +38,8 @@ export async function getLast10Games1v1(page: number = 1, setErrorMessage: (stri
                 window.location.reload();
             }
         });
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { games, pagination };
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {games, pagination};
 }
 
 export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string: string) => void) {
@@ -71,13 +71,13 @@ export async function getOwnGames1v1(page: number = 1, setErrorMessage: (string:
                 window.location.reload();
             }
         });
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { games, pagination };
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {games, pagination};
 }
 
 export async function makeGame1v1(player2_username: string, player1_score: number | undefined,
-    player2_score: number | undefined,
-    player1_side: number, setErrorMessage: (string: string) => void) {
+                                  player2_score: number | undefined,
+                                  player1_side: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.post('games1v1', {
         headers: {
@@ -111,8 +111,8 @@ export async function makeGame1v1(player2_username: string, player1_score: numbe
 }
 
 export async function editGame1v1(id: number, player1_score: number | undefined,
-    player2_score: number | undefined,
-    player1_side: number, setErrorMessage: (string: string) => void) {
+                                  player2_score: number | undefined,
+                                  player1_side: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.put('games1v1/' + id, {
         headers: {
@@ -210,8 +210,8 @@ export async function getLast10Games2v2(page: number = 1, setErrorMessage: (stri
                 window.location.reload();
             }
         });
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { games, pagination };
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {games, pagination};
 }
 
 export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string: string) => void) {
@@ -243,12 +243,12 @@ export async function getOwnGames2v2(page: number = 1, setErrorMessage: (string:
                 window.location.reload();
             }
         });
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { games, pagination };
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {games, pagination};
 }
 
 export async function makeGame2v2(player2_username: string, player3_username: string, player4_username: string,
-    team1_score: number | undefined, team2_score: number | undefined, side: number, setErrorMessage: (string: string) => void) {
+                                  team1_score: number | undefined, team2_score: number | undefined, side: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.post('games2v2', {
         headers: {
@@ -284,8 +284,8 @@ export async function makeGame2v2(player2_username: string, player3_username: st
 }
 
 export async function editGame2v2(id: number, team1_score: number | undefined,
-    team2_score: number | undefined,
-    side: number, setErrorMessage: (string: string) => void) {
+                                  team2_score: number | undefined,
+                                  side: number, setErrorMessage: (string: string) => void) {
     let b: boolean = false;
     await axios.put('games2v2/' + id, {
         headers: {

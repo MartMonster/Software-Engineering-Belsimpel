@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { lastGames1v1Route } from '../player/LastGames1v1';
-import { editGame1v1 } from '../../components/endpoints/admin/Games';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useNavigate, useParams, useSearchParams} from 'react-router-dom';
+import {lastGames1v1Route} from '../player/LastGames1v1';
+import {editGame1v1} from '../../components/endpoints/admin/Games';
 
 export const AdminEditGame1v1 = () => {
     const idPar = useParams();
@@ -14,7 +14,7 @@ export const AdminEditGame1v1 = () => {
     const [bluePoints, setBluePoints] = useState<number>();
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
-    
+
     if (idPar) {
         id = idPar.id as unknown as number;
     }
@@ -67,11 +67,13 @@ export const AdminEditGame1v1 = () => {
                         <h1 className="App-header">Red</h1>
                         <label>
                             Username
-                            <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={playerRed} />
+                            <input required disabled type="text" maxLength={255} placeholder="Username"
+                                   defaultValue={playerRed}/>
                         </label>
                         <label>
                             Score
-                            <input required type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={redPoints} onChange={e => setRedPoints(parseInt(e.target.value))} />
+                            <input required type="number" max="10" min="0" step="1" placeholder="Points"
+                                   defaultValue={redPoints} onChange={e => setRedPoints(parseInt(e.target.value))}/>
                         </label>
                     </div>
                     <div>
@@ -81,11 +83,13 @@ export const AdminEditGame1v1 = () => {
                         <h1 className="App-header">Blue</h1>
                         <label>
                             Username
-                            <input required disabled type="text" maxLength={255} placeholder="Username" defaultValue={playerBlue} />
+                            <input required disabled type="text" maxLength={255} placeholder="Username"
+                                   defaultValue={playerBlue}/>
                         </label>
                         <label>
                             Score
-                            <input required type="number" max="10" min="0" step="1" placeholder="Points" defaultValue={bluePoints} onChange={e => setBluePoints(parseInt(e.target.value))} />
+                            <input required type="number" max="10" min="0" step="1" placeholder="Points"
+                                   defaultValue={bluePoints} onChange={e => setBluePoints(parseInt(e.target.value))}/>
                         </label>
                     </div>
                 </div>

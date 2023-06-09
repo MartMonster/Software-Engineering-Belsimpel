@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { editTeam } from '../../components/endpoints/player/Teams';
-import { ownTeamsRoute } from './OwnTeams';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {editTeam} from '../../components/endpoints/player/Teams';
+import {ownTeamsRoute} from './OwnTeams';
 
 export const editTeamRoute: string = "edit"
 export const EditTeam = () => {
@@ -15,11 +15,11 @@ export const EditTeam = () => {
     if (idPar) {
         id = idPar.id as unknown as number;
     }
-    
+
     const navigateToOwnGames = () => {
         navigate(ownTeamsRoute);
     }
-    
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -32,20 +32,22 @@ export const EditTeam = () => {
             navigateToOwnGames()
         }
     }
-    
+
     useEffect(() => {
         if (searchParams.get("team") as string) {
             setTeamName(searchParams.get("team") as string);
         }
     }, [searchParams])
-    
+
     return (
         <div className="App">
             <h1>Edit your team</h1>
             <form autoComplete="off" onSubmit={saveTeam}>
                 <label>
                     Your new team name:
-                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
+                    <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                           type="text" maxLength={255} placeholder="Team name" defaultValue={teamName}
+                           onChange={e => setTeamName(e.target.value)}/>
                 </label>
                 {error()}
                 <button type="submit" className='submitButton'>Save team</button>

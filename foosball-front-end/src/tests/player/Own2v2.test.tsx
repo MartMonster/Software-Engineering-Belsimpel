@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../../App';
-import server, { teamName } from '../mocks/api';
-import { rest } from 'msw';
+import server, {teamName} from '../mocks/api';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen());
 beforeEach(() => {
@@ -12,7 +12,7 @@ beforeEach(() => {
 afterAll(() => server.close());
 
 test('renders own last games', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/2v2 games/i));
     fireEvent.click(screen.getByText(/own games/i));
     const lastGamesText = await screen.findByText(/Your last 2v2 games/i);
@@ -24,10 +24,10 @@ test('renders own last games', async () => {
 test('shows error message if there are no games', async () => {
     server.use(
         rest.get('http://localhost:8000/games2v2/self', (req, res, ctx) => {
-            return res.once(ctx.json({ data: [], current_page: 1, last_page: -10 }));
+            return res.once(ctx.json({data: [], current_page: 1, last_page: -10}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const lastGamesText = await screen.findByText(/Your last 2v2 games/i);
     expect(lastGamesText).not.toBeNull();
     const errorText = await screen.findByText(/No games found./i);
@@ -37,10 +37,10 @@ test('shows error message if there are no games', async () => {
 test('shows error when not logged in', async () => {
     server.use(
         rest.get('http://localhost:8000/games2v2/self', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const lastGamesText = await screen.findByText(/Your last 2v2 games/i);
     expect(lastGamesText).not.toBeNull();
     const errorText = await screen.findByText(/No games found./i);
@@ -48,7 +48,7 @@ test('shows error when not logged in', async () => {
 });
 
 test('can delete a game', async () => {
-    render(<App />);
+    render(<App/>);
     const lastGamesText = await screen.findByText(/Your last 2v2 games/i);
     expect(lastGamesText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${teamName}1`));
@@ -59,10 +59,10 @@ test('can delete a game', async () => {
 test('delete modal can show error message', async () => {
     server.use(
         rest.delete('http://localhost:8000/games2v2/1', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const lastGamesText = await screen.findByText(/Your last 2v2 games/i);
     expect(lastGamesText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${teamName}2`));
@@ -73,7 +73,7 @@ test('delete modal can show error message', async () => {
 });
 
 test('can close options modal', async () => {
-    render(<App />);
+    render(<App/>);
     const lastGamesText = await screen.findByText(/Your last 2v2 games/i);
     expect(lastGamesText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${teamName}1`));

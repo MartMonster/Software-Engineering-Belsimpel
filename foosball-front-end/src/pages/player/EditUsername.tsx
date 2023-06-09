@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { editUsername } from '../../components/endpoints/player/Users';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {editUsername} from '../../components/endpoints/player/Users';
 
 export const editUsernameRoute = 'username';
 export const EditUsername = () => {
@@ -12,7 +12,7 @@ export const EditUsername = () => {
     const navigateToDashboard = () => {
         navigate('/');
     }
-    
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -35,14 +35,16 @@ export const EditUsername = () => {
             setUsername(searchParams.get("username") as string);
         }
     }, [searchParams])
-    
+
     return (
         <div className="App">
             <h1>Edit your username</h1>
             <form autoComplete="off" onSubmit={submitUsername}>
                 <div className="login">
                     <label>Username
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                               type="text" maxLength={255} placeholder="Username" defaultValue={username}
+                               onChange={e => setUsername(e.target.value)}/>
                     </label>
                     {error()}
                     <button type="submit" className='submitButton'>Edit username</button>

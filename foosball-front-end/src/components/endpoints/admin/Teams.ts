@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Team } from '../player/Teams';
-import { PaginateInfo } from '../../paginate';
+import {Team} from '../player/Teams';
+import {PaginateInfo} from '../../paginate';
 
 export async function getTop10Teams(page: number = 1, setErrorMessage: (string: string) => void) {
     let teams: Team[] = [];
@@ -31,7 +31,7 @@ export async function getTop10Teams(page: number = 1, setErrorMessage: (string: 
                 window.location.reload();
             }
         })
-    pagination = { current_page: currentPage, last_page: lastPage };
+    pagination = {current_page: currentPage, last_page: lastPage};
     return {teams, pagination};
 }
 

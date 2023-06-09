@@ -34,6 +34,46 @@ class AdminManagementFunctionalitiesTest extends TestCase
         }
     }
 
+    private static function create_players($x)
+    {
+        $players = array();
+        for ($i = 0; $i < $x; $i++) {
+            $players[] = User::factory()->create();
+        }
+        return $players;
+    }
+
+    private static function makeUserAdmin($player)
+    {
+        $player->role_id = 1;
+        $player->save();
+        return $player;
+
+    }
+
+    private function updateElo($player, $elo)
+    {
+        $player->elo = $elo;
+        $player->save();
+    }
+
+    private function selectPropertiesOfPlayer($player)
+    {
+        $playerUnProtected = (object)self::getProperty($player, 'attributes');
+        $actualPlayerToBeReturned = new stdClass();
+        $actualPlayerToBeReturned->elo = $playerUnProtected->elo;
+        $actualPlayerToBeReturned->username = $playerUnProtected->username;
+        $actualPlayerToBeReturned->id = $playerUnProtected->id;
+        return $actualPlayerToBeReturned;
+    }
+
+    private function getProperty($object, $propertyName)
+    {
+        $reflection = new ReflectionClass($object);
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+        return $property->getValue($object);
+    }
 
     public function test_admin_top_10_players_can_return_less_than10_when_there_are_less_than_10_players()
     {
@@ -51,7 +91,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
             $this->assertEquals((object)$ranking[5 - $i], self::selectPropertiesOfPlayer($players[$i]));
         }
     }
-
 
     public function test_admin_top_10_is_paginated()
     {
@@ -75,7 +114,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
 
     }
 
-
     public function test_admin_can_edit_the_usernames_of_players()
     {
         $players = $this->create_players(2);
@@ -90,7 +128,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
         $this->assertEquals('newUsername', User::find($players[1]->id)->username);
 
     }
-
 
     public function test_admin_cant_edit_the_username_of_player_to_invalid_name()
     {
@@ -113,7 +150,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
 
     }
 
-
     public function test_admin_cant_edit_the_usernames_of_players_to_taken_usernames()
     {
         $players = $this->create_players(3);
@@ -127,7 +163,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
         ])->assertStatus(400);
 
     }
-
 
     public function test_admin_cant_edit_the_usernames_of_other_admins()
     {
@@ -159,7 +194,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
 
     }
 
-
     public function test_admin_can_delete_players()
     {
         $players = $this->create_players(2);
@@ -185,7 +219,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
         $this->assertNotNull(User::find($players[1]->id));
     }
 
-
     public function test_admin_cant_delete_themselves()
     {
         $players = $this->create_players(1);
@@ -197,7 +230,6 @@ class AdminManagementFunctionalitiesTest extends TestCase
         $this->json('delete', '/admin/user/' . $players[0]->id)->assertStatus(403);
         $this->assertNotNull(User::find($players[0]->id));
     }
-
 
     public function test_admin_cant_delete_players_that_dont_exist()
     {
@@ -233,67 +265,23 @@ class AdminManagementFunctionalitiesTest extends TestCase
 
     }
 
-    public function test_isAdmin_returns_true_for_admins()
-    {
-        $admin = self::makeUserAdmin(self::create_players(1)[0]);
-        $this->post('/login', [
-            'email' => $admin->email,
-            'password' => 'password',
-        ]);
-        $value = $this->get('/admin')->assertStatus(200);
-        assertEquals(1, $value->content());
-    }
-
-    public function test_isAdmin_returns_nothing_for_non_admins()
-    {
-        $player = self::create_players(1)[0];
-        $this->post('/login', [
-            'email' => $player->email,
-            'password' => 'password',
-        ]);
-        $value = $this->get('/admin')->assertStatus(200);
-        assertEquals('', $value->content());
-    }
-
-    private static function makeUserAdmin($player)
-    {
-        $player->role_id = 1;
-        $player->save();
-        return $player;
-
-    }
-
-    private function updateElo($player, $elo)
-    {
-        $player->elo = $elo;
-        $player->save();
-    }
-
-    private function createTeamAdmin($plyer1, $player2, $teamName, $admin)
+    private function adminCreate2v2Game($admin, $player1, $player2, $player3, $player4, $score1, $score2, $side)
     {
         $this->post('/login', [
             'email' => $admin->email,
             'password' => 'password',
         ]);
-        $response = $this->json('post', '/admin/teams', [
-            'player1_username' => $plyer1->username,
+        $response = $this->json('post', '/admin/games2v2', [
+            'player1_username' => $player1->username,
             'player2_username' => $player2->username,
-            'team_name' => $teamName,
+            'player3_username' => $player3->username,
+            'player4_username' => $player4->username,
+            'team1_score' => $score1,
+            'team2_score' => $score2,
+            'side' => $side,
         ]);
         $this->post('/logout');
-        return $response;
-    }
-
-    private function findTeam($player1, $player2)
-    {
-        $team = FoosballTeam::where('player1_id', $player1->id)
-            ->where('player2_id', $player2->id)->first();
-        if (is_null($team)) {
-            $team = FoosballTeam::where('player1_id', $player2->id)
-                ->where('player2_id', $player1->id)->first();
-        }
-        return $team;
-
+        return array($response, self::find2v2Game($player1, $player2, $player3, $player4, $score1, $score2, $side));
     }
 
     private function find2v2Game($player1, $player2, $player3, $player4, $team1_score, $team2_score, $side)
@@ -326,52 +314,16 @@ class AdminManagementFunctionalitiesTest extends TestCase
         return $game;
     }
 
-    private function adminCreate2v2Game($admin, $player1, $player2, $player3, $player4, $score1, $score2, $side)
+    private function findTeam($player1, $player2)
     {
-        $this->post('/login', [
-            'email' => $admin->email,
-            'password' => 'password',
-        ]);
-        $response = $this->json('post', '/admin/games2v2', [
-            'player1_username' => $player1->username,
-            'player2_username' => $player2->username,
-            'player3_username' => $player3->username,
-            'player4_username' => $player4->username,
-            'team1_score' => $score1,
-            'team2_score' => $score2,
-            'side' => $side,
-        ]);
-        $this->post('/logout');
-        return array($response, self::find2v2Game($player1, $player2, $player3, $player4, $score1, $score2, $side));
-    }
-
-
-    private static function create_players($x)
-    {
-        $players = array();
-        for ($i = 0; $i < $x; $i++) {
-            $players[] = User::factory()->create();
+        $team = FoosballTeam::where('player1_id', $player1->id)
+            ->where('player2_id', $player2->id)->first();
+        if (is_null($team)) {
+            $team = FoosballTeam::where('player1_id', $player2->id)
+                ->where('player2_id', $player1->id)->first();
         }
-        return $players;
-    }
+        return $team;
 
-
-    private function selectPropertiesOfPlayer($player)
-    {
-        $playerUnProtected = (object)self::getProperty($player, 'attributes');
-        $actualPlayerToBeReturned = new \stdClass();
-        $actualPlayerToBeReturned->elo = $playerUnProtected->elo;
-        $actualPlayerToBeReturned->username = $playerUnProtected->username;
-        $actualPlayerToBeReturned->id = $playerUnProtected->id;
-        return $actualPlayerToBeReturned;
-    }
-
-    private function getProperty($object, $propertyName)
-    {
-        $reflection = new ReflectionClass($object);
-        $property = $reflection->getProperty($propertyName);
-        $property->setAccessible(true);
-        return $property->getValue($object);
     }
 
     private function createAdminGame1v1($admin, $score1, $score2, $player1, $player2)
@@ -393,6 +345,43 @@ class AdminManagementFunctionalitiesTest extends TestCase
     private function findGame1v1($player1, $player2, $score1, $score2)
     {
         return Game1v1::where('player1_id', $player1->id)->where('player2_id', $player2->id)->where('player1_score', $score1)->where('player2_score', $score2)->first();
+    }
+
+    public function test_isAdmin_returns_true_for_admins()
+    {
+        $admin = self::makeUserAdmin(self::create_players(1)[0]);
+        $this->post('/login', [
+            'email' => $admin->email,
+            'password' => 'password',
+        ]);
+        $value = $this->get('/admin')->assertStatus(200);
+        assertEquals(1, $value->content());
+    }
+
+    public function test_isAdmin_returns_nothing_for_non_admins()
+    {
+        $player = self::create_players(1)[0];
+        $this->post('/login', [
+            'email' => $player->email,
+            'password' => 'password',
+        ]);
+        $value = $this->get('/admin')->assertStatus(200);
+        assertEquals('', $value->content());
+    }
+
+    private function createTeamAdmin($plyer1, $player2, $teamName, $admin)
+    {
+        $this->post('/login', [
+            'email' => $admin->email,
+            'password' => 'password',
+        ]);
+        $response = $this->json('post', '/admin/teams', [
+            'player1_username' => $plyer1->username,
+            'player2_username' => $player2->username,
+            'team_name' => $teamName,
+        ]);
+        $this->post('/logout');
+        return $response;
     }
 
 

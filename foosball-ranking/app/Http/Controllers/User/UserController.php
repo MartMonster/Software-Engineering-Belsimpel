@@ -55,6 +55,6 @@ class UserController extends Controller
 
     public function getTop10()
     {
-        return User::select('id','username','elo')->orderBy('elo', 'desc')->take(10)->get();
+        return User::select('id', 'username', 'elo')->orderBy('elo', 'desc')->take(10)->get();
     }
 }

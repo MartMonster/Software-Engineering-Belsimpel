@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { wallOfFame2v2Route } from '../player/WallOfFame2v2';
-import { editTeam } from '../../components/endpoints/admin/Teams';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
+import {wallOfFame2v2Route} from '../player/WallOfFame2v2';
+import {editTeam} from '../../components/endpoints/admin/Teams';
 
 export const AdminEditTeam = () => {
     const idPar = useParams();
@@ -18,7 +18,7 @@ export const AdminEditTeam = () => {
     const navigateToWoF2v2 = () => {
         navigate('/admin/' + wallOfFame2v2Route);
     }
-    
+
     const error = useCallback(() => {
         if (errorMessage !== "") {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
@@ -41,14 +41,16 @@ export const AdminEditTeam = () => {
             setTeamName(searchParams.get("team") as string);
         }
     }, [searchParams])
-    
+
     return (
         <div className="App">
             <h1>Edit a team</h1>
             <form autoComplete="off" onSubmit={submitTeamName}>
                 <div className="login">
                     <label>Team name
-                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed" type="text" maxLength={255} placeholder="Team name" defaultValue={teamName} onChange={e => setTeamName(e.target.value)} />
+                        <input required pattern="\S(.*\S)?" title="Leading and trailing whitespaces are not allowed"
+                               type="text" maxLength={255} placeholder="Team name" defaultValue={teamName}
+                               onChange={e => setTeamName(e.target.value)}/>
                     </label>
                     {error()}
                     <button type="submit" className='submitButton'>Edit team</button>

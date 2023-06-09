@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { User } from '../player/Users';
-import { PaginateInfo } from '../../paginate';
+import {User} from '../player/Users';
+import {PaginateInfo} from '../../paginate';
 
 export async function getTop10Users(page: number = 1, setErrorMessage: (string: string) => void) {
     let users: User[] = [];
@@ -32,8 +32,8 @@ export async function getTop10Users(page: number = 1, setErrorMessage: (string: 
                 window.location.reload();
             }
         })
-    pagination = { current_page: currentPage, last_page: lastPage };
-    return { users, pagination };
+    pagination = {current_page: currentPage, last_page: lastPage};
+    return {users, pagination};
 }
 
 

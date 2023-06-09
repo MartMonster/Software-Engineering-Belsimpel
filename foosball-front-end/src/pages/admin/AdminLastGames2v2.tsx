@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { getLast10Games2v2, Game2v2 } from '../../components/endpoints/player/Games';
-import { deleteGame2v2 } from '../../components/endpoints/admin/Games';
-import { Link, useSearchParams } from 'react-router-dom';
-import { editGame2v2Route } from '../player/EditGame2v2';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Game2v2, getLast10Games2v2} from '../../components/endpoints/player/Games';
+import {deleteGame2v2} from '../../components/endpoints/admin/Games';
+import {Link, useSearchParams} from 'react-router-dom';
+import {editGame2v2Route} from '../player/EditGame2v2';
 import Modal from 'react-modal';
 import paginationButtons from '../../components/paginate';
 
@@ -84,50 +84,53 @@ export const AdminLastGames2v2 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
-    
+
     return (
         <div className="App">
             <h1>Last 2v2 games</h1>
             <p>Click on a game to edit or delete it.</p>
             <table>
                 <thead>
-                    <tr>
-                        <th>Side</th>
-                        <th>Teams</th>
-                        <th>Scores</th>
-                    </tr>
+                <tr>
+                    <th>Side</th>
+                    <th>Teams</th>
+                    <th>Scores</th>
+                </tr>
                 </thead>
                 <tbody className='editDeleteGame'>
-                    {games.map((game: Game2v2, index) => {
-                        return (
-                            <React.Fragment key={game.id}>
-                                <tr className='redRow' onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
-                                game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
-                                    <td>Red</td>
-                                    <td className='lastGames'>{game.team1_name}</td>
-                                    <td>{game.team1_score}</td>
-                                </tr>
-                                <tr className='blueRow' onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
-                                game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
-                                    <td>Blue</td>
-                                    <td className='lastGames'>{game.team2_name}</td>
-                                    <td>{game.team2_score}</td>
-                                </tr>
-                            </React.Fragment>
-                        );
-                    })}
+                {games.map((game: Game2v2) => {
+                    return (
+                        <React.Fragment key={game.id}>
+                            <tr className='redRow'
+                                onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                    game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
+                                <td>Red</td>
+                                <td className='lastGames'>{game.team1_name}</td>
+                                <td>{game.team1_score}</td>
+                            </tr>
+                            <tr className='blueRow'
+                                onClick={() => openOptionsModal(game.id, `${game.team1_name} vs ${game.team2_name}`,
+                                    game.team1_name, game.team2_name, game.team1_score, game.team2_score)}>
+                                <td>Blue</td>
+                                <td className='lastGames'>{game.team2_name}</td>
+                                <td>{game.team2_score}</td>
+                            </tr>
+                        </React.Fragment>
+                    );
+                })}
                 </tbody>
             </table>
             {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeOptionsModal}>
+                   onRequestClose={closeOptionsModal}>
                 <h2>Options for game: {modalText}</h2>
                 <div className="row">
                     <div className='left-3'>
                         <button onClick={closeOptionsModal}>Close</button>
                     </div>
                     <div className='middle-3'>
-                        <Link to={`${editGame2v2Route}/${gameId}?team1=${team1Name}&team2=${team2Name}&score1=${team1Score}&score2=${team2Score}`}>
+                        <Link
+                            to={`${editGame2v2Route}/${gameId}?team1=${team1Name}&team2=${team2Name}&score1=${team1Score}&score2=${team2Score}`}>
                             <button className='editButton'>Edit</button>
                         </Link>
                     </div>
@@ -137,8 +140,8 @@ export const AdminLastGames2v2 = () => {
                 </div>
             </Modal>
             <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeDeleteModal}
-                contentLabel="Example Modal">
+                   onRequestClose={closeDeleteModal}
+                   contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this game?</h2>
                 {deleteError()}
                 <div className="row">
@@ -159,13 +162,15 @@ export const AdminLastGames2v2 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={"/admin/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/admin/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={"/admin/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/admin/" + lastGames2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../../App';
-import server, { username } from '../mocks/api';
-import { rest } from 'msw';
+import server, {username} from '../mocks/api';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen());
 beforeEach(() => {
@@ -13,13 +13,13 @@ afterAll(() => server.close());
 
 function editGame() {
     fireEvent.click(screen.getByText(/Swap/i));
-    fireEvent.change(screen.getAllByPlaceholderText(/Points/i)[0], { target: { value: '10' } });
-    fireEvent.change(screen.getAllByPlaceholderText(/Points/i)[1], { target: { value: '3' } });
+    fireEvent.change(screen.getAllByPlaceholderText(/Points/i)[0], {target: {value: '10'}});
+    fireEvent.change(screen.getAllByPlaceholderText(/Points/i)[1], {target: {value: '3'}});
     fireEvent.click(screen.getByText(/Save game/i));
 }
 
 test('renders the edit game page', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/1v1 games/i));
     const player1Text = await screen.findByText(`${username}1`);
     expect(player1Text).not.toBeNull();
@@ -30,7 +30,7 @@ test('renders the edit game page', async () => {
 });
 
 test('swap button swaps users', async () => {
-    render(<App />);
+    render(<App/>);
     const editGameText = await screen.findByText(/Edit a 1v1 game/i);
     expect(editGameText).not.toBeNull();
     const playerNames = screen.getAllByPlaceholderText(/Username/i) as HTMLInputElement[];
@@ -43,7 +43,7 @@ test('swap button swaps users', async () => {
 });
 
 test('can edit a game', async () => {
-    render(<App />);
+    render(<App/>);
     const editGameText = await screen.findByText(/Edit a 1v1 game/i);
     expect(editGameText).not.toBeNull();
     editGame();
@@ -54,10 +54,10 @@ test('can edit a game', async () => {
 test('can show error message', async () => {
     server.use(
         rest.put('http://localhost:8000/admin/games1v1/:id', (req, res, ctx) => {
-            return res.once(ctx.status(401), ctx.json({ message: 'Unauthenticated.' }));
+            return res.once(ctx.status(401), ctx.json({message: 'Unauthenticated.'}));
         }),
     );
-    render(<App />);
+    render(<App/>);
     const lastGamesText = await screen.findByText(/Last 1v1 games/i);
     expect(lastGamesText).not.toBeNull();
     fireEvent.click(await screen.findByText(`${username}1`));

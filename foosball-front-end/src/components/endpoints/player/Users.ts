@@ -7,7 +7,7 @@ interface UserSummary {
 }
 
 export async function getUserSummary(setErrorMessage: (string: string) => void) {
-    let data: UserSummary = { username: '', position: 0, elo: 0 };
+    let data: UserSummary = {username: '', position: 0, elo: 0};
     await axios.get('/user/summary', {
         headers: {
             Accept: 'application/json'

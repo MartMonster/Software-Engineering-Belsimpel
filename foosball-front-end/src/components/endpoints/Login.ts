@@ -50,7 +50,7 @@ export async function login(email: string, password: string, setErrorMessage: (s
 }
 
 export async function register(email: string, username: string, name: string, lastname: string,
-    password: string, password_confirmation: string, setErrorMessage: (string: string) => void) {
+                               password: string, password_confirmation: string, setErrorMessage: (string: string) => void) {
     await cookie(setErrorMessage);
     let b: boolean = false;
     await axios.post('/register', {
@@ -91,7 +91,7 @@ export async function logout() {
             Accept: 'application/json'
         }
     })
-        .then(response => {
+        .then(() => {
         })
         .catch(error => {
             if (error.response.status === 401 &&
@@ -127,7 +127,7 @@ export async function forgotPassword(email: string, setErrorMessage: (string: st
 }
 
 export async function resetPassword(email: string, password: string, password_confirmation: string,
-    token: string, setErrorMessage: (string: string) => void) {
+                                    token: string, setErrorMessage: (string: string) => void) {
     await cookie(setErrorMessage);
     let b: boolean = false;
     await axios.post('/reset-password', {

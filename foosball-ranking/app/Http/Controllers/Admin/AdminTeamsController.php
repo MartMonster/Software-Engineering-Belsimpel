@@ -24,9 +24,9 @@ class AdminTeamsController extends Controller
     public function createTeam(Request $request)
     {
         $request->validate([
-            'player1_username' => ['required','exists:' . User::class . ',username'],
-            'player2_username' => ['required','exists:' . User::class . ',username'],
-            'team_name' => ['required','unique:' . FoosballTeam::class],
+            'player1_username' => ['required', 'exists:' . User::class . ',username'],
+            'player2_username' => ['required', 'exists:' . User::class . ',username'],
+            'team_name' => ['required', 'unique:' . FoosballTeam::class],
         ]);
         $player1 = User::where('username', $request->player1_username)->first();
         $player2 = User::where('username', $request->player2_username)->first();
@@ -36,9 +36,9 @@ class AdminTeamsController extends Controller
     public function updateTeam($id, Request $request)
     {
         $request->validate([
-            'team_name' => ['required','unique:' . FoosballTeam::class],
+            'team_name' => ['required', 'unique:' . FoosballTeam::class],
         ]);
-        if(!FoosballTeam::find($id))
+        if (!FoosballTeam::find($id))
             return response('Team not found', 404);
         FoosballTeam::updateTeamName($request->team_name, $id);
         return response('Team successfully updated', 200);
@@ -46,8 +46,9 @@ class AdminTeamsController extends Controller
 
     public function deleteTeam($id)
     {
-        if(!FoosballTeam::find($id))
+        if (!FoosballTeam::find($id))
             return response('Team not found', 404);
         FoosballTeam::deleteTeam($id);
+        return response('', 204);
     }
 }

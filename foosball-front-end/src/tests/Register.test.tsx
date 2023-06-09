@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import App from '../App';
 import server from './mocks/api';
-import { rest } from 'msw';
+import {rest} from 'msw';
 
 beforeAll(() => server.listen());
 afterEach(() => {
@@ -13,28 +13,28 @@ afterAll(() => server.close());
 
 function register() {
     fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-        target: { value: 'email@belsimpel.nl' },
+        target: {value: 'email@belsimpel.nl'},
     });
     fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-        target: { value: 'username' },
+        target: {value: 'username'},
     });
     fireEvent.change(screen.getByPlaceholderText(/First name/i), {
-        target: { value: 'firstName' },
+        target: {value: 'firstName'},
     });
     fireEvent.change(screen.getByPlaceholderText(/Last name/i), {
-        target: { value: 'lastName' },
+        target: {value: 'lastName'},
     });
     fireEvent.change(screen.getAllByPlaceholderText(/Password/i)[0], {
-        target: { value: 'password' },
+        target: {value: 'password'},
     });
     fireEvent.change(screen.getAllByPlaceholderText(/Password/i)[1], {
-        target: { value: 'password' },
+        target: {value: 'password'},
     });
     fireEvent.click(screen.getByText(/Register/i));
 }
 
 test('can navigate to register page', async () => {
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Register/i));
     const registerButton = await screen.findByText(/Register/i);
     expect(registerButton).not.toBeNull();
@@ -42,7 +42,7 @@ test('can navigate to register page', async () => {
 });
 
 test('forwards to dashboard after registering', async () => {
-    render(<App />);
+    render(<App/>);
     expect(window.location.pathname).toEqual('/register');
     register();
     const dashboardText = await screen.findAllByText(/Dashboard/i);
@@ -56,11 +56,11 @@ test('forwards to dashboard after registering', async () => {
 test('displays error message when registering fails', async () => {
     server.use(
         rest.post('http://localhost:8000/register', (req, res, ctx) => {
-            return res.once(ctx.status(400), ctx.json({ message: 'error' }));
+            return res.once(ctx.status(400), ctx.json({message: 'error'}));
         }),
     )
 
-    render(<App />);
+    render(<App/>);
     fireEvent.click(screen.getByText(/Register/i));
     expect(window.location.pathname).toEqual('/register');
     register();
@@ -71,7 +71,7 @@ test('displays error message when registering fails', async () => {
 
 test('forwards to dashboard when logged in', () => {
     window.sessionStorage.setItem('loggedIn', 'true');
-    render(<App />);
+    render(<App/>);
     const dashboardText = screen.getAllByText(/Dashboard/i);
     expect(dashboardText[1]).not.toBeNull();
 });

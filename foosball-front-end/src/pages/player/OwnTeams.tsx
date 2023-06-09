@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { getOwnTeams, Team, deleteTeam } from '../../components/endpoints/player/Teams';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useSearchParams} from 'react-router-dom';
+import {deleteTeam, getOwnTeams, Team} from '../../components/endpoints/player/Teams';
 import Modal from 'react-modal';
-import { editTeamRoute } from './EditTeam';
+import {editTeamRoute} from './EditTeam';
 import paginationButtons from '../../components/paginate';
 
 export const ownTeamsRoute: string = "/Teams";
@@ -23,7 +23,7 @@ export const OwnTeams = () => {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    
+
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
@@ -47,8 +47,8 @@ export const OwnTeams = () => {
                 setErrorMessage("No teams found.");
             }
         });
-    },[searchParams, setSearchParams])
-    
+    }, [searchParams, setSearchParams])
+
     useEffect(getTeams, [getTeams]);
 
     async function deleteTeamLocal() {
@@ -77,42 +77,42 @@ export const OwnTeams = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
-    
+
     return (
         <div className="App">
             <h1>Your teams</h1>
             <p>Click on a team to edit or delete it.</p>
             <table>
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Team name</th>
-                        <th>Players</th>
-                        <th>Elo</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Team name</th>
+                    <th>Players</th>
+                    <th>Elo</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {teams.map((team: Team, index) => {
-                        return (
-                            <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
-                                <td>{(index + 1) * pageNumber}</td>
-                                <td className='teamName'>{team.team_name}</td>
-                                <td>
-                                    <div className="tableCol">
-                                        <p className='WoF2v2'>{team.player1_username}</p>
-                                        <p className='WoF2v2'>{team.player2_username}</p>
-                                    </div>
-                                </td>
-                                <td>{Math.round(team.elo)}</td>
-                            </tr>
-                        );
-                    })
+                {teams.map((team: Team, index) => {
+                    return (
+                        <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
+                            <td>{(index + 1) * pageNumber}</td>
+                            <td className='teamName'>{team.team_name}</td>
+                            <td>
+                                <div className="tableCol">
+                                    <p className='WoF2v2'>{team.player1_username}</p>
+                                    <p className='WoF2v2'>{team.player2_username}</p>
+                                </div>
+                            </td>
+                            <td>{Math.round(team.elo)}</td>
+                        </tr>
+                    );
+                })
                 }
                 </tbody>
             </table>
             {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeOptionsModal}>
+                   onRequestClose={closeOptionsModal}>
                 <h2>Options for team: {teamName}</h2>
                 <div className="row">
                     <div className='left-3'>
@@ -129,7 +129,7 @@ export const OwnTeams = () => {
                 </div>
             </Modal>
             <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeModal}>
+                   onRequestClose={closeModal}>
                 <h2>Are you sure you want to delete this team?</h2>
                 {deleteError()}
                 <div className="row">

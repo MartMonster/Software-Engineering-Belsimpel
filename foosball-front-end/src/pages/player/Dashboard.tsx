@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState} from 'react';
-import { Link } from "react-router-dom";
-import { wallOfFame1v1Route } from "./WallOfFame1v1";
-import { wallOfFame2v2Route } from "./WallOfFame2v2";
-import { addGame1v1Route } from "./AddGame1v1";
-import { addGame2v2Route } from "./AddGame2v2";
-import { lastGames1v1Route } from "./LastGames1v1";
-import { lastGames2v2Route } from "./LastGames2v2";
-import { createTeamRoute } from "./CreateTeam";
-import { getUserSummary } from '../../components/endpoints/player/Users';
-import { ownTeamsRoute } from './OwnTeams';
-import { editUsernameRoute } from './EditUsername';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
+import {wallOfFame1v1Route} from "./WallOfFame1v1";
+import {wallOfFame2v2Route} from "./WallOfFame2v2";
+import {addGame1v1Route} from "./AddGame1v1";
+import {addGame2v2Route} from "./AddGame2v2";
+import {lastGames1v1Route} from "./LastGames1v1";
+import {lastGames2v2Route} from "./LastGames2v2";
+import {createTeamRoute} from "./CreateTeam";
+import {getUserSummary} from '../../components/endpoints/player/Users';
+import {ownTeamsRoute} from './OwnTeams';
+import {editUsernameRoute} from './EditUsername';
 
 const Dashboard = () => {
     const [username, setUsername] = useState("");

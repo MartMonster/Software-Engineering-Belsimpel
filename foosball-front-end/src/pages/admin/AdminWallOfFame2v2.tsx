@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Team } from '../../components/endpoints/player/Teams';
-import { deleteTeam, getTop10Teams } from '../../components/endpoints/admin/Teams';
-import { Link, useSearchParams } from 'react-router-dom';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Team} from '../../components/endpoints/player/Teams';
+import {deleteTeam, getTop10Teams} from '../../components/endpoints/admin/Teams';
+import {Link, useSearchParams} from 'react-router-dom';
 import Modal from 'react-modal';
 import paginationButtons from '../../components/paginate';
 
@@ -23,13 +23,13 @@ export const AdminWallOfFame2v2 = () => {
             return <p className='errorMessage'>{errorMessage.toString()}</p>
         }
     }, [errorMessage])
-    
+
     const deleteError = useCallback(() => {
         if (deleteErrorMessage !== "") {
             return <p className='errorMessage'>{deleteErrorMessage.toString()}</p>
         }
     }, [deleteErrorMessage])
-    
+
     const getTeams = useCallback(() => {
         let page = searchParams.get("page");
         if (page === null) {
@@ -68,7 +68,7 @@ export const AdminWallOfFame2v2 = () => {
         setDeleteErrorMessage("");
     }
 
-    function openOptionsModal(id:number, name:string) {
+    function openOptionsModal(id: number, name: string) {
         setTeamId(id);
         setTeamName(name);
         setOptionsModalIsOpen(true);
@@ -77,41 +77,41 @@ export const AdminWallOfFame2v2 = () => {
     function closeOptionsModal() {
         setOptionsModalIsOpen(false);
     }
-    
+
     return (
         <div className="App">
             <h1>Wall of fame 2v2</h1>
             <p>Click on a team to edit or delete it.</p>
             <table>
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Team name</th>
-                        <th>Players</th>
-                        <th>Elo</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Team name</th>
+                    <th>Players</th>
+                    <th>Elo</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {teams.map((team: Team, index) => {
-                        return (
-                            <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
-                                <td>{(index + 1)*pageNumber}</td>
-                                <td className='teamName'>{team.team_name}</td>
-                                <td>
-                                    <div className="tableCol">
-                                        <p className='WoF2v2'>{team.player1_username}</p>
-                                        <p className='WoF2v2'>{team.player2_username}</p>
-                                    </div>
-                                </td>
-                                <td>{Math.round(team.elo)}</td>
-                            </tr>
-                        )
-                    })}
+                {teams.map((team: Team, index) => {
+                    return (
+                        <tr key={team.id} onClick={() => openOptionsModal(team.id, team.team_name)}>
+                            <td>{(index + 1) * pageNumber}</td>
+                            <td className='teamName'>{team.team_name}</td>
+                            <td>
+                                <div className="tableCol">
+                                    <p className='WoF2v2'>{team.player1_username}</p>
+                                    <p className='WoF2v2'>{team.player2_username}</p>
+                                </div>
+                            </td>
+                            <td>{Math.round(team.elo)}</td>
+                        </tr>
+                    )
+                })}
                 </tbody>
             </table>
             {error()}
             <Modal className="Modal" isOpen={optionsModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeOptionsModal}>
+                   onRequestClose={closeOptionsModal}>
                 <h2>Options for team: {teamName}</h2>
                 <div className="row">
                     <div className='left-3'>
@@ -128,8 +128,8 @@ export const AdminWallOfFame2v2 = () => {
                 </div>
             </Modal>
             <Modal className="Modal" isOpen={deleteModalIsOpen} overlayClassName="Overlay"
-                onRequestClose={closeDeleteModal}
-                contentLabel="Example Modal">
+                   onRequestClose={closeDeleteModal}
+                   contentLabel="Example Modal">
                 <h2>Are you sure you want to delete this team?</h2>
                 {deleteError()}
                 <div className="row">
@@ -150,13 +150,15 @@ export const AdminWallOfFame2v2 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={"/admin/" + wallOfFame2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/admin/" + wallOfFame2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={"/admin/" + wallOfFame2v2Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/admin/" + wallOfFame2v2Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }

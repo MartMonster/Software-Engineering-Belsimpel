@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useSearchParams } from "react-router-dom";
-import { ownGames1v1Route } from "./OwnGames1v1";
-import { getLast10Games1v1, Game1v1 } from '../../components/endpoints/player/Games';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Link, useSearchParams} from "react-router-dom";
+import {ownGames1v1Route} from "./OwnGames1v1";
+import {Game1v1, getLast10Games1v1} from '../../components/endpoints/player/Games';
 import paginationButtons from '../../components/paginate';
 
 export const lastGames1v1Route: string = "LastGames1v1"
@@ -43,29 +43,29 @@ export const LastGames1v1 = () => {
             <Link className="App-link" to={ownGames1v1Route}>See own games</Link>
             <table>
                 <thead>
-                    <tr>
-                        <th>Side</th>
-                        <th>Players</th>
-                        <th>Scores</th>
-                    </tr>
+                <tr>
+                    <th>Side</th>
+                    <th>Players</th>
+                    <th>Scores</th>
+                </tr>
                 </thead>
                 <tbody className='editDeleteGame'>
-                    {games.map((game: Game1v1, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                <tr className='redRow'>
-                                    <td>Red</td>
-                                    <td className='lastGames'>{game.player1_username}</td>
-                                    <td>{game.player1_score}</td>
-                                </tr>
-                                <tr className='blueRow'>
-                                    <td>Blue</td>
-                                    <td className='lastGames'>{game.player2_username}</td>
-                                    <td>{game.player2_score}</td>
-                                </tr>
-                            </React.Fragment>
-                        );
-                    })
+                {games.map((game: Game1v1, index) => {
+                    return (
+                        <React.Fragment key={index}>
+                            <tr className='redRow'>
+                                <td>Red</td>
+                                <td className='lastGames'>{game.player1_username}</td>
+                                <td>{game.player1_score}</td>
+                            </tr>
+                            <tr className='blueRow'>
+                                <td>Blue</td>
+                                <td className='lastGames'>{game.player2_username}</td>
+                                <td>{game.player2_score}</td>
+                            </tr>
+                        </React.Fragment>
+                    );
+                })
                 }
                 </tbody>
             </table>
@@ -79,13 +79,15 @@ export const LastGames1v1 = () => {
                         } else if (button.toString() === page || (page === null && button === 1)) {
                             return (
                                 <li key={index} className="page-button-active">
-                                    <Link className='App-link' to={"/" + lastGames1v1Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/" + lastGames1v1Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         } else {
                             return (
                                 <li key={index} className="page-button">
-                                    <Link className='App-link' to={"/" + lastGames1v1Route + "?page=" + button}>{button}</Link>
+                                    <Link className='App-link'
+                                          to={"/" + lastGames1v1Route + "?page=" + button}>{button}</Link>
                                 </li>
                             );
                         }
